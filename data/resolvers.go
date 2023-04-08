@@ -21,6 +21,35 @@ func PrintTask(taskID uuid.UUID) {
 	printTask(task)
 }
 
+func PrintTaskByName(taskName string) {
+	var task Task
+	DB.Where("name = ?", taskName).First(&task)
+
+	printTask(task)
+}
+
 func PrintAllTasks() {
 
+}
+
+func TaskExistByID(taskID uuid.UUID) bool {
+	var task Task
+
+	tx := DB.First(&task, taskID)
+	if tx != nil {
+		return true
+	}
+
+	return false
+}
+
+func TaskExistByName(taskName string) bool {
+	var task Task
+
+	tx := DB.Where("name = ?", taskName).First(&task)
+	if tx != nil {
+		return true
+	}
+
+	return false
 }
