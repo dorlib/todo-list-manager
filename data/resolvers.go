@@ -2,10 +2,9 @@ package data
 
 import (
 	"github.com/google/uuid"
-	"time"
 )
 
-func CreateTask(title, description, priority string, deadline time.Time) {
+func CreateTask(title, description, priority string, deadline Date) {
 	task := Task{Title: title, Description: description, Priority: priority, Deadline: deadline}
 	DB.Create(&task)
 }
@@ -30,26 +29,4 @@ func PrintTaskByName(taskName string) {
 
 func PrintAllTasks() {
 
-}
-
-func TaskExistByID(taskID uuid.UUID) bool {
-	var task Task
-
-	tx := DB.First(&task, taskID)
-	if tx != nil {
-		return true
-	}
-
-	return false
-}
-
-func TaskExistByName(taskName string) bool {
-	var task Task
-
-	tx := DB.Where("name = ?", taskName).First(&task)
-	if tx != nil {
-		return true
-	}
-
-	return false
 }

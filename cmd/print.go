@@ -12,7 +12,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var TaskTitle string
+var taskTitle string
 
 // printCmd represents the print command
 var printCmd = &cobra.Command{
@@ -37,7 +37,7 @@ to quickly create a Cobra application.`,
 
 		} else if rootCmd.Flags().Lookup("by-created-at") != nil {
 
-		} else if TaskTitle == "" {
+		} else if taskTitle == "" {
 			taskID := uuid.MustParse(args[0])
 			if data.TaskExistByID(taskID) {
 				fmt.Println("Task Does Not Exist ")
@@ -65,7 +65,7 @@ func init() {
 	printCmd.PersistentFlags().StringP("by-deadline", "d", "", "print all tasks by order of deadline")
 	printCmd.PersistentFlags().StringP("by-priority", "p", "", "print all tasks by priority")
 	printCmd.PersistentFlags().StringP("by-created-at", "c", "", "print all tasks by order of time of creation")
-	printCmd.PersistentFlags().StringVarP(&TaskTitle, "title", "t", "", "print all tasks")
+	printCmd.PersistentFlags().StringVarP(&taskTitle, "title", "t", "", "print all tasks")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
