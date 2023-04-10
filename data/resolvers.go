@@ -42,7 +42,7 @@ func DeleteTaskByTitle(taskTitle string) {
 	fmt.Printf("deleted task: %v", taskTitle)
 }
 
-func PrintTask(taskID uuid.UUID) {
+func PrintTaskByID(taskID uuid.UUID) {
 	var task Task
 
 	DB.First(&task, taskID)
