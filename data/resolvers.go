@@ -15,6 +15,7 @@ func DeleteTask(taskID uuid.UUID) {
 
 func PrintTask(taskID uuid.UUID) {
 	var task Task
+
 	DB.First(&task, taskID)
 
 	printTask(task)
@@ -22,11 +23,13 @@ func PrintTask(taskID uuid.UUID) {
 
 func PrintTaskByName(taskName string) {
 	var task Task
+
 	DB.Where("name = ?", taskName).First(&task)
 
 	printTask(task)
 }
 
 func PrintAllTasks() {
-
+	//tasks := DB.Find(&Task{})
+	//printAllTasks(tasks)
 }

@@ -37,7 +37,8 @@ func printAllTasks(tasks []Task) {
 	t.AppendHeader(table.Row{"#", "Title", "Description", "Priority", "Created At", "Deadline", "Time Left"})
 
 	for i := 0; i < len(tasks); i++ {
-		var row table.Row = table.Row{tasks[i]}
+		var row = table.Row{tasks[i]}
+
 		t.AppendRows([]table.Row{row})
 	}
 
@@ -49,22 +50,16 @@ func TaskExistByID(taskID uuid.UUID) bool {
 	var task Task
 
 	tx := DB.First(&task, taskID)
-	if tx != nil {
-		return true
-	}
 
-	return false
+	return tx != nil
 }
 
 func TaskExistByName(taskName string) bool {
 	var task Task
 
 	tx := DB.Where("name = ?", taskName).First(&task)
-	if tx != nil {
-		return true
-	}
 
-	return false
+	return tx != nil
 }
 
 func CheckLegalPriority(priority string) bool {

@@ -14,7 +14,7 @@ import (
 
 var taskTitle string
 
-// printCmd represents the print command
+// printCmd represents the print command.
 var printCmd = &cobra.Command{
 	Use:   "print",
 	Short: "A brief description of your command",
@@ -30,7 +30,7 @@ to quickly create a Cobra application.`,
 		var taskID uuid.UUID
 
 		if rootCmd.Flags().Lookup("all") != nil {
-
+			data.PrintAllTasks()
 		} else if rootCmd.Flags().Lookup("by-deadline") != nil {
 
 		} else if rootCmd.Flags().Lookup("by-priority") != nil {
@@ -59,6 +59,10 @@ func init() {
 
 	// Here you will define your flags and configuration settings.
 
+	// Cobra supports local flags which will only run when this command
+	// is called directly, e.g.:
+	// printCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
 	printCmd.PersistentFlags().StringP("all", "a", "", "print all tasks")
@@ -66,8 +70,4 @@ func init() {
 	printCmd.PersistentFlags().StringP("by-priority", "p", "", "print all tasks by priority")
 	printCmd.PersistentFlags().StringP("by-created-at", "c", "", "print all tasks by order of time of creation")
 	printCmd.PersistentFlags().StringVarP(&taskTitle, "title", "t", "", "print all tasks")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// printCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
