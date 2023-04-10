@@ -26,8 +26,12 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		var taskName string
 		var taskID uuid.UUID
+
+		stringTaskID, err := cmd.Flags().GetString("ID")
+		if err != nil {
+			fmt.Printf("error while parsing flag: %v", err)
+		}
 
 		if rootCmd.Flags().Lookup("all") != nil {
 			data.PrintAllTasks()
@@ -38,18 +42,24 @@ to quickly create a Cobra application.`,
 		} else if rootCmd.Flags().Lookup("by-created-at") != nil {
 
 		} else if taskTitle == "" {
-			taskID := uuid.MustParse(args[0])
+			if data.TaskExistByName(taskTitle) {
+				fmt.Println("Task Does Not Exist ")
+			} else {
+				data.PrintTaskByName(taskTitle)
+			}
+		} else if stringTaskID != "" {
+			taskID := uuid.MustParse(stringTaskID)
 			if data.TaskExistByID(taskID) {
 				fmt.Println("Task Does Not Exist ")
+			} else {
+				data.PrintTaskByID(taskID)
 			}
-
-			data.PrintTask(taskID)
 		} else {
-			if data.TaskExistByName(taskName) {
+			if data.TaskExistByName(taskTitle) || data.TaskExistByID(taskID) {
 				fmt.Println("Task Does Not Exist ")
 			}
 
-			data.PrintTask(taskID)
+			data.PrintTaskByID(taskID)
 		}
 	},
 }
@@ -69,5 +79,6 @@ func init() {
 	printCmd.PersistentFlags().StringP("by-deadline", "d", "", "print all tasks by order of deadline")
 	printCmd.PersistentFlags().StringP("by-priority", "p", "", "print all tasks by priority")
 	printCmd.PersistentFlags().StringP("by-created-at", "c", "", "print all tasks by order of time of creation")
-	printCmd.PersistentFlags().StringVarP(&taskTitle, "title", "t", "", "print all tasks")
+	printCmd.PersistentFlags().StringP("ID", "i", "", "print task by ID")
+	printCmd.PersistentFlags().StringVarP(&taskTitle, "title", "t", "", "print task by name")
 }
