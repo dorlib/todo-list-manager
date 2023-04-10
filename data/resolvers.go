@@ -14,6 +14,7 @@ func DeleteTaskByID(taskID uuid.UUID) {
 	if TaskExistByID(taskID) {
 		DB.Delete(&Task{}, taskID)
 		fmt.Printf("deleted task: %v", taskID)
+
 		return
 	}
 
@@ -27,17 +28,18 @@ func DeleteTaskByTitle(taskTitle string) {
 
 	if len(tasks) > 1 {
 		fmt.Printf("more than one task with the same title %v exists", taskTitle)
+
 		return
 	}
 
 	if len(tasks) < 1 {
 		fmt.Printf("there is no tasks with the given title: %v", taskTitle)
+
 		return
 	}
 
 	DB.Where("name = ?", taskTitle).Delete(&tasks)
 	fmt.Printf("deleted task: %v", taskTitle)
-
 }
 
 func PrintTask(taskID uuid.UUID) {
@@ -57,6 +59,9 @@ func PrintTaskByName(taskName string) {
 }
 
 func PrintAllTasks() {
-	//tasks := DB.Find(&Task{})
-	//printAllTasks(tasks)
+	var tasks []Task
+
+	DB.Find(&tasks)
+
+	printAllTasks(tasks)
 }
