@@ -15,7 +15,7 @@ var description string
 var priority string
 var deadline string
 
-// addCmd represents the add command
+// addCmd represents the add command.
 var addCmd = &cobra.Command{
 	Use:   "add",
 	Short: "A brief description of your command",
@@ -36,14 +36,14 @@ func init() {
 
 	// Here you will define your flags and configuration settings.
 
+	// Cobra supports local flags which will only run when this command
+	// is called directly, e.g.:
+	// addCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
 	printCmd.PersistentFlags().StringVarP(&taskTitle, "title", "t", "", "add the task's title")
 	printCmd.PersistentFlags().StringVarP(&taskTitle, "description", "d", "", "add the task's description")
 	printCmd.PersistentFlags().StringVarP(&taskTitle, "priority", "p", "", "add the task's priority")
 	printCmd.PersistentFlags().StringVarP(&taskTitle, "deadline", "d", "", "add the task's deadline")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// addCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
