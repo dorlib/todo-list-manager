@@ -25,8 +25,8 @@ type Date struct {
 // Priority enum.
 const (
 	Critical string = "critical"
-	VeryHigh        = "very high"
-	High            = "high"
-	Medium          = "medium"
-	Low             = "low"
+	VeryHigh string = "very high"
+	High     string = "high"
+	Medium   string = "medium"
+	Low      string = "low"
 )
