@@ -11,6 +11,7 @@ type Task struct {
 	UpdatedAt   time.Time `gorm:"autoUpdateTime"`
 	DeletedAt   time.Time `gorm:"index"`
 	Deadline    Date      // dd/mm/yyyy
+	Done        bool
 	Title       string
 	Description string
 	Priority    string // enum
