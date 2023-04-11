@@ -37,10 +37,20 @@ to quickly create a Cobra application.`,
 		}
 
 		if taskTitle != "" {
-			data.DeleteTaskByTitle(taskTitle)
-		}
+			if !data.TaskExistByName(taskTitle) {
+				fmt.Printf("Task %v Does Not Exist", taskTitle)
 
-		if taskID != "" {
+				return
+			}
+
+			data.DeleteTaskByTitle(taskTitle)
+		} else if taskID != "" {
+			if !data.TaskExistByName(taskTitle) {
+				fmt.Printf("Task %v Does Not Exist", taskID)
+
+				return
+			}
+
 			data.DeleteTaskByID(uuid.MustParse(taskID))
 		}
 

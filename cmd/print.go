@@ -42,15 +42,15 @@ to quickly create a Cobra application.`,
 		} else if rootCmd.Flags().Lookup("by-created-at") != nil {
 
 		} else if taskTitle == "" {
-			if data.TaskExistByName(taskTitle) {
-				fmt.Println("Task Does Not Exist ")
+			if !data.TaskExistByName(taskTitle) {
+				fmt.Printf("Task %v Does Not Exist", taskTitle)
 			} else {
 				data.PrintTaskByName(taskTitle)
 			}
 		} else if stringTaskID != "" {
 			taskID := uuid.MustParse(stringTaskID)
-			if data.TaskExistByID(taskID) {
-				fmt.Println("Task Does Not Exist ")
+			if !data.TaskExistByID(taskID) {
+				fmt.Printf("Task %v Does Not Exist", taskID)
 			} else {
 				data.PrintTaskByID(taskID)
 			}
