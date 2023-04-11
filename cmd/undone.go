@@ -12,7 +12,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// undoneCmd represents the undone command
+// undoneCmd represents the undone command.
 var undoneCmd = &cobra.Command{
 	Use:   "undone",
 	Short: "A brief description of your command",

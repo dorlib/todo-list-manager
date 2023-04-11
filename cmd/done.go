@@ -12,7 +12,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// doneCmd represents the done command
+// doneCmd represents the done command.
 var doneCmd = &cobra.Command{
 	Use:   "done",
 	Short: "A brief description of your command",

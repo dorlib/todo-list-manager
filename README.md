@@ -32,8 +32,7 @@ In the future, we will continue to extend the app and create more features, and 
 - [GORM](https://gorm.io/) as ORM library for Golang.
 - [go-pretty](https://github.com/jedib0t/go-pretty/tree/main/table) for printing tables.
 - [uuid](https://github.com/google/uuid) for generating and inspecting UUIDs.
-- [golangci-lint](https://golangci-lint.run/) as golang linter.
-
+- [golangci-lint](https://golangci-lint.run/) as golang linter in order to preserve our code's quality.
 ---
 
 
