@@ -21,25 +21,25 @@ func DeleteTaskByID(taskID uuid.UUID) {
 	fmt.Printf("there is no tasks with the given ID: %v", taskID)
 }
 
-func DeleteTaskByTitle(taskTitle string) {
+func DeleteTaskByTitle(title string) {
 	var tasks []Task
 
-	DB.Where("Title = ?", taskTitle).Find(&tasks)
+	DB.Where("Title = ?", title).Find(&tasks)
 
 	if len(tasks) > 1 {
-		fmt.Printf("more than one task with the same title %v exists", taskTitle)
+		fmt.Printf("more than one task with the same title %v exists", title)
 
 		return
 	}
 
 	if len(tasks) < 1 {
-		fmt.Printf("there is no tasks with the given title: %v", taskTitle)
+		fmt.Printf("there is no tasks with the given title: %v", title)
 
 		return
 	}
 
-	DB.Where("name = ?", taskTitle).Delete(&tasks)
-	fmt.Printf("deleted task: %v", taskTitle)
+	DB.Where("name = ?", title).Delete(&tasks)
+	fmt.Printf("deleted task: %v", title)
 }
 
 func PrintTaskByID(taskID uuid.UUID) {
@@ -64,4 +64,46 @@ func PrintAllTasks() {
 	DB.Find(&tasks)
 
 	printAllTasks(tasks)
+}
+
+func ToggleDoneByTitle(title string, isDone bool) {
+	var tasks []Task
+
+	DB.Where("Title = ?", title).Find(&tasks)
+
+	if len(tasks) > 1 {
+		fmt.Printf("more than one task with the same title %v exists", title)
+
+		return
+	}
+
+	if len(tasks) < 1 {
+		fmt.Printf("there is no tasks with the given title: %v", title)
+
+		return
+	}
+
+	if isDone {
+		DB.Where("name = ?", title).Update("Done", true)
+	} else {
+		DB.Where("name = ?", title).Update("Done", false)
+	}
+
+	fmt.Printf("task: %v is done", title)
+}
+
+func ToggleDoneByID(taskID uuid.UUID, isDone bool) {
+	if TaskExistByID(taskID) {
+		if isDone {
+			DB.Model(&Task{}).Update("Done", true).Where("ID = ?", taskID)
+		} else {
+			DB.Model(&Task{}).Update("Done", false).Where("ID = ?", taskID)
+		}
+
+		fmt.Printf("task: %v is done", taskID)
+
+		return
+	}
+
+	fmt.Printf("there is no tasks with the given ID: %v", taskID)
 }
