@@ -47,8 +47,8 @@ func init() {
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	printCmd.LocalNonPersistentFlags().StringVarP(&taskTitle, "title", "t", "", "add the task's title")
-	printCmd.LocalNonPersistentFlags().StringVarP(&taskTitle, "description", "d", "", "add the task's description")
-	printCmd.LocalNonPersistentFlags().StringVarP(&taskTitle, "priority", "p", "", "add the task's priority")
-	printCmd.LocalNonPersistentFlags().StringVarP(&taskTitle, "deadline", "l", "", "add the task's deadline")
+	printCmd.LocalNonPersistentFlags().StringVarP(&title, "title", "t", "", "add the task's title")
+	printCmd.LocalNonPersistentFlags().StringVarP(&description, "description", "d", "", "add the task's description")
+	printCmd.LocalNonPersistentFlags().StringVarP(&priority, "priority", "p", "", "add the task's priority")
+	printCmd.LocalNonPersistentFlags().StringVarP(&deadline, "deadline", "d", "", "add the task's deadline")
 }
