@@ -17,13 +17,20 @@ var taskTitle string
 // printCmd represents the print command.
 var printCmd = &cobra.Command{
 	Use:   "print",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "print command will print the given task/s to the console.",
+	Long: ` print command will print the given task/s to the console.
+			print must except one and only one from the following tags: 
+			-a: print all the tasks to the console.
+			-d: print all the tasks to the console, ordered by deadline (closest deadline first)
+			-p: print all the tasks to the console, ordered by priority (most urgent first)
+			-c: print all the tasks to the console, ordered by creation date (oldest creation date first)
+			-i: print the task with the given ID to the console.
+			-t: print the task with the given title to the console (if there is only one task with the given title).
+			
+			for example: 
+			todo print -i="134", 
+			todo print -a
+`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		var taskID uuid.UUID

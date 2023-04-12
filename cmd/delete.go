@@ -15,13 +15,17 @@ import (
 // deleteCmd represents the delete command.
 var deleteCmd = &cobra.Command{
 	Use:   "delete",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "delete command will remove the given task from your todo list.",
+	Long: `delete command will remove the given task from your todo list.
+			delete must except one and only one from the following tags: 
+			-t: the task's title (accept string).
+			-i: the task's ID (accept string).
+			-a: remove all the tasks in the list.
+			
+			for example: 
+			todo delete -i="134", 
+			todo delete -a
+`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("delete called")
@@ -65,7 +69,7 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// deleteCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	printCmd.PersistentFlags().StringP("taskTitle", "t", "", "a"+"delete by the task's title")
+	printCmd.PersistentFlags().StringP("taskTitle", "t", "", "delete by the task's title")
 	printCmd.PersistentFlags().StringP("taskID", "i", "", "delete by the task's ID")
 	printCmd.PersistentFlags().StringP("all", "a", "", "delete all tasks")
 
