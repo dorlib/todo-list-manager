@@ -82,10 +82,10 @@ func init() {
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	printCmd.PersistentFlags().StringP("all", "a", "", "print all tasks")
-	printCmd.PersistentFlags().StringP("by-deadline", "d", "", "print all tasks by order of deadline")
-	printCmd.PersistentFlags().StringP("by-priority", "p", "", "print all tasks by priority")
-	printCmd.PersistentFlags().StringP("by-created-at", "c", "", "print all tasks by order of time of creation")
-	printCmd.PersistentFlags().StringP("ID", "i", "", "print task by ID")
-	printCmd.PersistentFlags().StringVarP(&taskTitle, "title", "t", "", "print task by name")
+	printCmd.LocalNonPersistentFlags().StringP("all", "a", "", "print all tasks")
+	printCmd.LocalNonPersistentFlags().StringP("by-deadline", "d", "", "print all tasks by order of deadline")
+	printCmd.LocalNonPersistentFlags().StringP("by-priority", "p", "", "print all tasks by priority")
+	printCmd.LocalNonPersistentFlags().StringP("by-created-at", "c", "", "print all tasks by order of time of creation")
+	printCmd.LocalNonPersistentFlags().StringP("ID", "i", "", "print task by ID")
+	printCmd.LocalNonPersistentFlags().StringVarP(&taskTitle, "title", "t", "", "print task by name")
 }
