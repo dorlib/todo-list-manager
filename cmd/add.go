@@ -18,12 +18,17 @@ var deadline string
 // addCmd represents the add command.
 var addCmd = &cobra.Command{
 	Use:   "add",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "add command will add new task to your todo list.",
+	Long: `add command will add new task to your todo list.
+			Add must except the following tags and inputs: 
+			-t: the title of the task (accept string).
+			-d: a shot description of the task (accept string).
+			-p: the priority of the task, which can be: Critical, VeryHigh, High, Medium, Low (accept string).
+			-d: the deadline of the task, in the following format: "dd/mm/yyyy (accept string)."
+			
+			for example: 
+			todo add -t="homework" -d="do homework 3 in intro to cs" -p="High" -d="04/05/2023"
+`,
 	Args: cobra.ExactArgs(4),
 	Run: func(cmd *cobra.Command, args []string) {
 		deadlineDate := strings.Split(deadline, "/")
