@@ -23,4 +23,5 @@
 3. mysql
 4. gorm
 5. cobra cli
+6. golangci-lint
 
