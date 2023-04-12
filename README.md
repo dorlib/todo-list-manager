@@ -1,4 +1,4 @@
-## [IMDB - Searching, Rating and Reviewing movies !](https://localhost:8081)
+## TODO List Manager - For Managing And Tracking Your Daily Tasks
 
 Hello everyone 👋 </br>
 This is my CLI for task managment using Go!
