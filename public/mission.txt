@@ -1,0 +1,26 @@
+##############################
+######### missions ###########
+##############################
+
+
+
+###### CMD MISSIONS ######
+
+
+
+##### DATA MISSIONS ######
+
+
+
+
+
+
+
+####### TO INSTALL IN ORDER TO CONTRIBUTE #######
+
+1. go
+2. git
+3. mysql
+4. gorm
+5. cobra cli
+

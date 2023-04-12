@@ -23,7 +23,7 @@ var updateCmd = &cobra.Command{
 			-t: the title of the task (accept string).
 			-d: a shot description of the task (accept string).
 			-p: the priority of the task, which can be: Critical, VeryHigh, High, Medium, Low (accept string).
-			-d: the deadline of the task, in the following format: "dd/mm/yyyy (accept string)."
+			-l: the deadline of the task, in the following format: "dd/mm/yyyy (accept string)."
 			
 			for example: 
 			todo update -t="homework" -d="do homework 3 in intro to cs"
