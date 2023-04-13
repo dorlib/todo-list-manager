@@ -2,18 +2,49 @@
 ######### missions ###########
 ##############################
 
-
+those are the current mission.
+please update in the slack channel when starting to work on a certain task in order to maintain synchronization.
+feel free to add/update missions
 
 ###### CMD MISSIONS ######
 
-
+1. add feature to print only the tasks with a given priority
+2. add feature to print all the done tasks
+3. add feature to print all the undone tasks
+4. add management for multi users, meaning:
+    a. add commands for: add-user, update-user, delete-user
+    b. add features for printing mission by users
+    c. adjust print all to print also the user the mission assign to
+    d. add option to print all tasks ordered by users
+5. add seeder command to insert pre-made data
 
 ##### DATA MISSIONS ######
+1. write unit test for the functions in data/utils.go (read about golang way to write unit tests)
+2. add management for multi users, meaning:
+    a. create a new model for User in models.go
+    b. add User entity in the DB migration
+    c. adjust resolver to support User
+3. change done & undone to todo & in progress & done
+4. add a seeder to the app which insert pre-made data
 
+##### ALERT SERVICE #####
+1. create an alert service which will once a day go over the undone tasks and make alerts to users by mail if the deadline in on the next day.
 
+##### AUTH AND AUTHz #####
+1. create authorization process as a user who have access to the tasks manager.
+2. create types of users (admin and regular users) and define authorization (eg. only admin can delete tasks).
+3. when running we should register or login (add to cmd).
 
+##### INNOVATION #####
+1. make a POC about opening a web server in golang which will print "hello world" in the browser on "localhost:8080"
+2. next step is to extract all the tasks to a txt file and display it on the web
+3. start add more features in the web using simple HTML and display data using golang package "html/template"
+4. after that we can continue to build a UI with javascript and css
 
-
+##### OPS #####
+1. include unit tests written in the code as part of the CI as a github workflow.
+2. dockerize the app (make a working dockerfile) & upload to dockerhub.
+3. optional after we have docker, upload it to EC2 in AWS.
 
 
 ####### TO INSTALL IN ORDER TO CONTRIBUTE #######
