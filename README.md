@@ -1,9 +1,13 @@
 ## TODO List Manager - For Managing And Tracking Your Daily Tasks
 
 Hello everyone 👋 </br>
-This is my CLI for task managment using Go!
+This is a CLI for task managment using Go, Cobra cli & GORM!
 
-The CLI is wrriten with the cobra framework for CLI creation, and GORM as ORM library and database connection, which is MySQL.
+The main purposes of this project are to gain more experience with golang and known & popular frameworks and technologies. 
+In addition, gain experience of taste of what its like working with other team members on the same 
+codebase, working with git and with the technologies github has to offer.
+
+The CLI is written with the cobra framework for CLI creation, and GORM as ORM library and database connection, which is MySQL.
 In the future, we will continue to extend the app and create more features, and even a UI is on our mind!
 
 <p align="center">
@@ -31,19 +35,41 @@ In the future, we will continue to extend the app and create more features, and 
 
 ## What the Application include?
 
-to be wrriten...
+The main entites in the app are : Tasks and Users.
+As you can see in the welcome page of the app, the main "things" you can do are : managing and tracking, so Let's cover the main features!
+
+1. Create user - you can register in order to make yourself a user and login in order to access the team's task management system.
+2. Manage tasks - Create, update and task's content, update progress, and delete tasks (admin only).
+3. Track tasks - print in tasks different variations and options to make efficient tracking.
+4. Alert system - which will update the user who's the task is belong to by mail when deadline is coming near!
+
+#### pleae note the README file in the cmd directory of more info about the available commands & flags.
 
 ---
 
 ## Running the Application Yourself
 
-to be wrriten...
+Here's what needs to be done in order to get the app running locally on your machine.
+
+### Run the docker container:
+
+Coming soon...
+
+### Or follow those steps:
+
+1. Clone the project to your machine with `git clone https://github.com/dorlib/todo-list-manager.git`
+2. Install Go on your machine from [here](https://go.dev/doc/install).
+3. Install MySQL on your machine from [here](https://www.mysql.com/downloads/).
+4. On the root of the project, run the app with `go run main.go`
+5. Run `go install`
+6. Run in the command line `todo --help` and start manging your tasks!
+7. Open [http://localhost:3000](http://localhost:3000) to manage your tasks on the web (IN PROGRESS).
 
 ---
 
 ## Seed data to your database
 
-to be wrriten..
+to be written..
 
 ---
 
