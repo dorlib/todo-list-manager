@@ -7,14 +7,7 @@ The CLI is wrriten with the cobra framework for CLI creation, and GORM as ORM li
 In the future, we will continue to extend the app and create more features, and even a UI is on our mind!
 
 <p align="center">
-    <img alt="React" src="https://img.shields.io/badge/-React-61DBFB?style=flat&logo=react&logoColor=FFFFFF"/>
-    <img alt="Go" style="height: 0.55cm;" src="https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white"/>
-    <img alt="apollo" style="height: 0.55cm;" src="https://img.shields.io/badge/-ApolloGraphQL-311C87?style=for-the-badge&logo=apollo-graphql"/>
-    <img alt="Styled Components" src="https://img.shields.io/badge/-<💅>%20Styled%20Components-grey?style=flat"/>
     <img alt="Open Source? Yes!" src="https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github"/>
-</p>
-
-<p align="center">
     <img alt="Issues" src="https://img.shields.io/github/issues-raw/dorlib/IMDB-Project"/>
     <img alt="pull request" src="https://img.shields.io/github/issues-pr-closed/dorlib/IMDB-Project"/>
     <img alt="stars" src="https://img.shields.io/github/stars/dorlib/IMDB-Project?style=social">
