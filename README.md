@@ -8,11 +8,11 @@ In the future, we will continue to extend the app and create more features, and 
 
 <p align="center">
     <img alt="Open Source? Yes!" src="https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github"/>
-    <img alt="Issues" src="https://img.shields.io/github/issues-raw/dorlib/IMDB-Project"/>
-    <img alt="pull request" src="https://img.shields.io/github/issues-pr-closed/dorlib/IMDB-Project"/>
-    <img alt="stars" src="https://img.shields.io/github/stars/dorlib/IMDB-Project?style=social">
-    <img alt="updated" src="https://img.shields.io/github/last-commit/dorlib/IMDB-project">
-    <img alt="size" src="https://img.shields.io/github/repo-size/dorlib/IMDB-Project" >
+    <img alt="Issues" src="https://img.shields.io/github/issues-raw/dorlib/todo-list-manager"/>
+    <img alt="pull request" src="https://img.shields.io/github/issues-pr-closed/dorlib/todo-list-manager"/>
+    <img alt="stars" src="https://img.shields.io/github/stars/dorlib/todo-list-manager?style=social">
+    <img alt="updated" src="https://img.shields.io/github/last-commit/dorlib/todo-list-manager">
+    <img alt="size" src="https://img.shields.io/github/repo-size/dorlib/todo-list-managdr" >
 </p>
 
 !Picrute will be here
