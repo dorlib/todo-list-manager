@@ -12,7 +12,7 @@ In the future, we will continue to extend the app and create more features, and 
     <img alt="pull request" src="https://img.shields.io/github/issues-pr-closed/dorlib/todo-list-manager"/>
     <img alt="stars" src="https://img.shields.io/github/stars/dorlib/todo-list-manager?style=social">
     <img alt="updated" src="https://img.shields.io/github/last-commit/dorlib/todo-list-manager">
-    <img alt="size" src="https://img.shields.io/github/repo-size/dorlib/todo-list-managdr" >
+    <img alt="size" src="https://img.shields.io/github/repo-size/dorlib/todo-list-manager" >
 </p>
 
 !Picrute will be here
