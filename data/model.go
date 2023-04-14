@@ -10,7 +10,7 @@ type Task struct {
 	CreatedAt   time.Time `gorm:"autoCreateTime"`
 	UpdatedAt   time.Time `gorm:"autoUpdateTime"`
 	DeletedAt   time.Time `gorm:"index"`
-	Deadline    Date      // dd/mm/yyyy
+	Deadline    Date      `gorm:"-"` // dd/mm/yyyy
 	Done        bool
 	Title       string
 	Description string
