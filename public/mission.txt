@@ -17,8 +17,10 @@ feel free to add/update missions
     c. adjust print all to print also the user the mission assign to
     d. add option to print all tasks ordered by users
 5. add seeder command to insert pre-made data
+6. add the init command in order to make a group or make private dashboard
+7. add option to jump between dashboards
 
-##### DATA MISSIONS ######
+##### DATA MISSIONSt######
 1. write unit test for the functions in data/utils.go (read about golang way to write unit tests)
 2. add management for multi users, meaning:
     a. create a new model for User in models.go
@@ -26,12 +28,13 @@ feel free to add/update missions
     c. adjust resolver to support User
 3. change done & undone to todo & in progress & done
 4. add a seeder to the app which insert pre-made data
+5. move hard coded parameters in openDatabase function to env vars.
 
 ##### ALERT SERVICE #####
 1. create an alert service which will once a day go over the undone tasks and make alerts to users by mail if the deadline in on the next day.
 
 ##### AUTH AND AUTHz #####
-1. create authorization process as a user who have access to the tasks manager.
+1. create authentication process as a user who have access to the tasks manager.
 2. create types of users (admin and regular users) and define authorization (eg. only admin can delete tasks).
 3. when running we should register or login (add to cmd).
 
@@ -51,7 +54,7 @@ feel free to add/update missions
 
 1. go
 2. git
-3. mysql
+3. mysql (download and install mysql community cli, configure user 'root' and pass '12345678' and create database 'todo')
 4. gorm
 5. cobra cli
 6. golangci-lint
