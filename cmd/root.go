@@ -14,9 +14,9 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "todo",
 	Short: "TODO is a simple todo list app to manage your tasks",
-	Long: ` TODO is a CLI library for Go that lets you organize you tasks.
-This application is a tool to track and update daily tasks in order 
-to make your day more organized and efficient.`,
+	Long: `TODO is a CLI library for Go that lets you organize you tasks.
+This application is a tool to track and update daily tasks and group's tasks.
+With todo-list-manager you can make your day and even your group more organized and efficient.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
