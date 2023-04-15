@@ -31,6 +31,7 @@ var addCmd = &cobra.Command{
 		if title == "" || description == "" || priority == "" || deadline == "" {
 			return errors.New("accepts 1 arg(s)")
 		}
+
 		return nil
 	},
 	Example: `todo add -t="homework" -d="do homework 3 in intro to cs" -p="High" -d="04/05/2023"`,
