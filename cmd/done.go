@@ -6,7 +6,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/google/uuid"
+	"strconv"
 	"todo/data"
 
 	"github.com/spf13/cobra"
@@ -45,13 +45,13 @@ var doneCmd = &cobra.Command{
 
 			data.ToggleDoneByTitle(taskTitle, true)
 		} else if stringTaskID != "" {
-			if !data.TaskExistByID(uuid.MustParse(stringTaskID)) {
-				fmt.Printf("Task %v Does Not Exist", uuid.MustParse(stringTaskID))
-
+			taskID, err := strconv.ParseUint(stringTaskID, 10, 64)
+			if err != nil {
+				fmt.Printf("err while parsing ID: %v", err)
 				return
 			}
 
-			data.ToggleDoneByID(uuid.MustParse(stringTaskID), true)
+			data.ToggleDoneByID(uint(taskID), true)
 		}
 	},
 }
@@ -65,6 +65,6 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// doneCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	printCmd.LocalNonPersistentFlags().StringP("ID", "i", "", "mark task by ID as done")
-	printCmd.LocalNonPersistentFlags().StringP("title", "t", "", "mark task by title as done")
+	doneCmd.PersistentFlags().StringP("ID", "i", "", "mark task by ID as done")
+	doneCmd.PersistentFlags().StringP("title", "t", "", "mark task by title as done")
 }

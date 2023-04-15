@@ -7,6 +7,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/google/uuid"
+	"strconv"
 	"todo/data"
 
 	"github.com/spf13/cobra"
@@ -36,6 +37,12 @@ var undoneCmd = &cobra.Command{
 			fmt.Printf("error while parsing flag: %v", err)
 		}
 
+		taskID, err := strconv.ParseUint(stringTaskID, 10, 64)
+		if err != nil {
+			fmt.Printf("err while parsing ID: %v", err)
+			return
+		}
+
 		if taskTitle != "" {
 			if !data.TaskExistByName(taskTitle) {
 				fmt.Printf("Task %v Does Not Exist", taskTitle)
@@ -45,13 +52,13 @@ var undoneCmd = &cobra.Command{
 
 			data.ToggleDoneByTitle(taskTitle, false)
 		} else if stringTaskID != "" {
-			if !data.TaskExistByID(uuid.MustParse(stringTaskID)) {
+			if !data.TaskExistByID(uint(taskID)) {
 				fmt.Printf("Task %v Does Not Exist", uuid.MustParse(stringTaskID))
 
 				return
 			}
 
-			data.ToggleDoneByID(uuid.MustParse(stringTaskID), false)
+			data.ToggleDoneByID(uint(taskID), false)
 		}
 	},
 }
@@ -65,6 +72,6 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// doneCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	printCmd.LocalNonPersistentFlags().StringP("ID", "i", "", "mark task by ID as undone")
-	printCmd.LocalNonPersistentFlags().StringP("title", "t", "", "mark task by title as undone")
+	undoneCmd.PersistentFlags().StringP("ID", "i", "", "mark task by ID as undone")
+	undoneCmd.PersistentFlags().StringP("title", "t", "", "mark task by title as undone")
 }

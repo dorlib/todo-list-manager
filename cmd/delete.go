@@ -6,7 +6,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/google/uuid"
+	"strconv"
 	"todo/data"
 
 	"github.com/spf13/cobra"
@@ -35,7 +35,7 @@ var deleteCmd = &cobra.Command{
 			fmt.Printf("error while parsing flag: %v", err)
 		}
 
-		taskID, err := cmd.Flags().GetString("taskID")
+		stringTaskID, err := cmd.Flags().GetString("taskID")
 		if err != nil {
 			fmt.Printf("error while parsing flag: %v", err)
 		}
@@ -48,14 +48,14 @@ var deleteCmd = &cobra.Command{
 			}
 
 			data.DeleteTaskByTitle(title)
-		} else if taskID != "" {
-			if !data.TaskExistByName(taskID) {
-				fmt.Printf("Task %v Does Not Exist", taskID)
-
+		} else if stringTaskID != "" {
+			taskID, err := strconv.ParseUint(stringTaskID, 10, 64)
+			if err != nil {
+				fmt.Printf("err while parsing ID: %v", err)
 				return
 			}
 
-			data.DeleteTaskByID(uuid.MustParse(taskID))
+			data.DeleteTaskByID(uint(taskID))
 		}
 
 	},
@@ -69,9 +69,9 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// deleteCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	printCmd.LocalNonPersistentFlags().StringP("title", "t", "", "delete by the task's title")
-	printCmd.LocalNonPersistentFlags().StringP("taskID", "i", "", "delete by the task's ID")
-	printCmd.LocalNonPersistentFlags().StringP("all", "a", "", "delete all tasks")
+	deleteCmd.PersistentFlags().StringP("title", "t", "", "delete by the task's title")
+	deleteCmd.PersistentFlags().StringP("taskID", "i", "", "delete by the task's ID")
+	deleteCmd.PersistentFlags().StringP("all", "a", "", "delete all tasks")
 
 	rootCmd.AddCommand(deleteCmd)
 }

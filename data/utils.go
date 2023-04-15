@@ -2,7 +2,6 @@ package data
 
 import (
 	"fmt"
-	"github.com/google/uuid"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"os"
 	"strconv"
@@ -46,7 +45,7 @@ func printAllTasks(tasks []Task) {
 	t.Render()
 }
 
-func TaskExistByID(taskID uuid.UUID) bool {
+func TaskExistByID(taskID uint) bool {
 	var task Task
 
 	tx := DB.First(&task, taskID)

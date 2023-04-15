@@ -6,7 +6,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/google/uuid"
+	"strconv"
 	"todo/data"
 
 	"github.com/spf13/cobra"
@@ -33,11 +33,15 @@ var printCmd = &cobra.Command{
 `,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		var taskID uuid.UUID
-
 		stringTaskID, err := cmd.Flags().GetString("ID")
 		if err != nil {
 			fmt.Printf("error while parsing flag: %v", err)
+		}
+
+		taskID, err := strconv.ParseUint(stringTaskID, 10, 64)
+		if err != nil {
+			fmt.Printf("err while parsing ID: %v", err)
+			return
 		}
 
 		if rootCmd.Flags().Lookup("all") != nil {
@@ -55,18 +59,17 @@ var printCmd = &cobra.Command{
 				data.PrintTaskByName(taskTitle)
 			}
 		} else if stringTaskID != "" {
-			taskID := uuid.MustParse(stringTaskID)
-			if !data.TaskExistByID(taskID) {
+			if !data.TaskExistByID(uint(taskID)) {
 				fmt.Printf("Task %v Does Not Exist", taskID)
 			} else {
-				data.PrintTaskByID(taskID)
+				data.PrintTaskByID(uint(taskID))
 			}
 		} else {
-			if data.TaskExistByName(taskTitle) || data.TaskExistByID(taskID) {
+			if data.TaskExistByName(taskTitle) || data.TaskExistByID(uint(taskID)) {
 				fmt.Println("Task Does Not Exist ")
 			}
 
-			data.PrintTaskByID(taskID)
+			data.PrintTaskByID(uint(taskID))
 		}
 	},
 }
@@ -82,10 +85,10 @@ func init() {
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	printCmd.LocalNonPersistentFlags().StringP("all", "a", "", "print all tasks")
-	printCmd.LocalNonPersistentFlags().StringP("by-deadline", "d", "", "print all tasks by order of deadline")
-	printCmd.LocalNonPersistentFlags().StringP("by-priority", "p", "", "print all tasks by priority")
-	printCmd.LocalNonPersistentFlags().StringP("by-created-at", "c", "", "print all tasks by order of time of creation")
-	printCmd.LocalNonPersistentFlags().StringP("ID", "i", "", "print task by ID")
-	printCmd.LocalNonPersistentFlags().StringVarP(&taskTitle, "title", "t", "", "print task by name")
+	printCmd.PersistentFlags().StringP("all", "a", "", "print all tasks")
+	printCmd.PersistentFlags().StringP("by-deadline", "d", "", "print all tasks by order of deadline")
+	printCmd.PersistentFlags().StringP("by-priority", "p", "", "print all tasks by priority")
+	printCmd.PersistentFlags().StringP("by-created-at", "c", "", "print all tasks by order of time of creation")
+	printCmd.PersistentFlags().StringP("ID", "i", "", "print task by ID")
+	printCmd.PersistentFlags().StringVarP(&taskTitle, "title", "t", "", "print task by name")
 }
