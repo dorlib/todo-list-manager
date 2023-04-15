@@ -69,9 +69,9 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// deleteCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	printCmd.LocalNonPersistentFlags().StringP("title", "t", "", "delete by the task's title")
-	printCmd.LocalNonPersistentFlags().StringP("taskID", "i", "", "delete by the task's ID")
-	printCmd.LocalNonPersistentFlags().StringP("all", "a", "", "delete all tasks")
+	deleteCmd.PersistentFlags().StringP("title", "t", "", "delete by the task's title")
+	deleteCmd.PersistentFlags().StringP("taskID", "i", "", "delete by the task's ID")
+	deleteCmd.PersistentFlags().StringP("all", "a", "", "delete all tasks")
 
 	rootCmd.AddCommand(deleteCmd)
 }

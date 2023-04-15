@@ -65,6 +65,6 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// doneCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	printCmd.LocalNonPersistentFlags().StringP("ID", "i", "", "mark task by ID as done")
-	printCmd.LocalNonPersistentFlags().StringP("title", "t", "", "mark task by title as done")
+	doneCmd.PersistentFlags().StringP("ID", "i", "", "mark task by ID as done")
+	doneCmd.PersistentFlags().StringP("title", "t", "", "mark task by title as done")
 }
