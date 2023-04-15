@@ -6,7 +6,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/google/uuid"
+	"strconv"
 	"todo/data"
 
 	"github.com/spf13/cobra"
@@ -33,11 +33,15 @@ var printCmd = &cobra.Command{
 `,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		var taskID uuid.UUID
-
 		stringTaskID, err := cmd.Flags().GetString("ID")
 		if err != nil {
 			fmt.Printf("error while parsing flag: %v", err)
+		}
+
+		taskID, err := strconv.ParseUint(stringTaskID, 10, 64)
+		if err != nil {
+			fmt.Printf("err while parsing ID: %v", err)
+			return
 		}
 
 		if rootCmd.Flags().Lookup("all") != nil {
@@ -55,18 +59,17 @@ var printCmd = &cobra.Command{
 				data.PrintTaskByName(taskTitle)
 			}
 		} else if stringTaskID != "" {
-			taskID := uuid.MustParse(stringTaskID)
-			if !data.TaskExistByID(taskID) {
+			if !data.TaskExistByID(uint(taskID)) {
 				fmt.Printf("Task %v Does Not Exist", taskID)
 			} else {
-				data.PrintTaskByID(taskID)
+				data.PrintTaskByID(uint(taskID))
 			}
 		} else {
-			if data.TaskExistByName(taskTitle) || data.TaskExistByID(taskID) {
+			if data.TaskExistByName(taskTitle) || data.TaskExistByID(uint(taskID)) {
 				fmt.Println("Task Does Not Exist ")
 			}
 
-			data.PrintTaskByID(taskID)
+			data.PrintTaskByID(uint(taskID))
 		}
 	},
 }

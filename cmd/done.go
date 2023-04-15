@@ -6,7 +6,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/google/uuid"
+	"strconv"
 	"todo/data"
 
 	"github.com/spf13/cobra"
@@ -45,13 +45,13 @@ var doneCmd = &cobra.Command{
 
 			data.ToggleDoneByTitle(taskTitle, true)
 		} else if stringTaskID != "" {
-			if !data.TaskExistByID(uuid.MustParse(stringTaskID)) {
-				fmt.Printf("Task %v Does Not Exist", uuid.MustParse(stringTaskID))
-
+			taskID, err := strconv.ParseUint(stringTaskID, 10, 64)
+			if err != nil {
+				fmt.Printf("err while parsing ID: %v", err)
 				return
 			}
 
-			data.ToggleDoneByID(uuid.MustParse(stringTaskID), true)
+			data.ToggleDoneByID(uint(taskID), true)
 		}
 	},
 }

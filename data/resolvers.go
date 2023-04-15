@@ -2,15 +2,15 @@ package data
 
 import (
 	"fmt"
-	"github.com/google/uuid"
 )
 
 func CreateTask(title, description, priority string, deadline Date) {
 	task := Task{Title: title, Description: description, Priority: priority, Deadline: deadline}
-	DB.Create(&task)
+	rows := DB.Create(&task).RowsAffected
+	fmt.Printf("rows affected: %v \n", rows)
 }
 
-func DeleteTaskByID(taskID uuid.UUID) {
+func DeleteTaskByID(taskID uint) {
 	if TaskExistByID(taskID) {
 		DB.Delete(&Task{}, taskID)
 		fmt.Printf("deleted task: %v", taskID)
@@ -42,7 +42,7 @@ func DeleteTaskByTitle(title string) {
 	fmt.Printf("deleted task: %v", title)
 }
 
-func PrintTaskByID(taskID uuid.UUID) {
+func PrintTaskByID(taskID uint) {
 	var task Task
 
 	DB.First(&task, taskID)
@@ -92,7 +92,7 @@ func ToggleDoneByTitle(title string, isDone bool) {
 	fmt.Printf("task: %v is done", title)
 }
 
-func ToggleDoneByID(taskID uuid.UUID, isDone bool) {
+func ToggleDoneByID(taskID uint, isDone bool) {
 	if TaskExistByID(taskID) {
 		if isDone {
 			DB.Model(&Task{}).Update("Done", true).Where("ID = ?", taskID)

@@ -1,18 +1,18 @@
 package data
 
 import (
-	"github.com/google/uuid"
+	"gorm.io/gorm"
 	"time"
 )
 
 type Task struct {
-	ID          uuid.UUID `gorm:"primaryKey"`
-	CreatedAt   time.Time `gorm:"autoCreateTime"`
-	UpdatedAt   time.Time `gorm:"autoUpdateTime"`
-	DeletedAt   time.Time `gorm:"index"`
-	Deadline    Date      `gorm:"-"` // dd/mm/yyyy
+	ID          uint           `gorm:"primaryKey"`
+	CreatedAt   time.Time      `gorm:"autoCreateTime"`
+	UpdatedAt   time.Time      `gorm:"autoUpdateTime"`
+	DeletedAt   gorm.DeletedAt `gorm:"index"`
+	Deadline    Date           `gorm:"-"` // dd/mm/yyyy
 	Done        bool
-	Title       string
+	Title       string `gorm:"not null"`
 	Description string
 	Priority    string // enum
 }
