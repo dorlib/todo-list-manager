@@ -52,6 +52,7 @@ var deleteCmd = &cobra.Command{
 			taskID, err := strconv.ParseUint(stringTaskID, 10, 64)
 			if err != nil {
 				fmt.Printf("err while parsing ID: %v", err)
+
 				return
 			}
 
