@@ -6,7 +6,6 @@ package cmd
 
 import (
 	"fmt"
-	"strconv"
 	"todo/data"
 
 	"github.com/spf13/cobra"
@@ -20,13 +19,10 @@ var doneCmd = &cobra.Command{
 			done must except one and only one from the following tags: 
 			-t: the task's title (accept string).
 			-i: the task's ID (accept string).
-			
-			for example: 
-			todo done -i="134", 
 `,
-	Args: cobra.ExactArgs(1),
+	Example: `todo done -i "134"`,
 	Run: func(cmd *cobra.Command, args []string) {
-		stringTaskID, err := cmd.Flags().GetString("ID")
+		taskID, err := cmd.Flags().GetUint("ID")
 		if err != nil {
 			fmt.Printf("error while parsing flag: %v", err)
 		}
@@ -37,22 +33,9 @@ var doneCmd = &cobra.Command{
 		}
 
 		if taskTitle != "" {
-			if !data.TaskExistByName(taskTitle) {
-				fmt.Printf("Task %v Does Not Exist", taskTitle)
-
-				return
-			}
-
 			data.ToggleDoneByTitle(taskTitle, true)
-		} else if stringTaskID != "" {
-			taskID, err := strconv.ParseUint(stringTaskID, 10, 64)
-			if err != nil {
-				fmt.Printf("err while parsing ID: %v", err)
-
-				return
-			}
-
-			data.ToggleDoneByID(uint(taskID), true)
+		} else if taskID != 0 {
+			data.ToggleDoneByID(taskID, true)
 		}
 	},
 }
@@ -66,6 +49,6 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// doneCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	doneCmd.PersistentFlags().StringP("ID", "i", "", "mark task by ID as done")
+	doneCmd.PersistentFlags().UintP("ID", "i", 0, "mark task by ID as done")
 	doneCmd.PersistentFlags().StringP("title", "t", "", "mark task by title as done")
 }
