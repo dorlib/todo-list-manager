@@ -6,8 +6,6 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/google/uuid"
-	"strconv"
 	"todo/data"
 
 	"github.com/spf13/cobra"
@@ -21,13 +19,11 @@ var undoneCmd = &cobra.Command{
 			undone must except one and only one from the following tags: 
 			-t: the task's title (accept string).
 			-i: the task's ID (accept string).
-			
-			for example: 
-			todo undone -i="134", 
 `,
-	Args: cobra.ExactArgs(1),
+	Example: `todo undone -i="134"`,
+	Args:    cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		stringTaskID, err := cmd.Flags().GetString("ID")
+		taskID, err := cmd.Flags().GetUint("ID")
 		if err != nil {
 			fmt.Printf("error while parsing flag: %v", err)
 		}
@@ -35,13 +31,6 @@ var undoneCmd = &cobra.Command{
 		taskTitle, err := cmd.Flags().GetString("title")
 		if err != nil {
 			fmt.Printf("error while parsing flag: %v", err)
-		}
-
-		taskID, err := strconv.ParseUint(stringTaskID, 10, 64)
-		if err != nil {
-			fmt.Printf("err while parsing ID: %v", err)
-
-			return
 		}
 
 		if taskTitle != "" {
@@ -52,14 +41,14 @@ var undoneCmd = &cobra.Command{
 			}
 
 			data.ToggleDoneByTitle(taskTitle, false)
-		} else if stringTaskID != "" {
-			if !data.TaskExistByID(uint(taskID)) {
-				fmt.Printf("Task %v Does Not Exist", uuid.MustParse(stringTaskID))
+		} else if taskID != 0 {
+			if !data.TaskExistByID(taskID) {
+				fmt.Printf("Task %v Does Not Exist", taskID)
 
 				return
 			}
 
-			data.ToggleDoneByID(uint(taskID), false)
+			data.ToggleDoneByID(taskID, false)
 		}
 	},
 }
@@ -73,6 +62,6 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// doneCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	undoneCmd.PersistentFlags().StringP("ID", "i", "", "mark task by ID as undone")
+	undoneCmd.PersistentFlags().UintP("ID", "i", 0, "mark task by ID as undone")
 	undoneCmd.PersistentFlags().StringP("title", "t", "", "mark task by title as undone")
 }

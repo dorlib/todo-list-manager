@@ -24,10 +24,8 @@ var updateCmd = &cobra.Command{
 			-d: a shot description of the task (accept string).
 			-p: the priority of the task, which can be: Critical, VeryHigh, High, Medium, Low (accept string).
 			-l: the deadline of the task, in the following format: "dd/mm/yyyy (accept string)."
-			
-			for example: 
-			todo update -t="homework" -d="do homework 3 in intro to cs"
 `,
+	Example: `todo update -t="homework" -d="do homework 3 in intro to cs"`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("update called")
 	},

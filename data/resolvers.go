@@ -13,7 +13,7 @@ func CreateTask(title, description, priority string, deadline Date) {
 func DeleteTaskByID(taskID uint) {
 	if TaskExistByID(taskID) {
 		DB.Delete(&Task{}, taskID)
-		fmt.Printf("deleted task: %v", taskID)
+		fmt.Printf("deleted task: %v \n", taskID)
 
 		return
 	}
@@ -72,13 +72,13 @@ func ToggleDoneByTitle(title string, isDone bool) {
 	DB.Where("Title = ?", title).Find(&tasks)
 
 	if len(tasks) > 1 {
-		fmt.Printf("more than one task with the same title %v exists", title)
+		fmt.Printf("more than one task with the same title %v exists, please mark done by id instead", title)
 
 		return
 	}
 
 	if len(tasks) < 1 {
-		fmt.Printf("there is no tasks with the given title: %v", title)
+		fmt.Printf("there is no task with the given title: %v", title)
 
 		return
 	}
@@ -93,17 +93,21 @@ func ToggleDoneByTitle(title string, isDone bool) {
 }
 
 func ToggleDoneByID(taskID uint, isDone bool) {
+	var task Task
+
+	DB.First(&task)
+
 	if TaskExistByID(taskID) {
 		if isDone {
-			DB.Model(&Task{}).Update("Done", true).Where("ID = ?", taskID)
+			DB.Model(&task).Update("Done", true)
 		} else {
-			DB.Model(&Task{}).Update("Done", false).Where("ID = ?", taskID)
+			DB.Model(&task).Update("Done", false)
 		}
 
-		fmt.Printf("task: %v is done", taskID)
+		fmt.Printf("task: %v is been marked as done \n", taskID)
 
 		return
 	}
 
-	fmt.Printf("there is no tasks with the given ID: %v", taskID)
+	fmt.Printf("there is no task with the given ID: %v \n", taskID)
 }

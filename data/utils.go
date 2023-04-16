@@ -48,17 +48,17 @@ func printAllTasks(tasks []Task) {
 func TaskExistByID(taskID uint) bool {
 	var task Task
 
-	tx := DB.First(&task, taskID)
+	DB.First(&task, taskID)
 
-	return tx != nil
+	return task.ID != 0
 }
 
 func TaskExistByName(taskName string) bool {
 	var task Task
 
-	tx := DB.Where("name = ?", taskName).First(&task)
+	DB.Where("name = ?", taskName).First(&task)
 
-	return tx != nil
+	return task.ID != 0
 }
 
 func CheckLegalPriority(priority string) bool {
