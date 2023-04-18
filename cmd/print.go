@@ -18,21 +18,30 @@ var printCmd = &cobra.Command{
 	Use:   "print",
 	Short: "print command will print the given task/s to the console.",
 	Long: ` print command will print the given task/s to the console.
-			print must except one and only one from the following tags: 
-			-a: print all the tasks to the console.
-			-u: print all the tasks of a specific user to the console
+			print can accept one and only one from the following optional tags: 
+			
+			you can make the print command to look only on the tasks of a specific user, with:
+			--username: the user's name.
+			or
+			--userid: the user's id.
+			if none of them was not mentioned, the print command will look on all the tasks of the group.
 
 			in addition, print must except one and only one from the following tags:
+			-a: print all the tasks to the console.
 			-d: print all the tasks to the console, ordered by deadline (closest deadline first)
 			-p: print all the tasks to the console, ordered by priority (most urgent first)
 			-c: print all the tasks to the console, ordered by creation date (oldest creation date first)
+
+			in addition, this will always work:
 			-i: print the task with the given ID to the console (available only if the -u tag has been used).
 			-t: print the task with the given title to the console (available only if the -u tag has been used).
 			
-			for example: 
-			todo print -i="134", 
-			todo print -a
+
 `,
+	Example: `todo print -i="134"
+			  todo print --username=dor -a
+`,
+
 	Run: func(cmd *cobra.Command, args []string) {
 		if rootCmd.Flags().Lookup("all") != nil {
 			data.PrintAllTasks()
@@ -87,4 +96,6 @@ func init() {
 	printCmd.PersistentFlags().StringP("by-created-at", "c", "", "print all tasks by order of time of creation")
 	printCmd.PersistentFlags().UintP("ID", "i", 0, "print task by ID")
 	printCmd.PersistentFlags().StringVarP(&taskTitle, "title", "t", "", "print task by name")
+
+	rootCmd.Flags().Lookup("by-deadline").NoOptDefVal = "user"
 }
