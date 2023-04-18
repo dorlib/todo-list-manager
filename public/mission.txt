@@ -49,9 +49,7 @@ feel free to add/update missions
 2. dockerize the app (make a working dockerfile) & upload to dockerhub.
 3. optional after we have docker, upload it to EC2 in AWS.
 
-
 ####### TO INSTALL IN ORDER TO CONTRIBUTE #######
-
 1. go
 2. git
 3. mysql (download and install mysql community cli, configure user 'root' and pass '12345678' and create database 'todo')
