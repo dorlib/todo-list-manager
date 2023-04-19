@@ -111,3 +111,14 @@ func ToggleDoneByID(taskID uint, isDone bool) {
 
 	fmt.Printf("there is no task with the given ID: %v \n", taskID)
 }
+
+func GetUser(userID uint, username string) (User, bool) {
+	var user User
+
+	r := DB.Where("ID = ? OR Username >= ?", userID, username).First(&user)
+	if r.RowsAffected != 0 {
+		return user, true
+	}
+
+	return user, false
+}
