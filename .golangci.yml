@@ -52,6 +52,7 @@ linters:
 #    - unused
 #    - govet
     - gochecknoinits
+    - govet
 
 linters-settings:
   revive:
