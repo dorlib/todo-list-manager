@@ -11,7 +11,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var taskTitle string
+var username string
+var userid uint
 
 // printCmd represents the print command.
 var printCmd = &cobra.Command{
@@ -32,48 +33,23 @@ var printCmd = &cobra.Command{
 			-p: print all the tasks to the console, ordered by priority (most urgent first)
 			-c: print all the tasks to the console, ordered by creation date (oldest creation date first)
 
-			in addition, this will always work:
+			in addition, you can print a specific task by:
 			-i: print the task with the given ID to the console (available only if the -u tag has been used).
 			-t: print the task with the given title to the console (available only if the -u tag has been used).
-			
-
 `,
 	Example: `todo print -i="134"
 			  todo print --username=dor -a
+			  todo print --userID=12 -t="fix bugs"	
 `,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		if rootCmd.Flags().Lookup("all") != nil {
-			data.PrintAllTasks()
-		}
+		user, found := data.GetUser(userid, username)
+		fmt.Println(user)
 
-		taskID, err := cmd.Flags().GetUint("ID")
-		if err != nil {
-			fmt.Printf("error while parsing flag: %v", err)
-		} else if rootCmd.Flags().Lookup("by-deadline") != nil {
-
-		} else if rootCmd.Flags().Lookup("by-priority") != nil {
-
-		} else if rootCmd.Flags().Lookup("by-created-at") != nil {
-
-		} else if taskTitle == "" {
-			if !data.TaskExistByName(taskTitle) {
-				fmt.Printf("Task %v Does Not Exist", taskTitle)
-			} else {
-				data.PrintTaskByName(taskTitle)
-			}
-		} else if taskID != 0 {
-			if !data.TaskExistByID(taskID) {
-				fmt.Printf("Task %v Does Not Exist", taskID)
-			} else {
-				data.PrintTaskByID(taskID)
-			}
+		if found {
+			fmt.Println("replace..")
 		} else {
-			if data.TaskExistByName(taskTitle) || data.TaskExistByID(taskID) {
-				fmt.Println("Task Does Not Exist ")
-			}
-
-			data.PrintTaskByID(taskID)
+			fmt.Println("replace..")
 		}
 	},
 }
@@ -89,13 +65,17 @@ func init() {
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	printCmd.PersistentFlags().StringP("by", "b", "", "input can be: 1. all 2.user")
-	printCmd.PersistentFlags().StringP("name", "n", "", "the name of the user (comes after choosing option 2 in 'by' flag.")
+	printCmd.PersistentFlags().StringVar(&username, "username", "", "look on the tasks of a specific user name")
+	printCmd.PersistentFlags().UintVar(&userid, "userid", 0, "look on the tasks of a specific user ID")
+	printCmd.PersistentFlags().StringP("all", "a", "", "print all the tasks")
 	printCmd.PersistentFlags().StringP("by-deadline", "d", "", "print all tasks by order of deadline")
 	printCmd.PersistentFlags().StringP("by-priority", "p", "", "print all tasks by priority")
 	printCmd.PersistentFlags().StringP("by-created-at", "c", "", "print all tasks by order of time of creation")
 	printCmd.PersistentFlags().UintP("ID", "i", 0, "print task by ID")
-	printCmd.PersistentFlags().StringVarP(&taskTitle, "title", "t", "", "print task by name")
+	printCmd.PersistentFlags().StringP("title", "t", "", "print task by name")
 
-	rootCmd.Flags().Lookup("by-deadline").NoOptDefVal = "user"
+	rootCmd.Flags().Lookup("by-deadline").NoOptDefVal = "deadline"
+	rootCmd.Flags().Lookup("by-priority").NoOptDefVal = "priority"
+	rootCmd.Flags().Lookup("by-created-at").NoOptDefVal = "created-at"
+	rootCmd.Flags().Lookup("all").NoOptDefVal = "all"
 }
