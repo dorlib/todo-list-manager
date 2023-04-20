@@ -58,13 +58,20 @@ func PrintTaskByName(taskName string) {
 	printTask(task)
 }
 
-func PrintAllTasks() {
+func PrintAllTasks(user User, userExist bool) {
 	var tasks []Task
-
-	DB.Find(&tasks)
+	if userExist {
+		DB.Find(&tasks)
+	} else {
+		DB.Where(user).Find(&tasks)
+	}
 
 	printAllTasks(tasks)
 }
+
+func PrintByDeadLine(user User, userExist bool)     {}
+func PrintByPriority(user User, userExist bool)     {}
+func PrintByCreationDate(user User, userExist bool) {}
 
 func ToggleDoneByTitle(title string, isDone bool) {
 	var tasks []Task

@@ -11,6 +11,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// todo - verify that user inserted flags according the rules described in the long description.
+
 var username string
 var userid uint
 
@@ -43,13 +45,56 @@ var printCmd = &cobra.Command{
 `,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		user, found := data.GetUser(userid, username)
-		fmt.Println(user)
+		taskID, err := cmd.Flags().GetUint("ID")
+		if err != nil {
+			fmt.Printf("error while parsing flag: %v", err)
+		}
 
-		if found {
-			fmt.Println("replace..")
-		} else {
-			fmt.Println("replace..")
+		taskTitle, err := cmd.Flags().GetString("title")
+		if err != nil {
+			fmt.Printf("error while parsing flag: %v", err)
+		}
+
+		if taskTitle != "" {
+			data.PrintTaskByName(taskTitle)
+
+			return
+		} else if taskID != 0 {
+			data.PrintTaskByID(taskID)
+
+			return
+		}
+
+		user, found := data.GetUser(userid, username)
+
+		byDeadLine, err := cmd.Flags().GetString("by-deadline")
+		if err != nil {
+			fmt.Printf("error while parsing flag: %v", err)
+		}
+
+		byPriority, err := cmd.Flags().GetString("by-priority")
+		if err != nil {
+			fmt.Printf("error while parsing flag: %v", err)
+		}
+
+		byCreatedAt, err := cmd.Flags().GetString("by-created-at")
+		if err != nil {
+			fmt.Printf("error while parsing flag: %v", err)
+		}
+
+		all, err := cmd.Flags().GetString("all")
+		if err != nil {
+			fmt.Printf("error while parsing flag: %v", err)
+		}
+
+		if byDeadLine == "deadline" {
+			data.PrintByDeadLine(user, found)
+		} else if byPriority == "priority" {
+			data.PrintByPriority(user, found)
+		} else if byCreatedAt == "created-at" {
+			data.PrintByCreationDate(user, found)
+		} else if all == "all" {
+			data.PrintAllTasks(user, found)
 		}
 	},
 }
