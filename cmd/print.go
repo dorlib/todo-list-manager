@@ -29,11 +29,16 @@ var printCmd = &cobra.Command{
 			--userid: the user's id.
 			if none of them was not mentioned, the print command will look on all the tasks of the group.
 
-			in addition, print must except one and only one from the following tags:
+			in addition, print can except one and only one from the following tags:
 			-a: print all the tasks to the console.
 			-d: print all the tasks to the console, ordered by deadline (closest deadline first)
 			-p: print all the tasks to the console, ordered by priority (most urgent first)
 			-c: print all the tasks to the console, ordered by creation date (oldest creation date first)
+
+			you can also add the following tags even after selecting one of the optional tags above:
+			--done: print only the done tasks.
+			--undone: print only the undone tasks.
+			--with-priority: print only the tasks with a specific priority.
 
 			in addition, you can print a specific task by:
 			-i: print the task with the given ID to the console (available only if the -u tag has been used).
