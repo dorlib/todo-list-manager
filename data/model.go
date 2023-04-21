@@ -15,7 +15,13 @@ type Task struct {
 	Title       string `gorm:"not null"`
 	Description string
 	Priority    string // enum
-	User        User   `gorm:"unique;not null""`
+	User        User   `gorm:"-;unique;not null"`
+}
+
+type Date struct {
+	Year  string
+	Month string
+	Day   string
 }
 
 type User struct {
@@ -23,15 +29,9 @@ type User struct {
 	CreatedAt time.Time      `gorm:"autoCreateTime"`
 	UpdatedAt time.Time      `gorm:"autoUpdateTime"`
 	DeletedAt gorm.DeletedAt `gorm:"index"`
-	Username  string         `gorm:"unique;not null""`
+	Username  string         `gorm:"unique;not null"`
 	Role      string         // admin/user
-	Tasks     []Task
-}
-
-type Date struct {
-	Year  string
-	Month string
-	Day   string
+	Tasks     []Task         `gorm:"-"`
 }
 
 // Priority enum.
