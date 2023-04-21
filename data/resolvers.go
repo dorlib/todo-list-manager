@@ -38,7 +38,7 @@ func DeleteTaskByTitle(title string) {
 		return
 	}
 
-	DB.Where("name = ?", title).Delete(&tasks)
+	DB.Where("Title = ?", title).Delete(&tasks)
 	fmt.Printf("deleted task: %v", title)
 }
 
@@ -53,25 +53,58 @@ func PrintTaskByID(taskID uint) {
 func PrintTaskByName(taskName string) {
 	task := Task{}
 
-	DB.Where("name = ?", taskName).First(&task)
+	DB.Where("Title = ?", taskName).First(&task)
 
 	printTask(task)
 }
 
 func PrintAllTasks(user User, userExist bool) {
 	var tasks []Task
+
 	if userExist {
 		DB.Find(&tasks)
 	} else {
 		DB.Where(user).Find(&tasks)
 	}
 
-	printAllTasks(tasks)
+	printTasks(tasks)
 }
 
-func PrintByDeadLine(user User, userExist bool)     {}
-func PrintByPriority(user User, userExist bool)     {}
-func PrintByCreationDate(user User, userExist bool) {}
+func PrintByDeadLine(user User, userExist bool) {
+	var tasks []Task
+
+	if userExist {
+		DB.Raw("SELECT tasks FROM users WHERE id = ? ORDER BY deadline", user.ID).Scan(&tasks)
+	} else {
+		DB.Raw("SELECT * FROM tasks ORDER BY deadline").Scan(&tasks)
+	}
+
+	printTasks(tasks)
+}
+
+func PrintByPriority(user User, userExist bool) {
+	var tasks []Task
+
+	if userExist {
+		DB.Raw("SELECT tasks FROM users WHERE id = ? ORDER BY priority", user.ID).Scan(&tasks)
+	} else {
+		DB.Raw("SELECT * FROM tasks ORDER BY priority").Scan(&tasks)
+	}
+
+	printTasks(tasks)
+}
+
+func PrintByCreationDate(user User, userExist bool) {
+	var tasks []Task
+
+	if userExist {
+		DB.Raw("SELECT tasks FROM users WHERE id = ? ORDER BY created_at", user.ID).Scan(&tasks)
+	} else {
+		DB.Raw("SELECT * FROM tasks ORDER BY created_at").Scan(&tasks)
+	}
+
+	printTasks(tasks)
+}
 
 func ToggleDoneByTitle(title string, isDone bool) {
 	var tasks []Task

@@ -43,8 +43,12 @@ var printCmd = &cobra.Command{
 			  todo print --username=dor -a
 			  todo print --userID=12 -t="fix bugs"	
 `,
-
 	Run: func(cmd *cobra.Command, args []string) {
+		rootCmd.Flags().Lookup("by-deadline").NoOptDefVal = "deadline"
+		rootCmd.Flags().Lookup("by-priority").NoOptDefVal = "priority"
+		rootCmd.Flags().Lookup("by-created-at").NoOptDefVal = "created-at"
+		rootCmd.Flags().Lookup("all").NoOptDefVal = "all"
+
 		taskID, err := cmd.Flags().GetUint("ID")
 		if err != nil {
 			fmt.Printf("error while parsing flag: %v", err)
@@ -118,9 +122,4 @@ func init() {
 	printCmd.PersistentFlags().StringP("by-created-at", "c", "", "print all tasks by order of time of creation")
 	printCmd.PersistentFlags().UintP("ID", "i", 0, "print task by ID")
 	printCmd.PersistentFlags().StringP("title", "t", "", "print task by name")
-
-	rootCmd.Flags().Lookup("by-deadline").NoOptDefVal = "deadline"
-	rootCmd.Flags().Lookup("by-priority").NoOptDefVal = "priority"
-	rootCmd.Flags().Lookup("by-created-at").NoOptDefVal = "created-at"
-	rootCmd.Flags().Lookup("all").NoOptDefVal = "all"
 }
