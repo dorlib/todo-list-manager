@@ -29,7 +29,7 @@ func printTask(task Task) {
 	fmt.Printf("# %d: %v %v %v %v %v %v", task.ID, task.Title, task.Description, task.Priority, task.CreatedAt, task.Deadline, timeLeft)
 }
 
-func printAllTasks(tasks []Task) {
+func printTasks(tasks []Task) {
 	t := table.NewWriter()
 
 	t.SetOutputMirror(os.Stdout)
