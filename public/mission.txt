@@ -19,6 +19,8 @@ feel free to add/update missions
 5. add seeder command to insert pre-made data
 6. add the init command in order to make a group or make private dashboard
 7. add option to jump between dashboards
+8. verify that the conditions described in the long description of print command are applied in the code's logic.
+9. write unit tests for the commands in the cli.
 
 ##### DATA MISSIONSt######
 1. write unit test for the functions in data/utils.go (read about golang way to write unit tests)
