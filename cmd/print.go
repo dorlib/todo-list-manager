@@ -21,7 +21,8 @@ var printCmd = &cobra.Command{
 	Use:   "print",
 	Short: "print command will print the given task/s to the console.",
 	Long: ` print command will print the given task/s to the console.
-			print can accept one and only one from the following optional tags: 
+			if no tags were added, print will print all the tasks.
+			print can accept one and only one from the following optional tags:
 			
 			you can make the print command to look only on the tasks of a specific user, with:
 			--username: the user's name.
@@ -40,19 +41,21 @@ var printCmd = &cobra.Command{
 			--undone: print only the undone tasks.
 			--with-priority: print only the tasks with a specific priority.
 
-			in addition, you can print a specific task by:
+			in addition, you can print a specific task by (cannot be with any of the tags above):
 			-i: print the task with the given ID to the console (available only if the -u tag has been used).
 			-t: print the task with the given title to the console (available only if the -u tag has been used).
-`,
+	`,
 	Example: `todo print -i="134"
 			  todo print --username=dor -a
 			  todo print --userID=12 -t="fix bugs"	
-`,
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		rootCmd.Flags().Lookup("by-deadline").NoOptDefVal = "deadline"
 		rootCmd.Flags().Lookup("by-priority").NoOptDefVal = "priority"
 		rootCmd.Flags().Lookup("by-created-at").NoOptDefVal = "created-at"
 		rootCmd.Flags().Lookup("all").NoOptDefVal = "all"
+		rootCmd.Flags().Lookup("done").NoOptDefVal = "done"
+		rootCmd.Flags().Lookup("undone").NoOptDefVal = "undone"
 
 		taskID, err := cmd.Flags().GetUint("ID")
 		if err != nil {
@@ -64,11 +67,35 @@ var printCmd = &cobra.Command{
 			fmt.Printf("error while parsing flag: %v", err)
 		}
 
+		if len(args) == 0 {
+			data.PrintAllTasks(data.User{}, false)
+
+			return
+		}
+
+		if len(args) > 3 {
+			fmt.Printf("accepts at most 3 arg(s), found: %v", len(args))
+
+			return
+		}
+
 		if taskTitle != "" {
+			if len(args) > 1 {
+				fmt.Printf("accepts at most 3 arg(s), found: %v", len(args))
+
+				return
+			}
+
 			data.PrintTaskByName(taskTitle)
 
 			return
 		} else if taskID != 0 {
+			if len(args) > 1 {
+				fmt.Printf("accepts at most 3 arg(s), found: %v", len(args))
+
+				return
+			}
+
 			data.PrintTaskByID(taskID)
 
 			return
@@ -96,6 +123,16 @@ var printCmd = &cobra.Command{
 			fmt.Printf("error while parsing flag: %v", err)
 		}
 
+		done, err := cmd.Flags().GetString("done")
+		if err != nil {
+			fmt.Printf("error while parsing flag: %v", err)
+		}
+
+		undone, err := cmd.Flags().GetString("undone")
+		if err != nil {
+			fmt.Printf("error while parsing flag: %v", err)
+		}
+
 		if byDeadLine == "deadline" {
 			data.PrintByDeadLine(user, found)
 		} else if byPriority == "priority" {
@@ -104,6 +141,10 @@ var printCmd = &cobra.Command{
 			data.PrintByCreationDate(user, found)
 		} else if all == "all" {
 			data.PrintAllTasks(user, found)
+		} else if done == "done" {
+
+		} else if undone == "undone" {
+
 		}
 	},
 }
@@ -121,10 +162,16 @@ func init() {
 	// and all subcommands, e.g.:
 	printCmd.PersistentFlags().StringVar(&username, "username", "", "look on the tasks of a specific user name")
 	printCmd.PersistentFlags().UintVar(&userid, "userid", 0, "look on the tasks of a specific user ID")
+
 	printCmd.PersistentFlags().StringP("all", "a", "", "print all the tasks")
 	printCmd.PersistentFlags().StringP("by-deadline", "d", "", "print all tasks by order of deadline")
 	printCmd.PersistentFlags().StringP("by-priority", "p", "", "print all tasks by priority")
 	printCmd.PersistentFlags().StringP("by-created-at", "c", "", "print all tasks by order of time of creation")
+
+	printCmd.PersistentFlags().String("done", "", "print all the done tasks")
+	printCmd.PersistentFlags().String("undone", "", "print all the undone tasks")
+	printCmd.PersistentFlags().String("with-priority", "", "print all the done tasks with a given priority")
+
 	printCmd.PersistentFlags().UintP("ID", "i", 0, "print task by ID")
 	printCmd.PersistentFlags().StringP("title", "t", "", "print task by name")
 }
