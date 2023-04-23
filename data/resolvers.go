@@ -61,7 +61,7 @@ func PrintTaskByName(taskName string) {
 func PrintAllTasks(user User, userExist bool) {
 	var tasks []Task
 
-	if userExist {
+	if !userExist {
 		DB.Find(&tasks)
 	} else {
 		DB.Where(user).Find(&tasks)
