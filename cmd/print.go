@@ -142,9 +142,9 @@ var printCmd = &cobra.Command{
 		} else if all == "all" {
 			data.PrintAllTasks(user, found)
 		} else if done == "done" {
-
+			fmt.Println(done)
 		} else if undone == "undone" {
-
+			fmt.Println(undone)
 		}
 	},
 }
