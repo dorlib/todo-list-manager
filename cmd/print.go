@@ -6,6 +6,8 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/spf13/pflag"
+	"strconv"
 	"todo/data"
 
 	"github.com/spf13/cobra"
@@ -50,14 +52,15 @@ var printCmd = &cobra.Command{
 			  todo print --userID=12 -t="fix bugs"	
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
-		rootCmd.Flags().Lookup("by-deadline").NoOptDefVal = "deadline"
-		rootCmd.Flags().Lookup("by-priority").NoOptDefVal = "priority"
-		rootCmd.Flags().Lookup("by-created-at").NoOptDefVal = "created-at"
-		rootCmd.Flags().Lookup("all").NoOptDefVal = "all"
-		rootCmd.Flags().Lookup("done").NoOptDefVal = "done"
-		rootCmd.Flags().Lookup("undone").NoOptDefVal = "undone"
 
-		taskID, err := cmd.Flags().GetUint("ID")
+		if len(args) == 0 {
+			afterDash := pflag.Args()[pflag.CommandLine.ArgsLenAtDash():]
+			fmt.Printf("args after dash: %v\n", afterDash)
+		}
+		fmt.Println(len(args))
+		fmt.Println(args)
+
+		taskID, err := cmd.Flags().GetUint("id")
 		if err != nil {
 			fmt.Printf("error while parsing flag: %v", err)
 		}
@@ -133,6 +136,11 @@ var printCmd = &cobra.Command{
 			fmt.Printf("error while parsing flag: %v", err)
 		}
 
+		check := validatePrintTags(args)
+		fmt.Println(check)
+
+		if username != "" {
+		}
 		if byDeadLine == "deadline" {
 			data.PrintByDeadLine(user, found)
 		} else if byPriority == "priority" {
@@ -172,6 +180,39 @@ func init() {
 	printCmd.PersistentFlags().String("undone", "", "print all the undone tasks")
 	printCmd.PersistentFlags().String("with-priority", "", "print all the done tasks with a given priority")
 
-	printCmd.PersistentFlags().UintP("ID", "i", 0, "print task by ID")
+	printCmd.PersistentFlags().UintP("id", "i", 0, "print task by ID")
 	printCmd.PersistentFlags().StringP("title", "t", "", "print task by name")
+
+	//printCmd.Flags().Lookup("by-deadline").NoOptDefVal = "deadline"
+	//printCmd.Flags().Lookup("by-priority").NoOptDefVal = "priority"
+	//printCmd.Flags().Lookup("by-created-at").NoOptDefVal = "created-at"
+	//printCmd.Flags().Lookup("all").NoOptDefVal = "all"
+	//printCmd.Flags().Lookup("done").NoOptDefVal = "done"
+	//printCmd.Flags().Lookup("undone").NoOptDefVal = "undone"
+}
+
+func validatePrintTags(args []string) bool {
+	if len(args) > 3 {
+		return false
+	}
+
+	if username != "" && userid != 0 {
+		return false
+	}
+
+	if contains(args, username) || contains(args, strconv.Itoa(int(userid))) {
+
+	}
+
+	return true
+}
+
+func contains(s []string, str string) bool {
+	for _, v := range s {
+		if v == str {
+			return true
+		}
+	}
+
+	return false
 }

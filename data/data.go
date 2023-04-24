@@ -14,7 +14,7 @@ func OpenDataBase() {
 	dsn := "root:12345678@tcp(127.0.0.1:3306)/todo?charset=utf8mb4&parseTime=True&loc=Local"
 
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Info),
+		Logger: logger.Default.LogMode(logger.Silent),
 	})
 
 	DB := DB.Session(&gorm.Session{CreateBatchSize: 1000})
