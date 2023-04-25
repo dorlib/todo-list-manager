@@ -138,6 +138,7 @@ var printCmd = &cobra.Command{
 		}
 
 		if username != "" {
+			fmt.Println("...")
 		}
 		if byDeadLine == "deadline" {
 			data.PrintByDeadLine(user, found)
@@ -184,17 +185,18 @@ func init() {
 	printCmd.PersistentFlags().UintP("id", "i", 0, "print task by ID")
 	printCmd.PersistentFlags().StringP("title", "t", "", "print task by name")
 	printCmd.MarkFlagsMutuallyExclusive("id", "title")
-
 }
 
 func validatePrintTags() bool {
 	if len(flagsUsed) > 3 {
 		fmt.Printf("accepts at most 3 arg(s), found: %v", len(flagsUsed))
+
 		return false
 	}
 
 	if (contains(flagsUsed, "id") || contains(flagsUsed, "title")) && len(flagsUsed) > 1 {
 		fmt.Println("flags: id and title cannot be used together or with any other flags")
+
 		return false
 	}
 
