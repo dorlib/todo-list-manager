@@ -7,7 +7,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/pflag"
-	"strconv"
+	"strings"
 	"todo/data"
 
 	"github.com/spf13/cobra"
@@ -17,6 +17,8 @@ import (
 
 var username string
 var userid uint
+
+var flagsUsed []string
 
 // printCmd represents the print command.
 var printCmd = &cobra.Command{
@@ -51,15 +53,17 @@ var printCmd = &cobra.Command{
 			  todo print --username=dor -a
 			  todo print --userID=12 -t="fix bugs"	
 	`,
+	Args: func(cmd *cobra.Command, args []string) error {
+		flags := ""
+		cmd.Flags().Visit(func(flag *pflag.Flag) {
+			flags += flag.Name + ","
+		})
+
+		flagsUsed = strings.Split(flags, ",")
+
+		return nil
+	},
 	Run: func(cmd *cobra.Command, args []string) {
-
-		if len(args) == 0 {
-			afterDash := pflag.Args()[pflag.CommandLine.ArgsLenAtDash():]
-			fmt.Printf("args after dash: %v\n", afterDash)
-		}
-		fmt.Println(len(args))
-		fmt.Println(args)
-
 		taskID, err := cmd.Flags().GetUint("id")
 		if err != nil {
 			fmt.Printf("error while parsing flag: %v", err)
@@ -70,14 +74,11 @@ var printCmd = &cobra.Command{
 			fmt.Printf("error while parsing flag: %v", err)
 		}
 
-		if len(args) == 0 {
+		check := validatePrintTags()
+		fmt.Println(check)
+
+		if len(flagsUsed) == 0 {
 			data.PrintAllTasks(data.User{}, false)
-
-			return
-		}
-
-		if len(args) > 3 {
-			fmt.Printf("accepts at most 3 arg(s), found: %v", len(args))
 
 			return
 		}
@@ -136,9 +137,6 @@ var printCmd = &cobra.Command{
 			fmt.Printf("error while parsing flag: %v", err)
 		}
 
-		check := validatePrintTags(args)
-		fmt.Println(check)
-
 		if username != "" {
 		}
 		if byDeadLine == "deadline" {
@@ -170,38 +168,34 @@ func init() {
 	// and all subcommands, e.g.:
 	printCmd.PersistentFlags().StringVar(&username, "username", "", "look on the tasks of a specific user name")
 	printCmd.PersistentFlags().UintVar(&userid, "userid", 0, "look on the tasks of a specific user ID")
+	printCmd.MarkFlagsMutuallyExclusive("username", "userid")
 
-	printCmd.PersistentFlags().StringP("all", "a", "", "print all the tasks")
-	printCmd.PersistentFlags().StringP("by-deadline", "d", "", "print all tasks by order of deadline")
-	printCmd.PersistentFlags().StringP("by-priority", "p", "", "print all tasks by priority")
-	printCmd.PersistentFlags().StringP("by-created-at", "c", "", "print all tasks by order of time of creation")
+	printCmd.PersistentFlags().StringP("all", "a", "all", "print all the tasks")
+	printCmd.PersistentFlags().StringP("by-deadline", "d", "deadline", "print all tasks by order of deadline")
+	printCmd.PersistentFlags().StringP("by-priority", "p", "priority", "print all tasks by priority")
+	printCmd.PersistentFlags().StringP("by-created-at", "c", "created-at", "print all tasks by order of time of creation")
+	printCmd.MarkFlagsMutuallyExclusive("all", "by-deadline", "by-priority", "by-created-at")
 
-	printCmd.PersistentFlags().String("done", "", "print all the done tasks")
-	printCmd.PersistentFlags().String("undone", "", "print all the undone tasks")
+	printCmd.PersistentFlags().String("done", "done", "print all the done tasks")
+	printCmd.PersistentFlags().String("undone", "undone", "print all the undone tasks")
 	printCmd.PersistentFlags().String("with-priority", "", "print all the done tasks with a given priority")
+	printCmd.MarkFlagsMutuallyExclusive("done", "undone")
 
 	printCmd.PersistentFlags().UintP("id", "i", 0, "print task by ID")
 	printCmd.PersistentFlags().StringP("title", "t", "", "print task by name")
+	printCmd.MarkFlagsMutuallyExclusive("id", "title")
 
-	//printCmd.Flags().Lookup("by-deadline").NoOptDefVal = "deadline"
-	//printCmd.Flags().Lookup("by-priority").NoOptDefVal = "priority"
-	//printCmd.Flags().Lookup("by-created-at").NoOptDefVal = "created-at"
-	//printCmd.Flags().Lookup("all").NoOptDefVal = "all"
-	//printCmd.Flags().Lookup("done").NoOptDefVal = "done"
-	//printCmd.Flags().Lookup("undone").NoOptDefVal = "undone"
 }
 
-func validatePrintTags(args []string) bool {
-	if len(args) > 3 {
+func validatePrintTags() bool {
+	if len(flagsUsed) > 3 {
+		fmt.Printf("accepts at most 3 arg(s), found: %v", len(flagsUsed))
 		return false
 	}
 
-	if username != "" && userid != 0 {
+	if (contains(flagsUsed, "id") || contains(flagsUsed, "title")) && len(flagsUsed) > 1 {
+		fmt.Println("flags: id and title cannot be used together or with any other flags")
 		return false
-	}
-
-	if contains(args, username) || contains(args, strconv.Itoa(int(userid))) {
-
 	}
 
 	return true
