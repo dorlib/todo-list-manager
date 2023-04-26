@@ -170,19 +170,21 @@ func getOrderAndOptions(flags []string) (string, string) {
 	by := ""
 	opt := ""
 
-	if Contains(flags, "by-deadline") {
+	switch {
+	case Contains(flags, "by-deadline"):
 		by = "by-deadline"
-	} else if Contains(flags, "by-priority") {
+	case Contains(flags, "by-priority"):
 		by = "by-priority"
-	} else if Contains(flags, "by-created-at") {
+	case Contains(flags, "by-created-at"):
 		by = "by-created-at"
 	}
 
-	if Contains(flags, "done") {
+	switch {
+	case Contains(flags, "done"):
 		opt = "done"
-	} else if Contains(flags, "undone") {
+	case Contains(flags, "undone"):
 		opt = "undone"
-	} else if Contains(flags, "with-priority") {
+	case Contains(flags, "with-priority"):
 		opt = "with-priority"
 	}
 
