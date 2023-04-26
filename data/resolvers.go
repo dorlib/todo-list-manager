@@ -64,19 +64,13 @@ func PrintTaskByName(taskName string) {
 }
 
 func PrintAllTasks(user User, userExist bool, by string, opt string) {
-	var tasks []Task
-
 	if userExist {
-		tasks = PrintAllTaskOfUser(user, by, opt)
-
-		return
-	} else {
-		tasks = PrintAllTasksOfGroup(by, opt)
+		printTasks(PrintAllTaskOfUser(user, by, opt))
 
 		return
 	}
 
-	printTasks(tasks)
+	printTasks(PrintAllTasksOfGroup(by, opt))
 }
 
 func PrintAllTaskOfUser(user User, by string, opt string) []Task {
