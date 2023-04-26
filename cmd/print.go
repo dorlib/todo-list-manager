@@ -32,13 +32,13 @@ var printCmd = &cobra.Command{
 			--username: the user's name.
 			or
 			--userid: the user's id.
-			if none of them was not mentioned, the print command will look on all the tasks of the group.
+			if none of them were mentioned, the print command will look on all the tasks of the group.
 
 			in addition, print can except one and only one from the following tags:
-			-a: print all the tasks to the console.
 			-d: print all the tasks to the console, ordered by deadline (closest deadline first)
 			-p: print all the tasks to the console, ordered by priority (most urgent first)
 			-c: print all the tasks to the console, ordered by creation date (oldest creation date first)
+			if non of them were mentioned, the print command will print without specific order.
 
 			you can also add the following tags even after selecting one of the optional tags above:
 			--done: print only the done tasks.
@@ -60,99 +60,63 @@ var printCmd = &cobra.Command{
 		})
 
 		flagsUsed = strings.Split(flags, ",")
+		flagsUsed = flagsUsed[:len(flagsUsed)-1]
 
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		taskID, err := cmd.Flags().GetUint("id")
-		if err != nil {
-			fmt.Printf("error while parsing flag: %v", err)
-		}
-
-		taskTitle, err := cmd.Flags().GetString("title")
-		if err != nil {
-			fmt.Printf("error while parsing flag: %v", err)
-		}
+		flagsMap := make(map[string]interface{}, len(flagsUsed))
 
 		check := validatePrintTags()
 		fmt.Println(check)
 
+		if Contains(flagsUsed, "id") {
+			data.PrintTaskByID(flagsMap["id"].(uint))
+
+			return
+		}
+
+		if Contains(flagsUsed, "username") {
+			data.PrintTaskByName(flagsMap["username"].(string))
+
+			return
+		}
+
+		for _, flag := range flagsUsed {
+			if flag == "id" || flag == "userid" {
+				getUint, err := cmd.Flags().GetUint(flag)
+				if err != nil {
+					fmt.Printf("error while parsing flag %v: %v \n", flag, err)
+
+					return
+				}
+				flagsMap[flag] = getUint
+			} else {
+				getString, err := cmd.Flags().GetString(flag)
+				if err != nil {
+					fmt.Printf("error while parsing flag %v: %v \n", flag, err)
+
+					return
+				}
+				flagsMap[flag] = getString
+			}
+		}
+
+		by, opt := getOrderAndOptions(flagsUsed)
+
+		if opt == "with-priority" {
+			opt = flagsMap["with-priority"].(string)
+		}
+
 		if len(flagsUsed) == 0 {
-			data.PrintAllTasks(data.User{}, false)
+			data.PrintAllTasks(data.User{}, false, by, opt)
 
 			return
 		}
 
-		if taskTitle != "" {
-			if len(args) > 1 {
-				fmt.Printf("accepts at most 3 arg(s), found: %v", len(args))
+		user, userFound := data.GetUser(userid, username)
 
-				return
-			}
-
-			data.PrintTaskByName(taskTitle)
-
-			return
-		} else if taskID != 0 {
-			if len(args) > 1 {
-				fmt.Printf("accepts at most 3 arg(s), found: %v", len(args))
-
-				return
-			}
-
-			data.PrintTaskByID(taskID)
-
-			return
-		}
-
-		user, found := data.GetUser(userid, username)
-
-		byDeadLine, err := cmd.Flags().GetString("by-deadline")
-		if err != nil {
-			fmt.Printf("error while parsing flag: %v", err)
-		}
-
-		byPriority, err := cmd.Flags().GetString("by-priority")
-		if err != nil {
-			fmt.Printf("error while parsing flag: %v", err)
-		}
-
-		byCreatedAt, err := cmd.Flags().GetString("by-created-at")
-		if err != nil {
-			fmt.Printf("error while parsing flag: %v", err)
-		}
-
-		all, err := cmd.Flags().GetString("all")
-		if err != nil {
-			fmt.Printf("error while parsing flag: %v", err)
-		}
-
-		done, err := cmd.Flags().GetString("done")
-		if err != nil {
-			fmt.Printf("error while parsing flag: %v", err)
-		}
-
-		undone, err := cmd.Flags().GetString("undone")
-		if err != nil {
-			fmt.Printf("error while parsing flag: %v", err)
-		}
-
-		if username != "" {
-			fmt.Println("...")
-		}
-		if byDeadLine == "deadline" {
-			data.PrintByDeadLine(user, found)
-		} else if byPriority == "priority" {
-			data.PrintByPriority(user, found)
-		} else if byCreatedAt == "created-at" {
-			data.PrintByCreationDate(user, found)
-		} else if all == "all" {
-			data.PrintAllTasks(user, found)
-		} else if done == "done" {
-			fmt.Println(done)
-		} else if undone == "undone" {
-			fmt.Println(undone)
-		}
+		data.PrintAllTasks(user, userFound, by, opt)
 	},
 }
 
@@ -171,11 +135,10 @@ func init() {
 	printCmd.PersistentFlags().UintVar(&userid, "userid", 0, "look on the tasks of a specific user ID")
 	printCmd.MarkFlagsMutuallyExclusive("username", "userid")
 
-	printCmd.PersistentFlags().StringP("all", "a", "all", "print all the tasks")
 	printCmd.PersistentFlags().StringP("by-deadline", "d", "deadline", "print all tasks by order of deadline")
 	printCmd.PersistentFlags().StringP("by-priority", "p", "priority", "print all tasks by priority")
 	printCmd.PersistentFlags().StringP("by-created-at", "c", "created-at", "print all tasks by order of time of creation")
-	printCmd.MarkFlagsMutuallyExclusive("all", "by-deadline", "by-priority", "by-created-at")
+	printCmd.MarkFlagsMutuallyExclusive("by-deadline", "by-priority", "by-created-at")
 
 	printCmd.PersistentFlags().String("done", "done", "print all the done tasks")
 	printCmd.PersistentFlags().String("undone", "undone", "print all the undone tasks")
@@ -194,7 +157,7 @@ func validatePrintTags() bool {
 		return false
 	}
 
-	if (contains(flagsUsed, "id") || contains(flagsUsed, "title")) && len(flagsUsed) > 1 {
+	if (Contains(flagsUsed, "id") || Contains(flagsUsed, "title")) && len(flagsUsed) > 1 {
 		fmt.Println("flags: id and title cannot be used together or with any other flags")
 
 		return false
@@ -203,12 +166,27 @@ func validatePrintTags() bool {
 	return true
 }
 
-func contains(s []string, str string) bool {
-	for _, v := range s {
-		if v == str {
-			return true
-		}
+func getOrderAndOptions(flags []string) (string, string) {
+	by := ""
+	opt := ""
+
+	switch {
+	case Contains(flags, "by-deadline"):
+		by = "by-deadline"
+	case Contains(flags, "by-priority"):
+		by = "by-priority"
+	case Contains(flags, "by-created-at"):
+		by = "by-created-at"
 	}
 
-	return false
+	switch {
+	case Contains(flags, "done"):
+		opt = "done"
+	case Contains(flags, "undone"):
+		opt = "undone"
+	case Contains(flags, "with-priority"):
+		opt = "with-priority"
+	}
+
+	return by, opt
 }

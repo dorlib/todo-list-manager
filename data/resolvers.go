@@ -4,6 +4,11 @@ import (
 	"fmt"
 )
 
+const (
+	DONE   = "done"
+	UNDONE = "undone"
+)
+
 func CreateTask(title, description, priority string, deadline Date) {
 	task := Task{Title: title, Description: description, Priority: priority, Deadline: deadline}
 	rows := DB.Create(&task).RowsAffected
@@ -58,23 +63,92 @@ func PrintTaskByName(taskName string) {
 	printTask(task)
 }
 
-func PrintAllTasks(user User, userExist bool) {
-	var tasks []Task
+func PrintAllTasks(user User, userExist bool, by string, opt string) {
+	if userExist {
+		printTasks(PrintAllTaskOfUser(user, by, opt))
 
-	if !userExist {
-		DB.Find(&tasks)
-	} else {
-		DB.Where(user).Find(&tasks)
+		return
 	}
 
-	printTasks(tasks)
+	printTasks(PrintAllTasksOfGroup(by, opt))
 }
 
-func PrintByDeadLine(user User, userExist bool) {
+func PrintAllTaskOfUser(user User, by string, opt string) []Task {
+	var tasks []Task
+
+	switch {
+	case by == "" && opt == "":
+		DB.Where(user).Find(&tasks)
+	case by == "" && opt != "":
+		switch opt {
+		case DONE:
+			DB.Raw("SELECT tasks FROM users WHERE id = ? AND done = true", user.ID).Scan(&tasks)
+		case UNDONE:
+			DB.Raw("SELECT tasks FROM users WHERE id = ? AND done = false", user.ID).Scan(&tasks)
+		default:
+			DB.Raw("SELECT tasks FROM users WHERE id = ? AND priority = ?", user.ID, opt).Scan(&tasks)
+		}
+	case by != "" && opt == "":
+		DB.Raw("SELECT tasks FROM users WHERE id = ? ORDER BY = ?", user.ID, by).Scan(&tasks)
+	default:
+		switch opt {
+		case DONE:
+			DB.Raw("SELECT tasks FROM users WHERE id = ? AND done = true ORDER BY = ?", user.ID, by).Scan(&tasks)
+		case UNDONE:
+			DB.Raw("SELECT tasks FROM users WHERE id = ? AND done = false ORDER BY = ?", user.ID, by).Scan(&tasks)
+		default:
+			DB.Raw("SELECT tasks FROM users WHERE id = ? AND priority = ? ORDER BY = ?", user.ID, opt, by).Scan(&tasks)
+		}
+	}
+
+	return tasks
+}
+
+func PrintAllTasksOfGroup(by, opt string) []Task {
+	var tasks []Task
+
+	switch {
+	case by == "" && opt == "":
+		DB.Find(&tasks)
+	case by == "" && opt != "":
+		switch opt {
+		case DONE:
+			DB.Raw("SELECT * FROM tasks WHERE done = true").Scan(&tasks)
+		case UNDONE:
+			DB.Raw("SELECT * FROM tasks WHERE done = false").Scan(&tasks)
+		default:
+			DB.Raw("SELECT * FROM tasks WHERE priority = ?", opt).Scan(&tasks)
+		}
+	case by != "" && opt == "":
+		DB.Raw("SELECT * FROM tasks ORDER BY = ?", by).Scan(&tasks)
+	default:
+		switch opt {
+		case DONE:
+			DB.Raw("SELECT * FROM tasks WHERE done = true ORDER BY = ?", by).Scan(&tasks)
+		case UNDONE:
+			DB.Raw("SELECT * FROM tasks WHERE done = false ORDER BY = ?", by).Scan(&tasks)
+		default:
+			DB.Raw("SELECT * FROM tasks WHERE priority = ? ORDER BY = ?", opt, by).Scan(&tasks)
+		}
+	}
+
+	return tasks
+}
+
+func PrintByDeadLine(user User, userExist bool, opt string) {
 	var tasks []Task
 
 	if userExist {
-		DB.Raw("SELECT tasks FROM users WHERE id = ? ORDER BY deadline", user.ID).Scan(&tasks)
+		switch opt {
+		case DONE:
+			DB.Raw("SELECT tasks FROM users WHERE id = ? AND done = true ORDER BY deadline", user.ID).Scan(&tasks)
+		case UNDONE:
+			DB.Raw("SELECT tasks FROM users WHERE id = ? AND done = false ORDER BY deadline", user.ID).Scan(&tasks)
+		case "with-priority":
+			DB.Raw("SELECT tasks FROM users WHERE id = ? AND priority = ? ORDER BY deadline", user.ID, opt).Scan(&tasks)
+		default:
+			DB.Raw("SELECT tasks FROM users WHERE id = ? ORDER BY deadline", user.ID).Scan(&tasks)
+		}
 	} else {
 		DB.Raw("SELECT * FROM tasks ORDER BY deadline").Scan(&tasks)
 	}
@@ -155,7 +229,7 @@ func ToggleDoneByID(taskID uint, isDone bool) {
 func GetUser(userID uint, username string) (User, bool) {
 	var user User
 
-	r := DB.Where("ID = ? OR Username >= ?", userID, username).First(&user)
+	r := DB.Where("id = ? OR username = ?", userID, username).First(&user)
 	if r.RowsAffected != 0 {
 		return user, true
 	}
