@@ -8,17 +8,17 @@ import (
 )
 
 func printTask(task Task) {
-	year, err := strconv.Atoi(task.Deadline.Year)
+	year, err := strconv.Atoi(task.DeadlineDate.DeadlineYear)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	month, err := strconv.Atoi(task.Deadline.Month)
+	month, err := strconv.Atoi(task.DeadlineDate.DeadlineMonth)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	day, err := strconv.Atoi(task.Deadline.Day)
+	day, err := strconv.Atoi(task.DeadlineDate.DeadlineDay)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -29,19 +29,19 @@ func printTask(task Task) {
 	fmt.Printf("# %d: %v %v %v %v %v %v", task.ID, task.Title, task.Description, task.Priority, task.CreatedAt, task.Deadline, timeLeft)
 }
 
-func printTasks(tasks []Task) {
+func printTasks(tasks []taskSummery) {
 	t := table.NewWriter()
 
 	t.SetOutputMirror(os.Stdout)
-	t.AppendHeader(table.Row{"#", "Title", "Description", "Priority", "Created At", "Deadline", "Time Left"})
+	t.AppendHeader(table.Row{"#", "Title", "Description", "Priority", "Created At", "Deadline", "Days Left"})
 
 	for i := 0; i < len(tasks); i++ {
-		var row = table.Row{tasks[i]}
+		//var row = table.Row{tasks[i]}
 
-		t.AppendRows([]table.Row{row})
+		t.AppendRows([]table.Row{{tasks[i]}})
 	}
 
-	t.AppendFooter(table.Row{"Total", 10000})
+	t.AppendFooter(table.Row{"Total", len(tasks)})
 	t.Render()
 }
 

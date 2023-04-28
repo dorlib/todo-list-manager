@@ -29,7 +29,7 @@ var addCmd = &cobra.Command{
 `,
 	Args: func(cmd *cobra.Command, args []string) error {
 		if title == "" || description == "" || priority == "" || deadline == "" {
-			return errors.New("accepts 1 arg(s)")
+			return errors.New("accepts 4 arg(s)")
 		}
 
 		return nil
@@ -37,7 +37,7 @@ var addCmd = &cobra.Command{
 	Example: `todo add -t="homework" -d="do homework 3 in intro to cs" -p="High" -d="04/05/2023"`,
 	Run: func(cmd *cobra.Command, args []string) {
 		deadlineDate := strings.Split(deadline, "/")
-		data.CreateTask(title, description, priority, data.Date{Day: deadlineDate[0], Month: deadlineDate[1], Year: deadlineDate[2]})
+		data.CreateTask(title, description, priority, data.Date{DeadlineDay: deadlineDate[0], DeadlineMonth: deadlineDate[1], DeadlineYear: deadlineDate[2]})
 	},
 }
 
@@ -55,4 +55,5 @@ func init() {
 	addCmd.PersistentFlags().StringVarP(&description, "description", "d", "", "add the task's description")
 	addCmd.PersistentFlags().StringVarP(&priority, "priority", "p", "", "add the task's priority")
 	addCmd.PersistentFlags().StringVarP(&deadline, "deadline", "l", "", "add the task's deadline")
+	addCmd.MarkFlagsRequiredTogether("title", "description", "priority", "deadline")
 }

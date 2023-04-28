@@ -6,22 +6,23 @@ import (
 )
 
 type Task struct {
-	ID          uint           `gorm:"primaryKey"`
-	CreatedAt   time.Time      `gorm:"autoCreateTime"`
-	UpdatedAt   time.Time      `gorm:"autoUpdateTime"`
-	DeletedAt   gorm.DeletedAt `gorm:"index"`
-	Deadline    Date           `gorm:"-"` // dd/mm/yyyy
-	Done        bool
-	Title       string `gorm:"not null"`
-	Description string
-	Priority    string // enum
-	User        User   `gorm:"-;unique;not null"`
+	ID           uint           `gorm:"primaryKey"`
+	CreatedAt    time.Time      `gorm:"autoCreateTime"`
+	UpdatedAt    time.Time      `gorm:"autoUpdateTime"`
+	DeletedAt    gorm.DeletedAt `gorm:"index"`
+	DeadlineDate Date           `gorm:"embedded"` // dd/mm/yyyy
+	Deadline     string
+	Done         bool
+	Title        string `gorm:"not null"`
+	Description  string
+	Priority     string // enum
+	User         User   `gorm:"-;unique;not null"`
 }
 
 type Date struct {
-	Year  string
-	Month string
-	Day   string
+	DeadlineYear  string
+	DeadlineMonth string
+	DeadlineDay   string
 }
 
 type User struct {
@@ -32,6 +33,16 @@ type User struct {
 	Username  string         `gorm:"unique;not null"`
 	Role      string         // admin/user
 	Tasks     []Task         `gorm:"-"`
+}
+
+type taskSummery struct {
+	ID          uint
+	Title       string
+	Description string
+	Priority    string
+	CreatedAt   time.Time
+	Deadline    string
+	Done        bool
 }
 
 // Priority enum.
