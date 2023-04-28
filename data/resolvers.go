@@ -10,7 +10,7 @@ const (
 )
 
 func CreateTask(title, description, priority string, deadline Date) {
-	task := Task{Title: title, Description: description, Priority: priority, Deadline: deadline}
+	task := Task{Title: title, Description: description, Priority: priority, DeadlineDate: deadline}
 	rows := DB.Create(&task).RowsAffected
 	fmt.Printf("rows affected: %v \n", rows)
 }
@@ -65,20 +65,20 @@ func PrintTaskByName(taskName string) {
 
 func PrintAllTasks(user User, userExist bool, by string, opt string) {
 	if userExist {
-		printTasks(PrintAllTaskOfUser(user, by, opt))
+		printTasks(GetAllTasksOfUser(user, by, opt))
 
 		return
 	}
 
-	printTasks(PrintAllTasksOfGroup(by, opt))
+	printTasks(GetAllTasksOfGroup(by, opt))
 }
 
-func PrintAllTaskOfUser(user User, by string, opt string) []Task {
-	var tasks []Task
+func GetAllTasksOfUser(user User, by string, opt string) []taskSummery {
+	var tasks []taskSummery
 
 	switch {
 	case by == "" && opt == "":
-		DB.Where(user).Find(&tasks)
+		DB.Select("id, title, description, priority, created_at, deadline, done").Where(user).Find(&tasks)
 	case by == "" && opt != "":
 		switch opt {
 		case DONE:
@@ -104,12 +104,12 @@ func PrintAllTaskOfUser(user User, by string, opt string) []Task {
 	return tasks
 }
 
-func PrintAllTasksOfGroup(by, opt string) []Task {
-	var tasks []Task
+func GetAllTasksOfGroup(by, opt string) []taskSummery {
+	var tasks []taskSummery
 
 	switch {
 	case by == "" && opt == "":
-		DB.Find(&tasks)
+		DB.Table("tasks").Select("id, title, description, priority, created_at, deadline, done").Scan(&tasks)
 	case by == "" && opt != "":
 		switch opt {
 		case DONE:
@@ -132,11 +132,13 @@ func PrintAllTasksOfGroup(by, opt string) []Task {
 		}
 	}
 
+	fmt.Println(tasks)
+
 	return tasks
 }
 
 func PrintByDeadLine(user User, userExist bool, opt string) {
-	var tasks []Task
+	var tasks []taskSummery
 
 	if userExist {
 		switch opt {
@@ -157,7 +159,7 @@ func PrintByDeadLine(user User, userExist bool, opt string) {
 }
 
 func PrintByPriority(user User, userExist bool) {
-	var tasks []Task
+	var tasks []taskSummery
 
 	if userExist {
 		DB.Raw("SELECT tasks FROM users WHERE id = ? ORDER BY priority", user.ID).Scan(&tasks)
@@ -169,7 +171,7 @@ func PrintByPriority(user User, userExist bool) {
 }
 
 func PrintByCreationDate(user User, userExist bool) {
-	var tasks []Task
+	var tasks []taskSummery
 
 	if userExist {
 		DB.Raw("SELECT tasks FROM users WHERE id = ? ORDER BY created_at", user.ID).Scan(&tasks)
