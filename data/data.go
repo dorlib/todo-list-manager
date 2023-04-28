@@ -1,6 +1,7 @@
 package data
 
 import (
+	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -28,4 +29,10 @@ func OpenDataBase() {
 	if err != nil {
 		panic("failed to migrate database scheme")
 	}
+}
+
+// BeforeSave is a gorm hook in order to initiate the deadline field.
+func (t *Task) BeforeSave(tx *gorm.DB) error {
+	t.Deadline = fmt.Sprintf("%s/%s/%s", t.DeadlineDate.DeadlineDay, t.DeadlineDate.DeadlineMonth, t.DeadlineDate.DeadlineYear)
+	return nil
 }
