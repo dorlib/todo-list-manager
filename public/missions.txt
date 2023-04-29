@@ -21,8 +21,9 @@ feel free to add/update missions
 7. add option to jump between dashboards
 8. verify that the conditions described in the long description of print command are applied in the code's logic.
 9. write unit tests for the commands in the cli.
+10. turn "Done" field to enum the has: (todo, in progress, done)
 
-##### DATA MISSIONSt######
+##### DATA MISSIONSt#####
 1. write unit test for the functions in data/utils.go (read about golang way to write unit tests)
 2. add management for multi users, meaning:
     a. create a new model for User in models.go
