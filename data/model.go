@@ -40,9 +40,10 @@ type taskSummery struct {
 	Title       string
 	Description string
 	Priority    string
-	CreatedAt   time.Time
+	CreatedAt   string
 	Deadline    string
 	Done        bool
+	TimeLeft    int
 }
 
 // Priority enum.
