@@ -132,8 +132,6 @@ func GetAllTasksOfGroup(by, opt string) []taskSummery {
 		}
 	}
 
-	fmt.Println(tasks)
-
 	return tasks
 }
 
