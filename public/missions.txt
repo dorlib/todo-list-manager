@@ -22,7 +22,7 @@ feel free to add/update missions
 8. verify that the conditions described in the long description of print command are applied in the code's logic.
 9. write unit tests for the commands in the cli.
 10. turn "Done" field to enum the has: (todo, in progress, done)
-11. add user name to the table of print command (and to taskSummery model)
+11. fix all the printing queries (only the one for group and without by and without ops is correct)
 
 ##### DATA MISSIONS #####
 1. write unit test for the functions in data/utils.go (read about golang way to write unit tests)
