@@ -109,7 +109,7 @@ func GetAllTasksOfGroup(by, opt string) []taskSummery {
 
 	switch {
 	case by == "" && opt == "":
-		DB.Table("tasks").Select("id, title, description, priority, created_at, deadline, done").Scan(&tasks)
+		DB.Table("tasks").Select("id, user_name, title, description, priority, created_at, deadline, done").Scan(&tasks)
 	case by == "" && opt != "":
 		switch opt {
 		case DONE:
@@ -131,8 +131,6 @@ func GetAllTasksOfGroup(by, opt string) []taskSummery {
 			DB.Raw("SELECT * FROM tasks WHERE priority = ? ORDER BY = ?", opt, by).Scan(&tasks)
 		}
 	}
-
-	fmt.Println(tasks)
 
 	return tasks
 }

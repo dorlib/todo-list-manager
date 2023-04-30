@@ -16,7 +16,9 @@ type Task struct {
 	Title        string `gorm:"not null"`
 	Description  string
 	Priority     string // enum
-	User         User   `gorm:"-;unique;not null"`
+	UserID       uint   `gorm:"column:user_id"`
+	UserName     string `gorm:"column:user_name"`
+	User         User
 }
 
 type Date struct {
@@ -37,12 +39,14 @@ type User struct {
 
 type taskSummery struct {
 	ID          uint
+	UserName    string
 	Title       string
 	Description string
 	Priority    string
-	CreatedAt   time.Time
+	CreatedAt   string
 	Deadline    string
 	Done        bool
+	TimeLeft    int
 }
 
 // Priority enum.

@@ -2,9 +2,12 @@ package data
 
 import (
 	"fmt"
+	"github.com/fatih/structs"
 	"github.com/jedib0t/go-pretty/v6/table"
+	"log"
 	"os"
 	"strconv"
+	"time"
 )
 
 func printTask(task Task) {
@@ -33,12 +36,16 @@ func printTasks(tasks []taskSummery) {
 	t := table.NewWriter()
 
 	t.SetOutputMirror(os.Stdout)
-	t.AppendHeader(table.Row{"#", "Title", "Description", "Priority", "Created At", "Deadline", "Days Left"})
+	t.AppendHeader(table.Row{"#", "User", "Title", "Description", "Priority", "Created At", "Deadline", "Done", "Days Left"})
 
 	for i := 0; i < len(tasks); i++ {
-		//var row = table.Row{tasks[i]}
+		diff, err := getDiffOfDates(tasks[i].Deadline)
+		if err != nil {
+			log.Println(err)
+		}
 
-		t.AppendRows([]table.Row{{tasks[i]}})
+		tasks[i].TimeLeft = diff
+		t.AppendRows([]table.Row{structs.Values(tasks[i])})
 	}
 
 	t.AppendFooter(table.Row{"Total", len(tasks)})
@@ -67,4 +74,21 @@ func CheckLegalPriority(priority string) bool {
 	}
 
 	return false
+}
+
+func getDiffOfDates(deadline string) (int, error) {
+	layout := "02/01/2006" // dd/mm/yyyy format
+
+	date1, err := time.Parse(layout, deadline)
+	if err != nil {
+		err = fmt.Errorf("error while parsing date: %v", deadline)
+
+		return 0, err
+	}
+
+	date2 := time.Now()
+
+	diff := int(date1.Sub(date2).Hours() / 24)
+
+	return diff, nil
 }

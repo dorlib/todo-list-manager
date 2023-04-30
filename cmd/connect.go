@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// connectCmd represents the connect command
+// connectCmd represents the connect command.
 var connectCmd = &cobra.Command{
 	Use:   "connect",
 	Short: "A brief description of your command",
@@ -28,16 +28,13 @@ to quickly create a Cobra application.`,
 
 func init() {
 	rootCmd.AddCommand(connectCmd)
-
 	// Here you will define your flags and configuration settings.
-
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	connectCmd.PersistentFlags().StringP("username", "u", "", "username for connection")
-	connectCmd.PersistentFlags().StringP("password", "p", "", "password for connection")
-	connectCmd.MarkFlagsRequiredTogether("username", "password")
-
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// connectCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	connectCmd.PersistentFlags().StringP("username", "u", "", "username for connection")
+	connectCmd.PersistentFlags().StringP("password", "p", "", "password for connection")
+	connectCmd.MarkFlagsRequiredTogether("username", "password")
 }
