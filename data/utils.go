@@ -36,7 +36,7 @@ func printTasks(tasks []taskSummery) {
 	t := table.NewWriter()
 
 	t.SetOutputMirror(os.Stdout)
-	t.AppendHeader(table.Row{"#", "Title", "Description", "Priority", "Created At", "Deadline", "Done", "Days Left"})
+	t.AppendHeader(table.Row{"#", "User", "Title", "Description", "Priority", "Created At", "Deadline", "Done", "Days Left"})
 
 	for i := 0; i < len(tasks); i++ {
 		diff, err := getDiffOfDates(tasks[i].Deadline)
