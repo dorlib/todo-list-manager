@@ -22,8 +22,9 @@ feel free to add/update missions
 8. verify that the conditions described in the long description of print command are applied in the code's logic.
 9. write unit tests for the commands in the cli.
 10. turn "Done" field to enum the has: (todo, in progress, done)
+11. add user name to the table of print command (and to taskSummery model)
 
-##### DATA MISSIONSt#####
+##### DATA MISSIONS #####
 1. write unit test for the functions in data/utils.go (read about golang way to write unit tests)
 2. add management for multi users, meaning:
     a. create a new model for User in models.go
@@ -56,7 +57,5 @@ feel free to add/update missions
 1. go
 2. git
 3. mysql (download and install mysql community cli, configure user 'root' and pass '12345678' and create database 'todo')
-4. gorm
-5. cobra cli
-6. golangci-lint
+4. golangci-lint
 
