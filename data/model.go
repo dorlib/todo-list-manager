@@ -57,3 +57,24 @@ const (
 	Medium   string = "medium"
 	Low      string = "low"
 )
+
+type Status int
+
+const (
+	Todo Status = iota
+	InProgress
+	Done
+)
+
+// returns the corresponding string value to the Card enum
+func (s Status) String() string {
+	switch s {
+	case Todo:
+		return "todo"
+	case InProgress:
+		return "in progress"
+	case Done:
+		return "done"
+	}
+	return "Unknown status"
+}
