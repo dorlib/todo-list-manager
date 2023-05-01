@@ -12,7 +12,7 @@ type Task struct {
 	DeletedAt    gorm.DeletedAt `gorm:"index"`
 	DeadlineDate Date           `gorm:"embedded"` // dd/mm/yyyy
 	Deadline     string
-	Done         bool
+	Status       Status // enum
 	Title        string `gorm:"not null"`
 	Description  string
 	Priority     string // enum
