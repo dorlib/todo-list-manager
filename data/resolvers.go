@@ -113,22 +113,22 @@ func GetAllTasksOfGroup(by, opt string) []taskSummery {
 	case by == "" && opt != "":
 		switch opt {
 		case DONE:
-			DB.Raw("SELECT * FROM tasks WHERE done = true").Scan(&tasks)
+			DB.Table("tasks").Select("id, user_name, title, description, priority, created_at, deadline, done").Where("done = ?", true).Scan(&tasks)
 		case UNDONE:
-			DB.Raw("SELECT * FROM tasks WHERE done = false").Scan(&tasks)
+			DB.Table("tasks").Select("id, user_name, title, description, priority, created_at, deadline, done").Where("done = ?", false).Scan(&tasks)
 		default:
-			DB.Raw("SELECT * FROM tasks WHERE priority = ?", opt).Scan(&tasks)
+			DB.Table("tasks").Select("id, user_name, title, description, priority, created_at, deadline, done").Where("priority = ?", opt).Scan(&tasks)
 		}
 	case by != "" && opt == "":
-		DB.Raw("SELECT * FROM tasks ORDER BY = ?", by).Scan(&tasks)
+		DB.Table("tasks").Order(by).Scan(&tasks)
 	default:
 		switch opt {
 		case DONE:
-			DB.Raw("SELECT * FROM tasks WHERE done = true ORDER BY = ?", by).Scan(&tasks)
+			DB.Raw("SELECT id, user_name, title, description, priority, created_at, deadline, done FROM tasks WHERE done = true ORDER BY = ?", by).Scan(&tasks)
 		case UNDONE:
-			DB.Raw("SELECT * FROM tasks WHERE done = false ORDER BY = ?", by).Scan(&tasks)
+			DB.Raw("SELECT id, user_name, title, description, priority, created_at, deadline, done FROM tasks WHERE done = false ORDER BY = ?", by).Scan(&tasks)
 		default:
-			DB.Raw("SELECT * FROM tasks WHERE priority = ? ORDER BY = ?", opt, by).Scan(&tasks)
+			DB.Raw("SELECT id, user_name, title, description, priority, created_at, deadline, done  FROM tasks WHERE priority = ? ORDER BY = ?", opt, by).Scan(&tasks)
 		}
 	}
 
