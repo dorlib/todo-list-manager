@@ -40,4 +40,13 @@ func init() {
 	// is called directly, e.g.:
 	// updateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	rootCmd.AddCommand(updateCmd)
+
+	updateCmd.PersistentFlags().StringP("title", "t", "", "update the task's title")
+	updateCmd.PersistentFlags().StringP("description", "d", "", "update the task's description")
+	updateCmd.PersistentFlags().StringP("priority", "p", "", "update the task's priority")
+	updateCmd.PersistentFlags().StringP("deadline", "l", "", "update the task's deadline")
+
+	updateCmd.PersistentFlags().StringP("user", "u", "", "update the user which the task assigned to")
+	updateCmd.PersistentFlags().String("username", "", "the name of the user")
+	updateCmd.PersistentFlags().Uint("id", 0, "the id of the user")
 }
