@@ -66,7 +66,7 @@ const (
 	Done
 )
 
-// returns the corresponding string value to the Card enum
+// returns the corresponding string value to the Card enum.
 func (s Status) String() string {
 	switch s {
 	case Todo:
@@ -76,5 +76,6 @@ func (s Status) String() string {
 	case Done:
 		return "done"
 	}
+
 	return "Unknown status"
 }
