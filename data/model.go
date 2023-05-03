@@ -45,7 +45,7 @@ type Group struct {
 	Name        string
 	Description string
 	Usernames   []string
-	userIDs     []uint
+	UserIDs     []uint
 	Users       []User `gorm:"-"`
 }
 

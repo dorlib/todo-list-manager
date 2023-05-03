@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// deleteGroupCmd represents the deleteGroup command
+// deleteGroupCmd represents the deleteGroup command.
 var deleteGroupCmd = &cobra.Command{
 	Use:   "delete-group",
 	Short: "A brief description of your command",

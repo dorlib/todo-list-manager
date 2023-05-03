@@ -9,7 +9,7 @@ import (
 	"todo/cmd"
 )
 
-// updateGroupCmd represents the updateGroup command
+// updateGroupCmd represents the updateGroup command.
 var updateGroupCmd = &cobra.Command{
 	Use:   "update-group",
 	Short: "A brief description of your command",

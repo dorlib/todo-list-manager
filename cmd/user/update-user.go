@@ -9,7 +9,7 @@ import (
 	"todo/cmd"
 )
 
-// updateUserCmd represents the updateUser command
+// updateUserCmd represents the updateUser command.
 var updateUserCmd = &cobra.Command{
 	Use:   "update-user",
 	Short: "A brief description of your command",

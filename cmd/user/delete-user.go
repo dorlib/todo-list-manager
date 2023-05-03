@@ -9,7 +9,7 @@ import (
 	"todo/cmd"
 )
 
-// deleteUserCmd represents the deleteUser command
+// deleteUserCmd represents the deleteUser command.
 var deleteUserCmd = &cobra.Command{
 	Use:   "delete-user",
 	Short: "A brief description of your command",
