@@ -121,7 +121,7 @@ var printCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(printCmd)
+	RootCmd.AddCommand(printCmd)
 
 	// Here you will define your flags and configuration settings.
 

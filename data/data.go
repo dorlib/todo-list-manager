@@ -25,7 +25,7 @@ func OpenDataBase() {
 	}
 
 	// Migrate the schema
-	err = DB.AutoMigrate(&Task{}, &Date{}, &User{})
+	err = DB.AutoMigrate(&Task{}, &Date{}, &User{}, &Group{})
 	if err != nil {
 		panic("failed to migrate database scheme")
 	}

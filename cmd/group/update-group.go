@@ -1,17 +1,17 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 */
-package cmd
+package group
 
 import (
 	"fmt"
-
 	"github.com/spf13/cobra"
+	"todo/cmd"
 )
 
-// connectCmd represents the connect command.
-var connectCmd = &cobra.Command{
-	Use:   "connect",
+// updateGroupCmd represents the updateGroup command.
+var updateGroupCmd = &cobra.Command{
+	Use:   "update-group",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -20,21 +20,17 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("password validation...")
-		fmt.Println("authentication...")
-		fmt.Println("connect called")
+		fmt.Println("updateGroup called")
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(connectCmd)
 	// Here you will define your flags and configuration settings.
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
+	// updateGroupCmd.PersistentFlags().String("foo", "", "A help for foo")
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// connectCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	connectCmd.PersistentFlags().StringP("username", "u", "", "username for connection")
-	connectCmd.PersistentFlags().StringP("password", "p", "", "password for connection")
-	connectCmd.MarkFlagsRequiredTogether("username", "password")
+	// updateGroupCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	cmd.RootCmd.AddCommand(updateGroupCmd)
 }

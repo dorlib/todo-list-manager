@@ -56,5 +56,5 @@ func init() {
 	deleteCmd.PersistentFlags().UintP("taskID", "i", 0, "delete by the task's ID")
 	deleteCmd.PersistentFlags().StringP("all", "a", "", "delete all tasks")
 
-	rootCmd.AddCommand(deleteCmd)
+	RootCmd.AddCommand(deleteCmd)
 }

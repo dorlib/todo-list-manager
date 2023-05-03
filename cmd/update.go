@@ -39,7 +39,7 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// updateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	rootCmd.AddCommand(updateCmd)
+	RootCmd.AddCommand(updateCmd)
 
 	updateCmd.PersistentFlags().StringP("title", "t", "", "update the task's title")
 	updateCmd.PersistentFlags().StringP("description", "d", "", "update the task's description")
