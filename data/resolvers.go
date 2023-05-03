@@ -76,28 +76,30 @@ func PrintAllTasks(user User, userExist bool, by string, opt string) {
 func GetAllTasksOfUser(user User, by string, opt string) []taskSummery {
 	var tasks []taskSummery
 
+	userID := user.ID
+
 	switch {
 	case by == "" && opt == "":
-		DB.Select("id, title, description, priority, created_at, deadline, done").Where(user).Find(&tasks)
+		DB.Table("tasks").Select("id, user_name, title, description, priority, created_at, deadline, done").Where("userID = ?", userID).Scan(&tasks)
 	case by == "" && opt != "":
 		switch opt {
 		case DONE:
-			DB.Raw("SELECT tasks FROM users WHERE id = ? AND done = true", user.ID).Scan(&tasks)
+			DB.Table("tasks").Select("id, user_name, title, description, priority, created_at, deadline, done").Where("done = ? AND userID = ?", true, userID).Scan(&tasks)
 		case UNDONE:
-			DB.Raw("SELECT tasks FROM users WHERE id = ? AND done = false", user.ID).Scan(&tasks)
+			DB.Table("tasks").Select("id, user_name, title, description, priority, created_at, deadline, done").Where("done = ? AND userID = ?", false, userID).Scan(&tasks)
 		default:
-			DB.Raw("SELECT tasks FROM users WHERE id = ? AND priority = ?", user.ID, opt).Scan(&tasks)
+			DB.Table("tasks").Select("id, user_name, title, description, priority, created_at, deadline, done").Where("priority = ? AND userID = ?", opt, userID).Scan(&tasks)
 		}
 	case by != "" && opt == "":
-		DB.Raw("SELECT tasks FROM users WHERE id = ? ORDER BY = ?", user.ID, by).Scan(&tasks)
+		DB.Table("tasks").Where("userID = ?", userID).Order(by).Scan(&tasks)
 	default:
 		switch opt {
 		case DONE:
-			DB.Raw("SELECT tasks FROM users WHERE id = ? AND done = true ORDER BY = ?", user.ID, by).Scan(&tasks)
+			DB.Raw("SELECT id, user_name, title, description, priority, created_at, deadline, done FROM tasks WHERE done = true AND userID = ? ORDER BY = ?", userID, by).Scan(&tasks)
 		case UNDONE:
-			DB.Raw("SELECT tasks FROM users WHERE id = ? AND done = false ORDER BY = ?", user.ID, by).Scan(&tasks)
+			DB.Raw("SELECT id, user_name, title, description, priority, created_at, deadline, done FROM tasks WHERE done = false AND userID = ? ORDER BY = ?", userID, by).Scan(&tasks)
 		default:
-			DB.Raw("SELECT tasks FROM users WHERE id = ? AND priority = ? ORDER BY = ?", user.ID, opt, by).Scan(&tasks)
+			DB.Raw("SELECT id, user_name, title, description, priority, created_at, deadline, done  FROM tasks WHERE priority = ? AND userID = ? ORDER BY = ?", userID, opt, by).Scan(&tasks)
 		}
 	}
 
