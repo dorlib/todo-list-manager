@@ -37,6 +37,18 @@ type User struct {
 	Tasks     []Task         `gorm:"-"`
 }
 
+type Group struct {
+	ID          uint           `gorm:"primaryKey"`
+	CreatedAt   time.Time      `gorm:"autoCreateTime"`
+	UpdatedAt   time.Time      `gorm:"autoUpdateTime"`
+	DeletedAt   gorm.DeletedAt `gorm:"index"`
+	Name        string
+	Description string
+	Usernames   []string
+	userIDs     []uint
+	Users       []User `gorm:"-"`
+}
+
 type taskSummery struct {
 	ID          uint
 	UserName    string
