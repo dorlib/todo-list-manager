@@ -54,7 +54,7 @@ var undoneCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(undoneCmd)
+	RootCmd.AddCommand(undoneCmd)
 	// Here you will define your flags and configuration settings.
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
