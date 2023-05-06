@@ -34,13 +34,14 @@ In the future, we will continue to extend the app and create more features, and 
 
 ## What the Application include?
 
-The main entites in the app are : Tasks and Users.
+The main entites in the app are : Tasks, Groups & Users.
 As you can see in the welcome page of the app, the main "things" you can do are : managing and tracking, so Let's cover the main features!
 
-1. Create user - you can register in order to make yourself a user and login in order to access the team's task management system.
-2. Manage tasks - Create, update and task's content, update progress, and delete tasks (admin only).
-3. Track tasks - print in tasks different variations and options to make efficient tracking.
-4. Alert system - which will update the user who's the task is belong to by mail when deadline is coming near!
+1. Create Group - you can create a group in order to organize the task's of everyone in one place!
+2. Create user - you can register in order to make yourself a user and login in order to access the team's task management system.
+3. Manage tasks - Create, update and task's content, update progress, and delete tasks (admin only).
+4. Track tasks - print in tasks different variations and options to make efficient tracking.
+5. Alert system - which will update the user who's the task is belong to by mail when deadline is coming near!
 
 #### pleae note the README file in the cmd directory of more info about the available commands & flags.
 
