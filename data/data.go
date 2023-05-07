@@ -5,14 +5,25 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+	"os"
 )
 
 var DB *gorm.DB
 
 func OpenDataBase() {
 	var err error
+	var dsn string
 
-	dsn := "root:12345678@tcp(127.0.0.1:3306)/todo?charset=utf8mb4&parseTime=True&loc=Local"
+	user := os.Getenv("MYSQL_USER")
+	pass := os.Getenv("MYSQL_ROOT_PASSWORD")
+	database := os.Getenv("MYSQL_DATABASE")
+
+	if _, err := os.Stat("/.dockerenv"); err == nil {
+		dsn = "${MYSQL_USER}:${MYSQL_ROOT_PASSWORD}@tcp(127.0.0.1:3306)/${MYSQL_DATABASE}?charset=utf8mb4&parseTime=True&loc=Local"
+	} else {
+		dsn = user + ":" + pass + "@tcp(127.0.0.1:3306)/" + database + "?charset=utf8mb4&parseTime=True&loc=Local"
+	}
+	fmt.Printf(dsn)
 
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Silent),
