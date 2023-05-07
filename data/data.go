@@ -12,6 +12,7 @@ var DB *gorm.DB
 
 func OpenDataBase() {
 	var err error
+
 	var dsn string
 
 	user := os.Getenv("MYSQL_USER")
@@ -23,7 +24,8 @@ func OpenDataBase() {
 	} else {
 		dsn = user + ":" + pass + "@tcp(127.0.0.1:3306)/" + database + "?charset=utf8mb4&parseTime=True&loc=Local"
 	}
-	fmt.Printf(dsn)
+
+	fmt.Println(dsn)
 
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Silent),
