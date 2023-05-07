@@ -18,4 +18,4 @@ RUN go build -o app
 EXPOSE 8080
 
 # Start the application
-CMD ["./app"]
+CMD ["./app", "go run main.go"]

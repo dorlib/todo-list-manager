@@ -8,14 +8,24 @@ services:
       - "8080:8080"
     depends_on:
       - db
+    command: tail -f /dev/null # keeps the container running
+    tty: true
+    stdin_open: true
+    restart: unless-stopped
+
   db:
     image: mysql:latest
+    ports:
+      - "33061:3306"
+    command: --init-file /data/init.sql
     environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: example_db
-      MYSQL_USER: example_user
-      MYSQL_PASSWORD: example_password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
+      - ./init.sql:/data/init.sql
+
 volumes:
   db_data:
