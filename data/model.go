@@ -44,8 +44,6 @@ type Group struct {
 	DeletedAt   gorm.DeletedAt `gorm:"index"`
 	Name        string
 	Description string
-	Usernames   []string
-	UserIDs     []uint
 	Users       []User `gorm:"-"`
 }
 
