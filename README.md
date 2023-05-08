@@ -54,7 +54,7 @@ Here's what needs to be done in order to get the app running locally on your mac
 
 ### Run the docker container:
 
-Coming soon...
+Docker coming soon...
 
 ### Or follow those steps:
 
