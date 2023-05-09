@@ -19,11 +19,7 @@ func OpenDataBase() {
 	pass := os.Getenv("MYSQL_ROOT_PASSWORD")
 	database := os.Getenv("MYSQL_DATABASE")
 
-	if _, err := os.Stat("/.dockerenv"); err == nil {
-		dsn = "${MYSQL_USER}:${MYSQL_ROOT_PASSWORD}@tcp(127.0.0.1:3306)/${MYSQL_DATABASE}?charset=utf8mb4&parseTime=True&loc=Local"
-	} else {
-		dsn = user + ":" + pass + "@tcp(127.0.0.1:3306)/" + database + "?charset=utf8mb4&parseTime=True&loc=Local"
-	}
+	dsn = user + ":" + pass + "@tcp(127.0.0.1:3306)/" + database + "?charset=utf8mb4&parseTime=True&loc=Local"
 
 	fmt.Println(dsn)
 
