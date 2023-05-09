@@ -8,6 +8,8 @@ services:
       - "8080:8080"
     depends_on:
       - db
+    env_file:
+      - .env
     command: tail -f /dev/null # keeps the container running
     tty: true
     stdin_open: true
