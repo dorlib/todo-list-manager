@@ -12,7 +12,10 @@ RUN go get -d -v ./...
 RUN go install -v ./...
 
 # Build the application
-RUN go build -o app
+ARG ENV_FILE
+ENV MY_ENV_VAR=value
+RUN if [ -f "$ENV_FILE" ]; then . "$ENV_FILE"; fi && \
+    go build -o app
 
 # Expose port 8080 for the application
 EXPOSE 8080
