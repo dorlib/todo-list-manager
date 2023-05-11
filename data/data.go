@@ -2,9 +2,11 @@ package data
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+	"log"
 	"os"
 )
 
@@ -15,13 +17,22 @@ func OpenDataBase() {
 
 	var dsn string
 
+	err = godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	user := os.Getenv("MYSQL_USER")
 	pass := os.Getenv("MYSQL_ROOT_PASSWORD")
 	database := os.Getenv("MYSQL_DATABASE")
+	host := os.Getenv("DB_HOST")
 
-	dsn = user + ":" + pass + "@tcp(127.0.0.1:3306)/" + database + "?charset=utf8mb4&parseTime=True&loc=Local"
+	// check if in container
+	if _, ok := os.LookupEnv("HOSTNAME"); ok {
+		host = os.Getenv("DB_CONTAINER_HOST")
+	}
 
-	fmt.Println(dsn)
+	dsn = user + ":" + pass + "@tcp(" + host + ":3306)/" + database + "?charset=utf8mb4&parseTime=True&loc=Local"
 
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Silent),
