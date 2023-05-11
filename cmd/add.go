@@ -34,7 +34,7 @@ var addCmd = &cobra.Command{
 
 		return nil
 	},
-	Example: `todo add -t="homework" -d="do homework 3 in intro to cs" -p="High" -d="04/05/2023"`,
+	Example: `todo add -t="homework" -d="do homework 3 in intro to cs" -p="High" -l="04/05/2023"`,
 	Run: func(cmd *cobra.Command, args []string) {
 		deadlineDate := strings.Split(deadline, "/")
 		data.CreateTask(title, description, priority, data.Date{DeadlineDay: deadlineDate[0], DeadlineMonth: deadlineDate[1], DeadlineYear: deadlineDate[2]})
