@@ -21,7 +21,7 @@ feel free to add/update missions
 7. add option to jump between dashboards
 8. verify that the conditions described in the long description of print command are applied in the code's logic.
 9. write unit tests for the commands in the cli.
-10. turn "Done" field to enum the has: (todo, in progress, done)
+10. turn "Done" field to enum the has: (todo, in progress, done) - done
 11. fix all the printing queries (only the one for group and without by and without ops is correct)
 
 ##### DATA MISSIONS #####
@@ -50,7 +50,7 @@ feel free to add/update missions
 
 ##### OPS #####
 1. include unit tests written in the code as part of the CI as a github workflow.
-2. dockerize the app (make a working dockerfile) & upload to dockerhub.
+2. dockerize the app (make a working dockerfile) & upload to dockerhub. - done
 3. optional after we have docker, upload it to EC2 in AWS.
 
 ####### TO INSTALL IN ORDER TO CONTRIBUTE #######
