@@ -51,6 +51,8 @@ func init() {
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
+	updateCmd.Flags().SetInterspersed(false)
+
 	addCmd.PersistentFlags().StringVarP(&title, "title", "t", "", "add the task's title")
 	addCmd.PersistentFlags().StringVarP(&description, "description", "d", "", "add the task's description")
 	addCmd.PersistentFlags().StringVarP(&priority, "priority", "p", "", "add the task's priority")

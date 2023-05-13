@@ -47,8 +47,11 @@ func init() {
 	updateCmd.PersistentFlags().StringP("priority", "p", "", "update the task's priority")
 	updateCmd.PersistentFlags().StringP("deadline", "l", "", "update the task's deadline")
 
-	updateCmd.PersistentFlags().Uint("taskID", 0, "the id of the task to update")
-	updateCmd.PersistentFlags().StringP("user", "u", "", "update the user which the task assigned to")
-	updateCmd.PersistentFlags().String("username", "", "the name of the user")
-	updateCmd.PersistentFlags().Uint("id", 0, "the id of the user")
+	updateCmd.PersistentFlags().Uint("taskid", 0, "the id of the task to update")
+
+	updateCmd.PersistentFlags().String("username", "", "the name of the user who's the task is assigned to")
+	updateCmd.PersistentFlags().Uint("userid", 0, "the id of the user who's the task is assigned to")
+
+	updateCmd.Flags().SetInterspersed(false)
+	updateCmd.MarkFlagsMutuallyExclusive("username", "userid")
 }
