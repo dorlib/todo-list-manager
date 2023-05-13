@@ -48,12 +48,12 @@ var updateCmd = &cobra.Command{
 			flagsMap[flag] = cmd.Flag(flag).Value
 		}
 
-		//username := cmd.Flag("userid").Value.String()
+		// username := cmd.Flag("userid").Value.String()
 
 		fmt.Println(flagsMap)
 
 		if Contains(flagsUsed, "username") || Contains(flagsUsed, "userid") {
-			// update task by user
+			fmt.Println("update task by user")
 		}
 
 		if Contains(flagsUsed, "taskid") {
