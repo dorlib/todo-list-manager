@@ -6,8 +6,9 @@ package cmd
 
 import (
 	"fmt"
-
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
+	"strings"
 )
 
 // updateCmd represents the update command.
@@ -27,7 +28,44 @@ var updateCmd = &cobra.Command{
 			--id: the id of the task to update.
 `,
 	Example: `todo update -t="homework" -d="do homework 3 in intro to cs"`,
+	Args: func(cmd *cobra.Command, args []string) error {
+		flags := ""
+		cmd.Flags().Visit(func(flag *pflag.Flag) {
+			flags += flag.Name + ","
+		})
+
+		flagsUsed = strings.Split(flags, ",")
+		flagsUsed = flagsUsed[:len(flagsUsed)-1]
+
+		fmt.Println(flagsUsed)
+
+		return nil
+	},
 	Run: func(cmd *cobra.Command, args []string) {
+		flagsMap := make(map[string]interface{}, len(flagsUsed))
+
+		for _, flag := range flagsUsed {
+			flagsMap[flag] = cmd.Flag(flag).Value
+		}
+
+		//username := cmd.Flag("userid").Value.String()
+
+		fmt.Println(flagsMap)
+
+		if Contains(flagsUsed, "username") || Contains(flagsUsed, "userid") {
+			// update task by user
+		}
+
+		if Contains(flagsUsed, "taskid") {
+			// make an update directly by task's id.
+
+			return
+		}
+
+		// try to find the task by the given details
+		// if not found, fail
+		// if found and unique, update.
+
 		fmt.Println("update called")
 	},
 }
@@ -47,8 +85,11 @@ func init() {
 	updateCmd.PersistentFlags().StringP("priority", "p", "", "update the task's priority")
 	updateCmd.PersistentFlags().StringP("deadline", "l", "", "update the task's deadline")
 
-	updateCmd.PersistentFlags().Uint("taskID", 0, "the id of the task to update")
-	updateCmd.PersistentFlags().StringP("user", "u", "", "update the user which the task assigned to")
-	updateCmd.PersistentFlags().String("username", "", "the name of the user")
-	updateCmd.PersistentFlags().Uint("id", 0, "the id of the user")
+	updateCmd.PersistentFlags().Uint("taskid", 0, "the id of the task to update")
+
+	updateCmd.PersistentFlags().String("username", "", "the name of the user who's the task is assigned to")
+	updateCmd.PersistentFlags().Uint("userid", 0, "the id of the user who's the task is assigned to")
+
+	updateCmd.Flags().SetInterspersed(false)
+	updateCmd.MarkFlagsMutuallyExclusive("username", "userid")
 }

@@ -131,6 +131,8 @@ func init() {
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
+	updateCmd.Flags().SetInterspersed(false)
+
 	printCmd.PersistentFlags().StringVar(&username, "username", "", "look on the tasks of a specific user name")
 	printCmd.PersistentFlags().UintVar(&userid, "userid", 0, "look on the tasks of a specific user ID")
 	printCmd.MarkFlagsMutuallyExclusive("username", "userid")
