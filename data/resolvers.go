@@ -238,3 +238,39 @@ func GetUser(userID uint, username string) (User, bool) {
 
 	return user, false
 }
+
+func GetTaskByID(taskID uint) (Task, bool) {
+	var task Task
+
+	r := DB.Where("id = ?", taskID).First(&task)
+	if r.RowsAffected != 0 {
+		return task, true
+	}
+
+	return task, false
+}
+
+func UpdateTaskByID(taskID uint, argsMap map[string]interface{}) {
+	task, found := GetTaskByID(taskID)
+	if !found {
+		fmt.Printf("task with the id %v doesnt exists", taskID)
+	}
+
+	if argsMap["title"] != "" {
+		task.Title = argsMap["title"].(string)
+	}
+
+	if argsMap["description"] != "" {
+		task.Title = argsMap["description"].(string)
+	}
+
+	if argsMap["priority"] != "" {
+		task.Title = argsMap["priority"].(string)
+	}
+
+	if argsMap["deadline"] != "" {
+		task.Title = argsMap["deadline"].(string)
+	}
+
+	DB.Save(&task)
+}
