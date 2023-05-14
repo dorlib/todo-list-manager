@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"strings"
+	"todo/data"
 )
 
 // updateCmd represents the update command.
@@ -58,7 +59,7 @@ var updateCmd = &cobra.Command{
 
 		if Contains(flagsUsed, "taskid") {
 			// make an update directly by task's id.
-
+			data.UpdateTaskByID((flagsMap["taskid"]).(uint), flagsMap)
 			return
 		}
 
