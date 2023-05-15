@@ -8,7 +8,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/pflag v1.0.5
-	gorm.io/driver/mysql v1.4.7
+	gorm.io/driver/mysql v1.5.0
 	gorm.io/gorm v1.25.1
 )
 
