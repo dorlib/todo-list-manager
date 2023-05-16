@@ -60,6 +60,7 @@ var updateCmd = &cobra.Command{
 		if Contains(flagsUsed, "taskid") {
 			// make an update directly by task's id.
 			data.UpdateTaskByID((flagsMap["taskid"]).(uint), flagsMap)
+
 			return
 		}
 
