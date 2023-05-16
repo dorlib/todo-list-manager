@@ -54,7 +54,10 @@ Here's what needs to be done in order to get the app running locally on your mac
 
 ### Run the docker container:
 
-Docker coming soon...
+In order to run the app using docker-compose:
+1. Clone the project to your machine with `git clone https://github.com/dorlib/todo-list-manager.git && cd todo-list-manager`.
+2. Run `docker-compose buid && docker-compose up`.
+3. Enjoy managing your tasks.
 
 ### Or follow those steps:
 
