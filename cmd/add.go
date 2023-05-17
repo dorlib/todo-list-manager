@@ -5,16 +5,12 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"errors"
+	"fmt"
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 	"strings"
 	"todo/data"
 )
-
-var title string
-var description string
-var priority string
-var deadline string
 
 // addCmd represents the add command.
 var addCmd = &cobra.Command{
@@ -28,16 +24,33 @@ var addCmd = &cobra.Command{
 			-l: the deadline of the task, in the following format: "dd/mm/yyyy (accept string)."
 `,
 	Args: func(cmd *cobra.Command, args []string) error {
-		if title == "" || description == "" || priority == "" || deadline == "" {
-			return errors.New("accepts 4 arg(s)")
-		}
+		flags := ""
+		cmd.Flags().Visit(func(flag *pflag.Flag) {
+			flags += flag.Name + ","
+		})
+
+		flagsUsed = strings.Split(flags, ",")
+		flagsUsed = flagsUsed[:len(flagsUsed)-1]
+
+		fmt.Println(flagsUsed)
 
 		return nil
 	},
+
 	Example: `todo add -t="homework" -d="do homework 3 in intro to cs" -p="High" -l="04/05/2023"`,
 	Run: func(cmd *cobra.Command, args []string) {
-		deadlineDate := strings.Split(deadline, "/")
-		data.CreateTask(title, description, priority, data.Date{DeadlineDay: deadlineDate[0], DeadlineMonth: deadlineDate[1], DeadlineYear: deadlineDate[2]})
+		flagsMap := make(map[string]string, len(flagsUsed))
+
+		for _, flag := range flagsUsed {
+			flagsMap[flag] = cmd.Flag(flag).Value.String()
+		}
+
+		// username := cmd.Flag("userid").Value.String()
+
+		fmt.Println(flagsMap)
+
+		deadlineDate := strings.Split(flagsMap["deadline"], "/")
+		data.CreateTask(flagsMap["title"], flagsMap["description"], flagsMap["priority"], data.Date{DeadlineDay: deadlineDate[0], DeadlineMonth: deadlineDate[1], DeadlineYear: deadlineDate[2]})
 	},
 }
 
@@ -53,9 +66,9 @@ func init() {
 	// and all subcommands, e.g.:
 	updateCmd.Flags().SetInterspersed(false)
 
-	addCmd.PersistentFlags().StringVarP(&title, "title", "t", "", "add the task's title")
-	addCmd.PersistentFlags().StringVarP(&description, "description", "d", "", "add the task's description")
-	addCmd.PersistentFlags().StringVarP(&priority, "priority", "p", "", "add the task's priority")
-	addCmd.PersistentFlags().StringVarP(&deadline, "deadline", "l", "", "add the task's deadline")
+	addCmd.PersistentFlags().StringP("title", "t", "", "add the task's title")
+	addCmd.PersistentFlags().StringP("description", "d", "", "add the task's description")
+	addCmd.PersistentFlags().StringP("priority", "p", "", "add the task's priority")
+	addCmd.PersistentFlags().StringP("deadline", "l", "", "add the task's deadline")
 	addCmd.MarkFlagsRequiredTogether("title", "description", "priority", "deadline")
 }
