@@ -26,7 +26,9 @@ var updateCmd = &cobra.Command{
 			-d: a shot description of the task (accept string).
 			-p: the priority of the task, which can be: Critical, VeryHigh, High, Medium, Low (accept string).
 			-l: the deadline of the task, in the following format: "dd/mm/yyyy (accept string)."
-			--id: the id of the task to update.
+			-n: update the user who's the task is assigned to by name.
+			-i: update the the user who's the task is assigned to by id.
+
 `,
 	Example: `todo update -t="homework" -d="do homework 3 in intro to cs"`,
 	Args: func(cmd *cobra.Command, args []string) error {
@@ -53,22 +55,26 @@ var updateCmd = &cobra.Command{
 
 		fmt.Println(flagsMap)
 
-		if Contains(flagsUsed, "username") || Contains(flagsUsed, "userid") {
-			fmt.Println("update task by user")
+		if !Contains(flagsUsed, "task-id") && !Contains(flagsUsed, "task-title") {
+			fmt.Println("you must specify task id or task name")
+
 		}
 
-		if Contains(flagsUsed, "taskid") {
-			// make an update directly by task's id.
+		if Contains(flagsUsed, "task-id") {
 			data.UpdateTaskByID((flagsMap["taskid"]).(uint), flagsMap)
 
 			return
 		}
 
-		// try to find the task by the given details
-		// if not found, fail
-		// if found and unique, update.
+		// try to find the task by the given title
+		_, rowsAffected := data.GetTasksByTitle(flagsMap["task-title"].(string))
+		if rowsAffected > 1 {
+			fmt.Printf("more than one tasks exists with the title: %v, please specify task id", flagsMap["task-title"].(string))
 
-		fmt.Println("update called")
+			return
+		}
+
+		data.UpdateTaskByTitle(flagsMap["task-title"].(string), flagsMap)
 	},
 }
 
@@ -81,16 +87,15 @@ func init() {
 	// is called directly, e.g.:
 	// updateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	RootCmd.AddCommand(updateCmd)
+	updateCmd.PersistentFlags().Uint("task-id", 0, "the id of the task to update")
+	updateCmd.PersistentFlags().String("task-title", "", "the id of the task to update")
 
 	updateCmd.PersistentFlags().StringP("title", "t", "", "update the task's title")
 	updateCmd.PersistentFlags().StringP("description", "d", "", "update the task's description")
 	updateCmd.PersistentFlags().StringP("priority", "p", "", "update the task's priority")
 	updateCmd.PersistentFlags().StringP("deadline", "l", "", "update the task's deadline")
-
-	updateCmd.PersistentFlags().Uint("taskid", 0, "the id of the task to update")
-
-	updateCmd.PersistentFlags().String("username", "", "the name of the user who's the task is assigned to")
-	updateCmd.PersistentFlags().Uint("userid", 0, "the id of the user who's the task is assigned to")
+	updateCmd.PersistentFlags().StringP("username", "n", "", "update the user who's the task is assigned to by name")
+	updateCmd.PersistentFlags().UintP("userid", "i", 0, "update the the user who's the task is assigned to by id")
 
 	updateCmd.Flags().SetInterspersed(false)
 	updateCmd.MarkFlagsMutuallyExclusive("username", "userid")
