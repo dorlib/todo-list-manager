@@ -242,6 +242,10 @@ func GetUser(userID uint, username string) (User, bool) {
 func GetTaskByID(taskID uint) (Task, bool) {
 	var task Task
 
+	if !TaskExistByID(taskID) {
+		fmt.Printf("task with the id %v doesnt exists", taskID)
+	}
+
 	r := DB.Where("id = ?", taskID).First(&task)
 	if r.RowsAffected != 0 {
 		return task, true
@@ -250,11 +254,51 @@ func GetTaskByID(taskID uint) (Task, bool) {
 	return task, false
 }
 
+func GetTasksByTitle(taskTitle string) ([]Task, int64) {
+	var task []Task
+
+	if !TaskExistByName(taskTitle) {
+		fmt.Printf("task with the id %v doesnt exists", taskTitle)
+	}
+
+	r := DB.Where("title = ?", taskTitle).Find(&task)
+
+	if r.RowsAffected < 1 {
+		fmt.Printf("there is no task with the title: %v", taskTitle)
+		return nil, 0
+	}
+
+	return task, r.RowsAffected
+}
+
 func UpdateTaskByID(taskID uint, argsMap map[string]interface{}) {
 	task, found := GetTaskByID(taskID)
 	if !found {
 		fmt.Printf("task with the id %v doesnt exists", taskID)
 	}
+
+	if argsMap["title"] != "" {
+		task.Title = argsMap["title"].(string)
+	}
+
+	if argsMap["description"] != "" {
+		task.Title = argsMap["description"].(string)
+	}
+
+	if argsMap["priority"] != "" {
+		task.Title = argsMap["priority"].(string)
+	}
+
+	if argsMap["deadline"] != "" {
+		task.Title = argsMap["deadline"].(string)
+	}
+
+	DB.Save(&task)
+}
+
+func UpdateTaskByTitle(taskTitle string, argsMap map[string]interface{}) {
+	tasks, _ := GetTasksByTitle(taskTitle)
+	task := tasks[0]
 
 	if argsMap["title"] != "" {
 		task.Title = argsMap["title"].(string)
