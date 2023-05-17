@@ -265,6 +265,7 @@ func GetTasksByTitle(taskTitle string) ([]Task, int64) {
 
 	if r.RowsAffected < 1 {
 		fmt.Printf("there is no task with the title: %v", taskTitle)
+
 		return nil, 0
 	}
 
