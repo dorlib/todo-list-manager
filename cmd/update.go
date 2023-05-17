@@ -26,7 +26,6 @@ var updateCmd = &cobra.Command{
 			-d: a shot description of the task (accept string).
 			-p: the priority of the task, which can be: Critical, VeryHigh, High, Medium, Low (accept string).
 			-l: the deadline of the task, in the following format: "dd/mm/yyyy (accept string)."
-			--id: the id of the task to update.
 `,
 	Example: `todo update -t="homework" -d="do homework 3 in intro to cs"`,
 	Args: func(cmd *cobra.Command, args []string) error {
@@ -87,7 +86,7 @@ func init() {
 	updateCmd.PersistentFlags().StringP("priority", "p", "", "update the task's priority")
 	updateCmd.PersistentFlags().StringP("deadline", "l", "", "update the task's deadline")
 
-	updateCmd.PersistentFlags().Uint("taskid", 0, "the id of the task to update")
+	updateCmd.PersistentFlags().UintP("taskid", "i", 0, "the id of the task to update")
 
 	updateCmd.PersistentFlags().String("username", "", "the name of the user who's the task is assigned to")
 	updateCmd.PersistentFlags().Uint("userid", 0, "the id of the user who's the task is assigned to")
