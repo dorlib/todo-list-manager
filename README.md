@@ -51,6 +51,10 @@ As you can see in the welcome page of the app, the main "things" you can do are 
 ## Running the Application Yourself
 
 Here's what needs to be done in order to get the app running locally on your machine.
+1. Clone the project to your machine with `git clone https://github.com/dorlib/todo-list-manager.git && cd todo-list-manager`.
+2. run `go install`
+3. run `todo`
+4. help
 
 ### Run the docker container:
 
