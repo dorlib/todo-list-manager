@@ -67,14 +67,9 @@ var updateCmd = &cobra.Command{
 		}
 
 		// try to find the task by the given title
-		_, rowsAffected := data.GetTasksByTitle(flagsMap["task-title"].(string))
-		if rowsAffected > 1 {
-			fmt.Printf("more than one tasks exists with the title: %v, please specify task id", flagsMap["task-title"].(string))
+		task := data.GetTask(0, flagsMap["task-title"].(string))
 
-			return
-		}
-
-		data.UpdateTaskByTitle(flagsMap["task-title"].(string), flagsMap)
+		data.UpdateTaskByTitle(task, flagsMap)
 	},
 }
 

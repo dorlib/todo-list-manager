@@ -239,7 +239,27 @@ func GetUser(userID uint, username string) (User, bool) {
 	return user, false
 }
 
-func GetTaskByID(taskID uint) (Task, bool) {
+func GetTask(taskID uint, taskTitle string) Task {
+	if taskID != 0 {
+		task, exists := getTaskByID(taskID)
+		if exists {
+			return task
+		}
+	}
+
+	if taskTitle != "" {
+		task, rowsAffected := getTaskByTitle(taskTitle)
+		if rowsAffected == 1 {
+			return task
+		}
+	}
+
+	fmt.Printf("task with title %v or id %v doesnt exists", taskTitle, taskID)
+
+	return Task{}
+}
+
+func getTaskByID(taskID uint) (Task, bool) {
 	var task Task
 
 	if !TaskExistByID(taskID) {
@@ -254,26 +274,31 @@ func GetTaskByID(taskID uint) (Task, bool) {
 	return task, false
 }
 
-func GetTasksByTitle(taskTitle string) ([]Task, int64) {
-	var task []Task
+func getTaskByTitle(taskTitle string) (Task, int64) {
+	var task Task
 
 	if !TaskExistByName(taskTitle) {
 		fmt.Printf("task with the id %v doesnt exists", taskTitle)
 	}
 
 	r := DB.Where("title = ?", taskTitle).Find(&task)
+	if r.RowsAffected > 1 {
+		fmt.Printf("more than one tasks exists with the title: %v, please specify task id", taskTitle)
+
+		return Task{}, r.RowsAffected
+	}
 
 	if r.RowsAffected < 1 {
 		fmt.Printf("there is no task with the title: %v", taskTitle)
 
-		return nil, 0
+		return Task{}, 0
 	}
 
-	return task, r.RowsAffected
+	return task, 1
 }
 
 func UpdateTaskByID(taskID uint, argsMap map[string]interface{}) {
-	task, found := GetTaskByID(taskID)
+	task, found := getTaskByID(taskID)
 	if !found {
 		fmt.Printf("task with the id %v doesnt exists", taskID)
 	}
@@ -297,10 +322,7 @@ func UpdateTaskByID(taskID uint, argsMap map[string]interface{}) {
 	DB.Save(&task)
 }
 
-func UpdateTaskByTitle(taskTitle string, argsMap map[string]interface{}) {
-	tasks, _ := GetTasksByTitle(taskTitle)
-	task := tasks[0]
-
+func UpdateTaskByTitle(task Task, argsMap map[string]interface{}) {
 	if argsMap["title"] != "" {
 		task.Title = argsMap["title"].(string)
 	}
