@@ -41,6 +41,7 @@ feel free to add/update missions
 1. create authentication process as a user who have access to the tasks manager.
 2. create types of users (admin and regular users) and define authorization (eg. only admin can delete tasks).
 3. when running we should register or login (add to cmd).
+4. create the authorizer as independent microservice
 
 ##### INNOVATION #####
 1. make a POC about opening a web server in golang which will print "hello world" in the browser on "localhost:8080"
