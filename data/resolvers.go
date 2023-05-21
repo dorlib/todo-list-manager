@@ -15,6 +15,17 @@ func CreateTask(title, description, priority string, deadline Date, user User) {
 	fmt.Printf("rows affected: %v \n", rows)
 }
 
+func CreateUser(username, role, password string) {
+	user := User{
+		Username: username,
+		Password: password,
+		Role:     role,
+	}
+
+	rows := DB.Create(&user).RowsAffected
+	fmt.Printf("rows affected: %v \n", rows)
+}
+
 func DeleteTaskByID(taskID uint) {
 	if TaskExistByID(taskID) {
 		DB.Delete(&Task{}, taskID)
