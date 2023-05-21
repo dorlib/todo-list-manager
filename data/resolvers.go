@@ -9,9 +9,20 @@ const (
 	UNDONE = "undone"
 )
 
-func CreateTask(title, description, priority string, deadline Date) {
-	task := Task{Title: title, Description: description, Priority: priority, DeadlineDate: deadline}
+func CreateTask(title, description, priority string, deadline Date, user User) {
+	task := Task{Title: title, Description: description, Priority: priority, DeadlineDate: deadline, UserID: user.ID, UserName: user.Username}
 	rows := DB.Create(&task).RowsAffected
+	fmt.Printf("rows affected: %v \n", rows)
+}
+
+func CreateUser(username, role, password string) {
+	user := User{
+		Username: username,
+		Password: password,
+		Role:     role,
+	}
+
+	rows := DB.Create(&user).RowsAffected
 	fmt.Printf("rows affected: %v \n", rows)
 }
 

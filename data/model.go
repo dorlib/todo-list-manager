@@ -33,6 +33,7 @@ type User struct {
 	UpdatedAt time.Time      `gorm:"autoUpdateTime"`
 	DeletedAt gorm.DeletedAt `gorm:"index"`
 	Username  string         `gorm:"unique;not null"`
+	Password  string         `gorm:"size:255"`
 	Role      string         // admin/user
 	Tasks     []Task         `gorm:"-"`
 }

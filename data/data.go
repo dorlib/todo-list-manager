@@ -3,6 +3,7 @@ package data
 import (
 	"fmt"
 	"github.com/joho/godotenv"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -54,6 +55,20 @@ func OpenDataBase() {
 // BeforeSave is a gorm hook in order to initiate the deadline field.
 func (t *Task) BeforeSave(tx *gorm.DB) error {
 	t.Deadline = fmt.Sprintf("%s/%s/%s", t.DeadlineDate.DeadlineDay, t.DeadlineDate.DeadlineMonth, t.DeadlineDate.DeadlineYear)
+
+	return nil
+}
+
+// BeforeSave hook to hash the password before saving.
+func (u *User) BeforeSave(tx *gorm.DB) error {
+	if len(u.Password) > 0 {
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
+		if err != nil {
+			return err
+		}
+
+		u.Password = string(hashedPassword)
+	}
 
 	return nil
 }
