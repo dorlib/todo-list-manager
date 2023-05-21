@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
+	"strconv"
 	"strings"
 	"todo/data"
 )
@@ -22,6 +23,13 @@ var addCmd = &cobra.Command{
 			-d: a shot description of the task (accept string).
 			-p: the priority of the task, which can be: Critical, VeryHigh, High, Medium, Low (accept string).
 			-l: the deadline of the task, in the following format: "dd/mm/yyyy (accept string)."
+
+			-u: assign the task to a user. if not specified, the task will be assigned to the creator.
+			
+			if u was specified, you also need to give one of the following: 
+			--id: the id of the user to assign the task to.
+			--name: the full name of the user to assign the task to.
+			
 `,
 	Args: func(cmd *cobra.Command, args []string) error {
 		flags := ""
@@ -41,6 +49,12 @@ var addCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		flagsMap := make(map[string]string, len(flagsUsed))
 
+		if Contains(flagsUsed, "user") && !Contains(flagsUsed, "id") && !Contains(flagsUsed, "name") {
+			fmt.Printf("must specify user ID or username when assigning task to user")
+
+			return
+		}
+
 		for _, flag := range flagsUsed {
 			flagsMap[flag] = cmd.Flag(flag).Value.String()
 		}
@@ -49,8 +63,19 @@ var addCmd = &cobra.Command{
 
 		fmt.Println(flagsMap)
 
+		id, err := strconv.ParseUint(flagsMap["id"], 10, 64)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		userToAssign, exists := data.GetUser(uint(id), flagsMap["name"])
+
+		if !exists {
+			fmt.Printf("get the user who is currently connected")
+		}
+
 		deadlineDate := strings.Split(flagsMap["deadline"], "/")
-		data.CreateTask(flagsMap["title"], flagsMap["description"], flagsMap["priority"], data.Date{DeadlineDay: deadlineDate[0], DeadlineMonth: deadlineDate[1], DeadlineYear: deadlineDate[2]})
+		data.CreateTask(flagsMap["title"], flagsMap["description"], flagsMap["priority"], data.Date{DeadlineDay: deadlineDate[0], DeadlineMonth: deadlineDate[1], DeadlineYear: deadlineDate[2]}, userToAssign)
 	},
 }
 
@@ -71,4 +96,9 @@ func init() {
 	addCmd.PersistentFlags().StringP("priority", "p", "", "add the task's priority")
 	addCmd.PersistentFlags().StringP("deadline", "l", "", "add the task's deadline")
 	addCmd.MarkFlagsRequiredTogether("title", "description", "priority", "deadline")
+
+	printCmd.PersistentFlags().StringP("user", "u", "user", "assign the task to a user")
+	printCmd.PersistentFlags().Uint("id", 0, "the id of the user which the task will be assigned to")
+	printCmd.PersistentFlags().String("name", "", "the name of the user which the task will be assigned to")
+	printCmd.MarkFlagsMutuallyExclusive("done", "undone")
 }
