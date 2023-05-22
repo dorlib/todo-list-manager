@@ -18,11 +18,11 @@ feel free to add/update missions
     d. add option to print all tasks ordered by users
 5. add seeder command to insert pre-made data
 6. add the init command in order to make a group or make private dashboard
-7. add option to jump between dashboards
+7. add option to jump between dashboards (add 'use' like command in databases)
 8. verify that the conditions described in the long description of print command are applied in the code's logic.
 9. write unit tests for the commands in the cli.
 10. turn "Done" field to enum the has: (todo, in progress, done) - done
-11. fix all the printing queries (only the one for group and without by and without ops is correct)
+11. fix all the printing queries (only the one for group and without by and without ops is correct) - done
 
 ##### DATA MISSIONS #####
 1. write unit test for the functions in data/utils.go (read about golang way to write unit tests)
@@ -32,7 +32,7 @@ feel free to add/update missions
     c. adjust resolver to support User
 3. change done & undone to todo & in progress & done
 4. add a seeder to the app which insert pre-made data
-5. move hard coded parameters in openDatabase function to env vars.
+5. move hard coded parameters in openDatabase function to env vars. - done
 
 ##### ALERT SERVICE #####
 1. create an alert service which will once a day go over the undone tasks and make alerts to users by mail if the deadline in on the next day.
