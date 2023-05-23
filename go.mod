@@ -9,7 +9,7 @@ require (
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/pflag v1.0.5
 	golang.org/x/crypto v0.9.0
-	gorm.io/driver/mysql v1.5.0
+	gorm.io/driver/mysql v1.5.1
 	gorm.io/gorm v1.25.1
 )
 
