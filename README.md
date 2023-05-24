@@ -77,7 +77,7 @@ In order to run the app using docker-compose:
 
 ## Seed data to your database
 
-to be written..
+In order to seed pre-made data, for quick testing the app, you can type the command `todo seed`
 
 ---
 
