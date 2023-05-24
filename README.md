@@ -111,5 +111,3 @@ This project was created for educational purposes, for personal and open-source 
 
 If you like my content or find my code useful, give it a :star: 
 
-
----
