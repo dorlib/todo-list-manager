@@ -73,13 +73,9 @@ In order to run the app using docker-compose:
 6. Run in the command line `todo --help` and start manging your tasks!
 7. Open [http://localhost:3000](http://localhost:3000) to manage your tasks on the web (IN PROGRESS).
 
----
-
 ## Seed data to your database
 
 In order to seed pre-made data, for quick testing the app, you can type the command `todo seed`
-
----
 
 ## Contributing
 
