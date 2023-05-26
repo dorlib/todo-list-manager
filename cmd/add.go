@@ -97,8 +97,8 @@ func init() {
 	addCmd.PersistentFlags().StringP("deadline", "l", "", "add the task's deadline")
 	addCmd.MarkFlagsRequiredTogether("title", "description", "priority", "deadline")
 
-	printCmd.PersistentFlags().StringP("user", "u", "user", "assign the task to a user")
-	printCmd.PersistentFlags().Uint("id", 0, "the id of the user which the task will be assigned to")
-	printCmd.PersistentFlags().String("name", "", "the name of the user which the task will be assigned to")
-	printCmd.MarkFlagsMutuallyExclusive("done", "undone")
+	addCmd.PersistentFlags().StringP("user", "u", "user", "assign the task to a user")
+	addCmd.PersistentFlags().Uint("id", 0, "the id of the user which the task will be assigned to")
+	addCmd.PersistentFlags().String("name", "", "the name of the user which the task will be assigned to")
+	addCmd.MarkFlagsMutuallyExclusive("id", "name")
 }

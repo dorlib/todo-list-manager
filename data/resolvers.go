@@ -10,7 +10,15 @@ const (
 )
 
 func CreateTask(title, description, priority string, deadline Date, user User) {
-	task := Task{Title: title, Description: description, Priority: priority, DeadlineDate: deadline, UserID: user.ID, UserName: user.Username}
+	task := Task{
+		Title:        title,
+		Description:  description,
+		Priority:     priority,
+		DeadlineDate: deadline,
+		UserID:       user.ID,
+		UserName:     user.Username,
+	}
+
 	rows := DB.Create(&task).RowsAffected
 	fmt.Printf("rows affected: %v \n", rows)
 }
@@ -23,6 +31,17 @@ func CreateUser(username, role, password string) {
 	}
 
 	rows := DB.Create(&user).RowsAffected
+	fmt.Printf("rows affected: %v \n", rows)
+}
+
+func CreateGroup(name, description string, users []User) {
+	group := Group{
+		Name:        name,
+		Description: description,
+		Users:       users,
+	}
+
+	rows := DB.Create(&group).RowsAffected
 	fmt.Printf("rows affected: %v \n", rows)
 }
 
