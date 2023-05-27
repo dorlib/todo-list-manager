@@ -5,32 +5,26 @@ package cmd
 
 import (
 	"fmt"
-
 	"github.com/spf13/cobra"
+	"todo/data"
 )
 
 // seedCmd represents the seed command.
 var seedCmd = &cobra.Command{
 	Use:   "seed",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Seed command will seed pre made data",
+	Long: `Seed command will seed pre made data
+			Seed will create users, groups and tasks which will be assigned to the different users.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("seed called")
+		err := data.Seeder()
+		if err != nil {
+			fmt.Printf("error while seeding data: %v", err)
+
+			return
+		}
 	},
 }
 
 func init() {
-	// Here you will define your flags and configuration settings.
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// seedCmd.PersistentFlags().String("foo", "", "A help for foo")
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// seedCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	RootCmd.AddCommand(seedCmd)
 }
