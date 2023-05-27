@@ -77,5 +77,6 @@ func Seeder() error {
 	}
 
 	fmt.Printf("task created: %v", task4)
+
 	return nil
 }

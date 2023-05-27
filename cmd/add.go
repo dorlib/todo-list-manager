@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
+	"log"
 	"strconv"
 	"strings"
 	"todo/data"
@@ -75,7 +76,14 @@ var addCmd = &cobra.Command{
 		}
 
 		deadlineDate := strings.Split(flagsMap["deadline"], "/")
-		data.CreateTask(flagsMap["title"], flagsMap["description"], flagsMap["priority"], data.Date{DeadlineDay: deadlineDate[0], DeadlineMonth: deadlineDate[1], DeadlineYear: deadlineDate[2]}, userToAssign)
+		task, err := data.CreateTask(flagsMap["title"], flagsMap["description"], flagsMap["priority"], data.Date{DeadlineDay: deadlineDate[0], DeadlineMonth: deadlineDate[1], DeadlineYear: deadlineDate[2]}, userToAssign)
+		if err != nil {
+			fmt.Printf("%v", err)
+
+			return
+		}
+
+		log.Printf("task created: %v", task)
 	},
 }
 
