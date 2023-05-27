@@ -6,9 +6,8 @@ package cmd
 
 import (
 	"fmt"
-	"todo/data"
-
 	"github.com/spf13/cobra"
+	"todo/data"
 )
 
 // deleteCmd represents the delete command.

@@ -11,7 +11,7 @@ import (
 	"log"
 	"strconv"
 	"strings"
-	"todo/data"
+	data2 "todo/data"
 )
 
 // addCmd represents the add command.
@@ -69,14 +69,14 @@ var addCmd = &cobra.Command{
 			fmt.Println(err)
 		}
 
-		userToAssign, exists := data.GetUser(uint(id), flagsMap["name"])
+		userToAssign, exists := data2.GetUser(uint(id), flagsMap["name"])
 
 		if !exists {
 			fmt.Printf("get the user who is currently connected")
 		}
 
 		deadlineDate := strings.Split(flagsMap["deadline"], "/")
-		task, err := data.CreateTask(flagsMap["title"], flagsMap["description"], flagsMap["priority"], data.Date{DeadlineDay: deadlineDate[0], DeadlineMonth: deadlineDate[1], DeadlineYear: deadlineDate[2]}, userToAssign)
+		task, err := data2.CreateTask(flagsMap["title"], flagsMap["description"], flagsMap["priority"], data2.Date{DeadlineDay: deadlineDate[0], DeadlineMonth: deadlineDate[1], DeadlineYear: deadlineDate[2]}, userToAssign)
 		if err != nil {
 			fmt.Printf("%v", err)
 
