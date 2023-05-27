@@ -5,8 +5,8 @@ Copyright © 2023 todo-list <dorlib318@gmail.com>
 package main
 
 import (
-	"todo/cmd"
-	"todo/data"
+	cmd "todo/cmd"
+	data "todo/data"
 )
 
 func main() {

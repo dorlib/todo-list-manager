@@ -5,7 +5,7 @@ FROM golang:latest
 WORKDIR /app
 
 # Copy the source code
-COPY . .
+COPY ../.. .
 
 # Install dependencies
 RUN go get -d -v ./...

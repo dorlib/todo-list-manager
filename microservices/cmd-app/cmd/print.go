@@ -6,11 +6,10 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"strings"
-	"todo/data"
-
-	"github.com/spf13/cobra"
+	data2 "todo/data"
 )
 
 // todo - verify that user inserted flags according the rules described in the long description.
@@ -71,13 +70,13 @@ var printCmd = &cobra.Command{
 		fmt.Println(check)
 
 		if Contains(flagsUsed, "id") {
-			data.PrintTaskByID(flagsMap["id"].(uint))
+			data2.PrintTaskByID(flagsMap["id"].(uint))
 
 			return
 		}
 
 		if Contains(flagsUsed, "username") {
-			data.PrintTaskByName(flagsMap["username"].(string))
+			data2.PrintTaskByName(flagsMap["username"].(string))
 
 			return
 		}
@@ -109,14 +108,14 @@ var printCmd = &cobra.Command{
 		}
 
 		if len(flagsUsed) == 0 {
-			data.PrintAllTasks(data.User{}, false, by, opt)
+			data2.PrintAllTasks(data2.User{}, false, by, opt)
 
 			return
 		}
 
-		user, userFound := data.GetUser(userid, username)
+		user, userFound := data2.GetUser(userid, username)
 
-		data.PrintAllTasks(user, userFound, by, opt)
+		data2.PrintAllTasks(user, userFound, by, opt)
 	},
 }
 

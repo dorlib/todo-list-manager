@@ -6,22 +6,20 @@ package cmd
 
 import (
 	"fmt"
-	"todo/data"
-
 	"github.com/spf13/cobra"
+	"todo/data"
 )
 
-// undoneCmd represents the undone command.
-var undoneCmd = &cobra.Command{
-	Use:   "undone",
-	Short: "undone command marks the given task as done.",
-	Long: `undone command will marks the given task as done.
-			undone must except one and only one from the following tags: 
+// doneCmd represents the done command.
+var doneCmd = &cobra.Command{
+	Use:   "done",
+	Short: "done command marks the given task as done.",
+	Long: `done command will marks the given task as done.
+			done must except one and only one from the following tags: 
 			-t: the task's title (accept string).
 			-i: the task's ID (accept string).
 `,
-	Example: `todo undone -i="134"`,
-	Args:    cobra.ExactArgs(1),
+	Example: `todo done -i "134"`,
 	Run: func(cmd *cobra.Command, args []string) {
 		taskID, err := cmd.Flags().GetUint("ID")
 		if err != nil {
@@ -34,27 +32,15 @@ var undoneCmd = &cobra.Command{
 		}
 
 		if taskTitle != "" {
-			if !data.TaskExistByName(taskTitle) {
-				fmt.Printf("Task %v Does Not Exist", taskTitle)
-
-				return
-			}
-
-			data.ToggleDoneByTitle(taskTitle, false)
+			data.ToggleDoneByTitle(taskTitle, true)
 		} else if taskID != 0 {
-			if !data.TaskExistByID(taskID) {
-				fmt.Printf("Task %v Does Not Exist", taskID)
-
-				return
-			}
-
-			data.ToggleDoneByID(taskID, false)
+			data.ToggleDoneByID(taskID, true)
 		}
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(undoneCmd)
+	RootCmd.AddCommand(doneCmd)
 	// Here you will define your flags and configuration settings.
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
@@ -62,6 +48,6 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// doneCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	undoneCmd.PersistentFlags().UintP("ID", "i", 0, "mark task by ID as undone")
-	undoneCmd.PersistentFlags().StringP("title", "t", "", "mark task by title as undone")
+	doneCmd.PersistentFlags().UintP("ID", "i", 0, "mark task by ID as done")
+	doneCmd.PersistentFlags().StringP("title", "t", "", "mark task by title as done")
 }

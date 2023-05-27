@@ -9,7 +9,7 @@ const (
 	UNDONE = "undone"
 )
 
-func CreateTask(title, description, priority string, deadline Date, user User) {
+func CreateTask(title, description, priority string, deadline Date, user User) (Task, error) {
 	task := Task{
 		Title:        title,
 		Description:  description,
@@ -21,9 +21,15 @@ func CreateTask(title, description, priority string, deadline Date, user User) {
 
 	rows := DB.Create(&task).RowsAffected
 	fmt.Printf("rows affected: %v \n", rows)
+
+	if rows > 0 {
+		return task, nil
+	}
+
+	return Task{}, fmt.Errorf("failed to create task")
 }
 
-func CreateUser(username, role, password string) {
+func CreateUser(username, role, password string) (User, error) {
 	user := User{
 		Username: username,
 		Password: password,
@@ -32,9 +38,15 @@ func CreateUser(username, role, password string) {
 
 	rows := DB.Create(&user).RowsAffected
 	fmt.Printf("rows affected: %v \n", rows)
+
+	if rows > 0 {
+		return user, nil
+	}
+
+	return User{}, fmt.Errorf("failed to create user")
 }
 
-func CreateGroup(name, description string, users []User) {
+func CreateGroup(name, description string, users []User) (Group, error) {
 	group := Group{
 		Name:        name,
 		Description: description,
@@ -43,6 +55,12 @@ func CreateGroup(name, description string, users []User) {
 
 	rows := DB.Create(&group).RowsAffected
 	fmt.Printf("rows affected: %v \n", rows)
+
+	if rows > 0 {
+		return group, nil
+	}
+
+	return Group{}, fmt.Errorf("failed to create group")
 }
 
 func DeleteTaskByID(taskID uint) {
