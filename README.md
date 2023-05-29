@@ -3,7 +3,8 @@
 Hello everyone 👋 </br>
 This is a CLI for task managment using Go, Cobra cli & GORM!
 
-The main purposes of this project are to gain more experience with golang and known & popular frameworks and technologies. 
+The main purposes of this project are to gain more experience with golang and known & popular frameworks and technologies.
+Also practise clean code, SOLID principles of golang and microservices architacture in golang.
 In addition, gain experience of taste of what its like working with other team members on the same 
 codebase, working with git and with the technologies github has to offer.
 
