@@ -29,7 +29,10 @@ func NewRoute(l *log.Logger, f *models.Flags) *Login {
 
 func (r *Login) RegisterRoutes() *gin.Engine {
 	ginEngine := gin.Default()
+	ginEngine.POST("/sign", r.signHandler.Sign)
 	ginEngine.POST("/login", r.loginHandler.Login)
+	ginEngine.POST("/logout", r.logoutHandler.Logout)
+	ginEngine.POST("/reset", r.resetHandler.Reset)
 	ginEngine.POST("/verifyToken", r.loginHandler.VerifyToken)
 	return ginEngine
 }
