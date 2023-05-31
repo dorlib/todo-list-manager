@@ -1,7 +1,7 @@
 package collectors
 
 import (
-	"github.com/architagr/golang-microservice-tutorial/authentication/models"
+	"authorizer/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

@@ -1,13 +1,14 @@
 package services
 
 import (
+	"github.com/dgrijalva/jwt-go"
 	"log"
 	"strconv"
 	"time"
 
-	"github.com/dorlib/todo-list-manager/microservices/authorizer/models"
-	"github.com/dorlib/todo-list-manager/microservices/authorizer/repository"
-	"github.com/dorlib/todo-list-manager/microservices/authorizer/token"
+	"authorizer/models"
+	"authorizer/repository"
+	"authorizer/token"
 )
 
 type Login struct {
@@ -30,9 +31,9 @@ func (l *Login) GetToken(loginModel models.LoginRequest, origin string) (string,
 		return "", err
 	}
 	var claims = &models.JwtClaims{
-		ComapnyId: strconv.Itoa(user.Id),
+		ComapnyID: strconv.Itoa(user.ID),
 		Username:  user.Name,
-		Roles:     user.Roles,
+		Roles:     user.Role,
 		StandardClaims: jwt.StandardClaims{
 			Audience: origin,
 		},

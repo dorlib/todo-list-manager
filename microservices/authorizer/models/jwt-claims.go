@@ -5,13 +5,13 @@ import (
 	"strings"
 	"time"
 
-	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/dgrijalva/jwt-go"
 )
 
 type JwtClaims struct {
 	ComapnyID string `json:"comapnyID,omitempty"`
 	Username  string `json:"username,omitempty"`
-	Roles     []int  `json:"roles,omitempty"`
+	Roles     string `json:"roles,omitempty"`
 	jwt.StandardClaims
 }
 

@@ -1,10 +1,10 @@
 package routers
 
 import (
+	"authorizer/collectors"
 	handlers "authorizer/collectors"
-	"github.com/dorlib/todo-list-mananger/microservices/authorizer/collectors"
-	"github.com/dorlib/todo-list-mananger/microservices/authorizer/models"
-	"github.com/dorlib/todo-list-mananger/microservices/authorizer/token"
+	"authorizer/models"
+	"authorizer/token"
 	"log"
 
 	"github.com/gin-gonic/gin"

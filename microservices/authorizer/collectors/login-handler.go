@@ -1,9 +1,9 @@
 package collectors
 
 import (
+	"authorizer/models"
+	"authorizer/services"
 	"fmt"
-	"github.com/dorlib/todo-list-manager/microservices/authorizer/models"
-	"github.com/dorlib/todo-list-manager/microservices/authorizer/services"
 	"log"
 	"net/http"
 

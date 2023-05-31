@@ -1,6 +1,7 @@
 package main
 
 import (
+	"authorizer/models"
 	"authorizer/routers"
 	"flag"
 	"fmt"
@@ -24,5 +25,8 @@ func main() {
 	engine := route.RegisterRoutes()
 
 	url, _ := flags.GetApplicationUrl()
-	engine.Run(*url)
+	err := engine.Run(*url)
+	if err != nil {
+		panic("failed to start server")
+	}
 }
