@@ -25,28 +25,28 @@ func NewLogin(l *log.Logger, f *models.Flags) *Login {
 	}
 }
 
-func (l *Login) Login(context *gin.Context) {
+func (l *Login) Login(ctx *gin.Context) {
 
 	var loginObj models.LoginRequest
-	if err := context.ShouldBindJSON(&loginObj); err != nil {
+	if err := ctx.ShouldBindJSON(&loginObj); err != nil {
 		var errors []models.ErrorDetail = make([]models.ErrorDetail, 0, 1)
 		errors = append(errors, models.ErrorDetail{
 			ErrorType:    models.ErrorTypeValidation,
 			ErrorMessage: fmt.Sprintf("%v", err),
 		})
-		badRequest(context, http.StatusBadRequest, "invalid request", errors)
+		badRequest(ctx, http.StatusBadRequest, "invalid request", errors)
 		return
 	}
-	tokeString, err := l.loginService.GetToken(loginObj, context.Request.Header.Get("Referer"))
+	tokeString, err := l.loginService.GetToken(loginObj, ctx.Request.Header.Get("Referer"))
 
 	if err != nil {
-		badRequest(context, http.StatusBadRequest, "error in gerating token", []models.ErrorDetail{
+		badRequest(ctx, http.StatusBadRequest, "error in gerating token", []models.ErrorDetail{
 			*err,
 		})
 		return
 	}
 
-	ok(context, http.StatusOK, "token created", tokeString)
+	ok(ctx, http.StatusOK, "token created", tokeString)
 }
 
 func (l *Login) VerifyToken(context *gin.Context) {
