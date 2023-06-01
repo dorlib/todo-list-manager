@@ -5,3 +5,8 @@ type LoginRequest struct {
 	Password   string `json:"Password" form:"Password" binding:"required"`
 	RememberMe bool   `json:"RememberMe" form:"RememberMe"`
 }
+
+type SignRequest struct {
+	UserName string `json:"UserName" form:"UserName" binding:"required"`
+	Password string `json:"Password" form:"Password" binding:"required"`
+}
