@@ -51,7 +51,7 @@ As you can see in the welcome page of the app, the main "things" you can do are 
 
 ## Microservices architacture
 
-![services](file:///Users/intel-mac/Desktop/Screenshot%202023-06-02%20at%2022.17.30.png)
+![services](https://github.com/dorlib/todo-list-manager/assets/90474428/3d466019-81bd-4ed0-a68e-e4036550c744)
 
 ## Running the Application Yourself
 
