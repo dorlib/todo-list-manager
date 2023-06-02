@@ -49,6 +49,10 @@ As you can see in the welcome page of the app, the main "things" you can do are 
 
 ---
 
+## Microservices architacture
+
+[services](file:///Users/intel-mac/Desktop/Screenshot%202023-06-02%20at%2022.17.30.png)
+
 ## Running the Application Yourself
 
 Here's what needs to be done in order to get the app running locally on your machine.
