@@ -25,7 +25,7 @@ const (
 	jWTPrivateToken = "SecrteTokenSecrteToken"
 )
 
-func GenrateToken(claims *models.JwtClaims, expirationTime time.Time) (string, *models.ErrorDetail) {
+func GenerateToken(claims *models.JwtClaims, expirationTime time.Time) (string, *models.ErrorDetail) {
 
 	claims.ExpiresAt = expirationTime.Unix()
 	claims.IssuedAt = time.Now().UTC().Unix()

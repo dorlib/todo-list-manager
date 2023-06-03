@@ -26,17 +26,21 @@ func NewLogin(l *log.Logger, f *models.Flags) *Login {
 }
 
 func (l *Login) Login(ctx *gin.Context) {
-
 	var loginObj models.LoginRequest
+
 	if err := ctx.ShouldBindJSON(&loginObj); err != nil {
 		var errors []models.ErrorDetail = make([]models.ErrorDetail, 0, 1)
+
 		errors = append(errors, models.ErrorDetail{
 			ErrorType:    models.ErrorTypeValidation,
 			ErrorMessage: fmt.Sprintf("%v", err),
 		})
+
 		badRequest(ctx, http.StatusBadRequest, "invalid request", errors)
+
 		return
 	}
+
 	tokeString, err := l.loginService.GetToken(loginObj, ctx.Request.Header.Get("Referer"))
 
 	if err != nil {

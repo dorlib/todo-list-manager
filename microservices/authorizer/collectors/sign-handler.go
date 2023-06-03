@@ -27,8 +27,9 @@ func NewSign(l *log.Logger, f *models.Flags) *Sign {
 func (s *Sign) Sign(ctx *gin.Context) {
 	var body struct {
 		UserName string
-		Password String
+		Password string
 	}
+
 	if ctx.Bind(&body) != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": "Failed to read body",
@@ -46,5 +47,6 @@ func (s *Sign) Sign(ctx *gin.Context) {
 		return
 	}
 
-	// create user (consider implement here and move from data).
+	// return a response which will contain the hash
+	ok(ctx, http.StatusOK, "token created", hash)
 }

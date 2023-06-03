@@ -40,7 +40,7 @@ func (l *Login) GetToken(loginModel models.LoginRequest, origin string) (string,
 	}
 	var tokenCreationTime = time.Now().UTC()
 	var expirationTime = tokenCreationTime.Add(time.Duration(2) * time.Hour)
-	return token.GenrateToken(claims, expirationTime)
+	return token.GenerateToken(claims, expirationTime)
 
 }
 
