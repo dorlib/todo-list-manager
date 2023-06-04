@@ -103,8 +103,6 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 6. Push changes to your fork.
 7. Open a Pull Request in my repository.
 
----
-
 ## Creator / Maintainer
 
 Dor Liberman ([dorlib](https://github.com/anniedotexe))
