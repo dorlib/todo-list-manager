@@ -30,8 +30,6 @@ In the future, we will continue to extend the app and create more features, and 
 - [GORM](https://gorm.io/) as ORM library for Golang.
 - [go-pretty](https://github.com/jedib0t/go-pretty/tree/main/table) for printing tables.
 - [golangci-lint](https://golangci-lint.run/) as golang linter in order to preserve our code's quality.
----
-
 
 ## What the Application include?
 
@@ -46,8 +44,6 @@ As you can see in the welcome page of the app, the main "things" you can do are 
 6. Define authorization - you can give admin access for some of the group's members inorder to have extra capabilities!
 
 #### pleae note the README file in the cmd directory of more info about the available commands & flags.
-
----
 
 ## Microservices Architacture
 
