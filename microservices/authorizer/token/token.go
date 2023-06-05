@@ -1,78 +1,88 @@
 package token
 
 import (
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/base64"
+	"encoding/json"
+	"errors"
 	"fmt"
+	"os"
+	"strings"
 	"time"
-
-	"authorizer/models"
-
-	"github.com/dgrijalva/jwt-go"
 )
 
-func Init() *models.ErrorDetail {
-	flags, err := models.GetFlags()
+const (
+	CORRUPT_TOKEN = "Corrupt Token"
+	INVALID_TOKEN = "Invalid Token"
+	EXPIRED_TOKEN = "Expired Token"
+)
+
+type ClaimsMap struct {
+	Aud string
+	Iss string
+	Exp string
+}
+
+// GetSecret fetches the value for the JWT_SECRET from the environment variable
+func GetSecret() string {
+	return os.Getenv("JWT_SECRET")
+}
+
+// GenerateToken is used for generating the tokens.
+func GenerateToken(header string, payload ClaimsMap, secret string) (string, error) {
+	h := hmac.New(sha256.New, []byte(secret))
+	header64 := base64.StdEncoding.EncodeToString([]byte(header))
+
+	payloadstr, err := json.Marshal(payload)
+	if err != nil {
+		return string(payloadstr), fmt.Errorf("Error generating token when encoding payload to string: %w", err)
+	}
+
+	payload64 := base64.StdEncoding.EncodeToString(payloadstr)
+	message := header64 + "." + payload64
+	unsignedStr := header + string(payloadstr)
+
+	h.Write([]byte(unsignedStr))
+	signature := base64.StdEncoding.EncodeToString(h.Sum(nil))
+
+	tokenStr := message + "." + signature
+	return tokenStr, nil
+}
+
+// ValidateToken helps in validating the token
+func ValidateToken(token string, secret string) error {
+	splitToken := strings.Split(token, ".")
+	if len(splitToken) != 3 {
+		return errors.New(CORRUPT_TOKEN)
+	}
+
+	header, err := base64.StdEncoding.DecodeString(splitToken[0])
 	if err != nil {
 		return err
 	}
 
-	ip, _ = flags.GetApplicationUrl()
-	return nil
-}
-
-var ip *string
-
-const (
-	jWTPrivateToken = "SecrteTokenSecrteToken"
-)
-
-func GenerateToken(claims *models.JwtClaims, expirationTime time.Time) (string, *models.ErrorDetail) {
-
-	claims.ExpiresAt = expirationTime.Unix()
-	claims.IssuedAt = time.Now().UTC().Unix()
-	claims.Issuer = *ip
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-
-	// Sign and get the complete encoded token as a string using the secret
-	tokenString, err := token.SignedString([]byte(jWTPrivateToken))
+	payload, err := base64.StdEncoding.DecodeString(splitToken[1])
 	if err != nil {
-		return "", &models.ErrorDetail{
-			ErrorType:    models.ErrorTypeError,
-			ErrorMessage: err.Error(),
-		}
+		return err
 	}
-	return tokenString, nil
-}
 
-func VerifyToken(tokenString, origin string) (bool, *models.JwtClaims) {
-	claims := &models.JwtClaims{}
-	token, _ := getTokenFromString(tokenString, claims)
+	unsignedStr := string(header) + string(payload)
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write([]byte(unsignedStr))
 
-	if token.Valid {
-		if claims.VerifyAudience(origin) {
-			return true, claims
-		}
+	signature := base64.StdEncoding.EncodeToString(h.Sum(nil))
+
+	if signature != splitToken[2] {
+		return errors.New(INVALID_TOKEN)
 	}
-	return false, nil
-}
 
-func GetClaims(tokenString string) models.JwtClaims {
-	claims := &models.JwtClaims{}
+	var payloadMap ClaimsMap
+	json.Unmarshal(payload, &payloadMap)
 
-	_, err := getTokenFromString(tokenString, claims)
-	if err == nil {
-		return *claims
+	if payloadMap.Exp < fmt.Sprint(time.Now().Unix()) {
+		return errors.New(EXPIRED_TOKEN)
 	}
-	return *claims
-}
-func getTokenFromString(tokenString string, claims *models.JwtClaims) (*jwt.Token, error) {
-	return jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
-		// Don't forget to validate the alg is what you expect:
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
-		}
 
-		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
-		return []byte(jWTPrivateToken), nil
-	})
+	return nil
 }
