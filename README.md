@@ -55,7 +55,7 @@ As you can see in the welcome page of the app, the main "things" you can do are 
 
 ## Running the Application Yourself
 
-Here's what needs to be done in order to get the app running locally on your machine.
+Here's what needs to be done in order to get the app running locally on your machine (NOT RELAVENT for now, need to be aligned with the new architacture).
 1. Clone the project to your machine with `git clone https://github.com/dorlib/todo-list-manager.git && cd todo-list-manager`.
 2. download mysql and create new database (pay attention to give the connection string the right arguments).
 3. run `go install`
@@ -64,7 +64,7 @@ Here's what needs to be done in order to get the app running locally on your mac
 
 ### Run the docker container:
 
-In order to run the app using docker-compose:
+In order to run the app using docker-compose  (NOT RELAVENT for now, need to be aligned with the new architacture).:
 1. Clone the project to your machine with `git clone https://github.com/dorlib/todo-list-manager.git && cd todo-list-manager`.
 2. Run `docker-compose buid && docker-compose up`.
 3. Enjoy managing your tasks.
