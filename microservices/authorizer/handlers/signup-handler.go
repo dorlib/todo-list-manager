@@ -2,8 +2,6 @@ package handlers
 
 import (
 	"net/http"
-
-	"authorizer/data"
 )
 
 // SignupHandler adds the user to the database of users.
@@ -37,16 +35,7 @@ func SignupHandler(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	// validate and then add the user
-	check := data.AddUserObject(r.Header["Email"][0], r.Header["Username"][0], r.Header["Passwordhash"][0],
-		r.Header["Fullname"][0], 0)
-
-	// if false means username already exists
-	if !check {
-		rw.WriteHeader(http.StatusConflict)
-		rw.Write([]byte("Email or Username already exists"))
-
-		return
-	}
+	rw.Write([]byte(r.Header["Passwordhash"][0]))
 
 	rw.WriteHeader(http.StatusOK)
 	rw.Write([]byte("User Created"))
