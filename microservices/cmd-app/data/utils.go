@@ -68,6 +68,22 @@ func TaskExistByName(taskName string) bool {
 	return task.ID != 0
 }
 
+func UserExistByID(userID uint) bool {
+	var user User
+
+	DB.First(&user, userID)
+
+	return user.ID != 0
+}
+
+func UserExistByName(userName string) bool {
+	var user User
+
+	DB.Where("username = ?", userName).First(&user)
+
+	return user.ID != 0
+}
+
 func CheckLegalPriority(priority string) bool {
 	if priority == Critical || priority == VeryHigh || priority == High || priority == Medium || priority == Low {
 		return true
