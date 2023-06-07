@@ -30,6 +30,9 @@ func CreateTask(title, description, priority string, deadline Date, user User) (
 }
 
 func CreateUser(username, role, password string) (User, error) {
+	if UserExistByName(username) {
+		return User{}, fmt.Errorf("user already exists")
+	}
 	user := User{
 		Username: username,
 		Password: password,
