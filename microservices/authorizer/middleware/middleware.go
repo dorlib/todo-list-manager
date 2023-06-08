@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	token2 "authorizer/token"
 	"net/http"
 )
 
@@ -14,14 +15,16 @@ func tokenValidationMiddleware(next http.Handler) http.Handler {
 			rw.Write([]byte("Token Missing"))
 			return
 		}
-		token := r.Header["Token"][0]
-		check, err := token.ValidateToken(token, "S0m3_R4n90m_sss")
 
+		token := r.Header["Token"][0]
+
+		check, err := token2.ValidateToken(token, "S0m3_R4n90m_sss")
 		if err != nil {
 			rw.WriteHeader(http.StatusInternalServerError)
 			rw.Write([]byte("Token Validation Failed"))
 			return
 		}
+
 		if !check {
 			rw.WriteHeader(http.StatusUnauthorized)
 			rw.Write([]byte("Token Invalid"))
