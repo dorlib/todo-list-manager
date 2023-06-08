@@ -24,19 +24,22 @@ type ClaimsMap struct {
 	Exp string
 }
 
-// GetSecret fetches the value for the JWT_SECRET from the environment variable
+// GetSecret fetches the value for the JWT_SECRET from the environment variable.
 func GetSecret() string {
+
 	return os.Getenv("JWT_SECRET")
 }
 
-// GenerateToken is used for generating the tokens.
-func GenerateToken(header string, payload ClaimsMap, secret string) (string, error) {
+// GenerateToken is generating the tokens.
+func GenerateToken(header string, payload map[string]string, secret string) (string, error) {
 	h := hmac.New(sha256.New, []byte(secret))
 	header64 := base64.StdEncoding.EncodeToString([]byte(header))
 
 	payloadstr, err := json.Marshal(payload)
 	if err != nil {
-		return string(payloadstr), fmt.Errorf("Error generating token when encoding payload to string: %w", err)
+		fmt.Println("Error generating Token")
+
+		return string(payloadstr), err
 	}
 
 	payload64 := base64.StdEncoding.EncodeToString(payloadstr)
@@ -45,26 +48,29 @@ func GenerateToken(header string, payload ClaimsMap, secret string) (string, err
 
 	h.Write([]byte(unsignedStr))
 	signature := base64.StdEncoding.EncodeToString(h.Sum(nil))
-
 	tokenStr := message + "." + signature
+
 	return tokenStr, nil
 }
 
-// ValidateToken helps in validating the token
-func ValidateToken(token string, secret string) error {
+// ValidateToken is validating the token.
+func ValidateToken(token string, secret string) (bool, error) {
 	splitToken := strings.Split(token, ".")
 	if len(splitToken) != 3 {
-		return errors.New(CORRUPT_TOKEN)
+
+		return false, errors.New(CORRUPT_TOKEN)
 	}
 
 	header, err := base64.StdEncoding.DecodeString(splitToken[0])
 	if err != nil {
-		return err
+
+		return false, err
 	}
 
 	payload, err := base64.StdEncoding.DecodeString(splitToken[1])
 	if err != nil {
-		return err
+
+		return false, err
 	}
 
 	unsignedStr := string(header) + string(payload)
@@ -74,15 +80,22 @@ func ValidateToken(token string, secret string) error {
 	signature := base64.StdEncoding.EncodeToString(h.Sum(nil))
 
 	if signature != splitToken[2] {
-		return errors.New(INVALID_TOKEN)
+
+		return false, errors.New(INVALID_TOKEN)
 	}
 
 	var payloadMap ClaimsMap
-	json.Unmarshal(payload, &payloadMap)
 
-	if payloadMap.Exp < fmt.Sprint(time.Now().Unix()) {
-		return errors.New(EXPIRED_TOKEN)
+	err = json.Unmarshal(payload, &payloadMap)
+	if err != nil {
+
+		return false, err
 	}
 
-	return nil
+	if payloadMap.Exp < fmt.Sprint(time.Now().Unix()) {
+
+		return false, errors.New(EXPIRED_TOKEN)
+	}
+
+	return true, nil
 }
