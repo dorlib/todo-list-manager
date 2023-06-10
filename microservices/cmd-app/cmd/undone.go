@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	data2 "todo/data"
+	"todo/middlewares"
 )
 
 // undoneCmd represents the undone command.
@@ -19,8 +20,9 @@ var undoneCmd = &cobra.Command{
 			-t: the task's title (accept string).
 			-i: the task's ID (accept string).
 `,
-	Example: `todo undone -i="134"`,
-	Args:    cobra.ExactArgs(1),
+	Example:           `todo undone -i="134"`,
+	Args:              cobra.ExactArgs(1),
+	PersistentPreRunE: middlewares.AuthenticationMiddleware,
 	Run: func(cmd *cobra.Command, args []string) {
 		taskID, err := cmd.Flags().GetUint("ID")
 		if err != nil {

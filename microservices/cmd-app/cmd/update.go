@@ -10,6 +10,7 @@ import (
 	"github.com/spf13/pflag"
 	"strings"
 	"todo/data"
+	"todo/middlewares"
 )
 
 // updateCmd represents the update command.
@@ -44,6 +45,7 @@ var updateCmd = &cobra.Command{
 
 		return nil
 	},
+	PersistentPreRunE: middlewares.AuthenticationMiddleware,
 	Run: func(cmd *cobra.Command, args []string) {
 		flagsMap := make(map[string]interface{}, len(flagsUsed))
 

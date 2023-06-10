@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"todo/data"
+	"todo/middlewares"
 )
 
 // doneCmd represents the done command.
@@ -19,7 +20,8 @@ var doneCmd = &cobra.Command{
 			-t: the task's title (accept string).
 			-i: the task's ID (accept string).
 `,
-	Example: `todo done -i "134"`,
+	Example:           `todo done -i "134"`,
+	PersistentPreRunE: middlewares.AuthenticationMiddleware,
 	Run: func(cmd *cobra.Command, args []string) {
 		taskID, err := cmd.Flags().GetUint("ID")
 		if err != nil {

@@ -12,6 +12,7 @@ import (
 	"strconv"
 	"strings"
 	data2 "todo/data"
+	"todo/middlewares"
 )
 
 // addCmd represents the add command.
@@ -46,7 +47,8 @@ var addCmd = &cobra.Command{
 		return nil
 	},
 
-	Example: `todo add -t="homework" -d="do homework 3 in intro to cs" -p="High" -l="04/05/2023"`,
+	Example:           `todo add -t="homework" -d="do homework 3 in intro to cs" -p="High" -l="04/05/2023"`,
+	PersistentPreRunE: middlewares.AuthenticationMiddleware,
 	Run: func(cmd *cobra.Command, args []string) {
 		flagsMap := make(map[string]string, len(flagsUsed))
 

@@ -5,9 +5,8 @@ Copyright © 2023 todo-list <dorlib318@gmail.com>
 package cmd
 
 import (
-	"os"
-
 	"github.com/spf13/cobra"
+	"os"
 )
 
 // RootCmd represents the base command when called without any subcommands.
