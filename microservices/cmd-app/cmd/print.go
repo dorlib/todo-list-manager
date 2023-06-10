@@ -10,6 +10,7 @@ import (
 	"github.com/spf13/pflag"
 	"strings"
 	data2 "todo/data"
+	"todo/middlewares"
 )
 
 // todo - verify that user inserted flags according the rules described in the long description.
@@ -63,6 +64,7 @@ var printCmd = &cobra.Command{
 
 		return nil
 	},
+	PersistentPreRunE: middlewares.AuthenticationMiddleware,
 	Run: func(cmd *cobra.Command, args []string) {
 		flagsMap := make(map[string]interface{}, len(flagsUsed))
 

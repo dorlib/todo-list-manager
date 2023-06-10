@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"todo/data"
+	"todo/middlewares"
 )
 
 // deleteCmd represents the delete command.
@@ -22,6 +23,7 @@ var deleteCmd = &cobra.Command{
 `,
 	Example: `todo delete -i="134", 
 			  todo delete -a`,
+	PersistentPreRunE: middlewares.AuthenticationMiddleware,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("delete called")
 
