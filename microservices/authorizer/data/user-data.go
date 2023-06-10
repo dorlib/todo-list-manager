@@ -11,7 +11,7 @@ type user struct {
 }
 
 // GetUserObject based on the email id provided, finds the user object
-// can be seen as the main constructor to start validation
+// can be seen as the main constructor to start validation.
 func GetUserObject(email string) (user, bool) {
 	//needs to be replaces using Database
 	for _, user := range userList {
@@ -22,7 +22,7 @@ func GetUserObject(email string) (user, bool) {
 	return user{}, false
 }
 
-// checks if the password hash is valid
+// ValidatePasswordHash checks if the password hash is valid.
 func (u *user) ValidatePasswordHash(pswdhash string) bool {
 	return u.passwordhash == pswdhash
 }

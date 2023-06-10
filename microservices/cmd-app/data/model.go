@@ -34,8 +34,9 @@ type User struct {
 	DeletedAt gorm.DeletedAt `gorm:"index"`
 	Username  string         `gorm:"unique;not null"`
 	Password  string         `gorm:"size:255"`
-	Role      string         // admin/user
-	Tasks     []Task         `gorm:"-"`
+	PublicKey string
+	Role      string // admin/user
+	Tasks     []Task `gorm:"-"`
 }
 
 type Group struct {
