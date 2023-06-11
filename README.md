@@ -38,10 +38,11 @@ As you can see in the welcome page of the app, the main "things" you can do are 
 
 1. Create Group - you can create a group in order to organize the task's of everyone in one place!
 2. Create user - you can register in order to make yourself a user and login in order to access the team's task management system.
-3. Manage tasks - Create, update and task's content, update progress, and delete tasks (admin only).
-4. Track tasks - print in tasks different variations and options to make efficient tracking.
-5. Alert system - which will update the user who's the task is belong to by mail when deadline is coming near!
-6. Define authorization - you can give admin access for some of the group's members inorder to have extra capabilities!
+3. Manage users - give different premissions to different users.
+4. Manage tasks - Create, update and task's content, update progress, and delete tasks (admin only).
+5. Track tasks - print in tasks different variations and options to make efficient tracking.
+6. Alert system - which will update the user who's the task is belong to by mail when deadline is coming near!
+7. Define authorization - you can give admin access for some of the group's members inorder to have extra capabilities!
 
 #### pleae note the README file in the cmd directory of more info about the available commands & flags.
 
