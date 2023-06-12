@@ -7,7 +7,7 @@ import (
 )
 
 func AuthenticationMiddleware(cmd *cobra.Command, args []string) error {
-	apiKey, _ := cmd.Flags().GetString("api-key")
+	apiKey, _ := cmd.Flags().GetString("key")
 	if apiKey == "" {
 		return fmt.Errorf("API key is required")
 	}
