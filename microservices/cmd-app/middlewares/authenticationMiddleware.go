@@ -15,7 +15,7 @@ func AuthenticationMiddleware(cmd *cobra.Command, args []string) error {
 	// Perform authentication logic here
 	// Send API call to authentication service to validate the token
 
-	authURL := "https://auth-service.example.com/validate-token"
+	authURL := "https://authorizer/validate-token"
 	req, err := http.NewRequest(http.MethodGet, authURL, nil)
 	if err != nil {
 		return fmt.Errorf("failed to create authentication request: %v", err)
