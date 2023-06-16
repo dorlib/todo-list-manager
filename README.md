@@ -48,7 +48,7 @@ As you can see in the welcome page of the app, the main "things" you can do are 
 
 ## Microservices Architacture
 
-![services](https://github.com/dorlib/todo-list-manager/assets/90474428/e14155c2-2c5b-4803-a218-a014af568cfa)
+![services](https://github.com/dorlib/todo-list-manager/assets/90474428/4bfb8493-bb8e-49cf-94b1-04463af4973d)
 
 ## Entity Relationship Diagram
 
