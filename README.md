@@ -30,6 +30,7 @@ In the future, we will continue to extend the app and create more features, and 
 - [GORM](https://gorm.io/) as ORM library for Golang.
 - [go-pretty](https://github.com/jedib0t/go-pretty/tree/main/table) for printing tables.
 - [golangci-lint](https://golangci-lint.run/) as golang linter in order to preserve our code's quality.
+- [ngnix](https://www.nginx.com/) as API proxy.
 
 ## What the Application include?
 
