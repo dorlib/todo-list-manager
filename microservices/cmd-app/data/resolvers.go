@@ -77,6 +77,17 @@ func DeleteTaskByID(taskID uint) {
 	fmt.Printf("there is no tasks with the given ID: %v", taskID)
 }
 
+func DeleteGroupByID(groupID uint) {
+	if TaskExistByID(groupID) {
+		DB.Delete(&Task{}, groupID)
+		fmt.Printf("deleted group: %v \n", groupID)
+
+		return
+	}
+
+	fmt.Printf("there is no group with the given ID: %v", groupID)
+}
+
 func DeleteTaskByTitle(title string) {
 	var tasks []Task
 
@@ -96,6 +107,27 @@ func DeleteTaskByTitle(title string) {
 
 	DB.Where("Title = ?", title).Delete(&tasks)
 	fmt.Printf("deleted task: %v", title)
+}
+
+func DeleteGroupByName(name string) {
+	var groups []Task
+
+	DB.Where("Name = ?", name).Find(&groups)
+
+	if len(groups) > 1 {
+		fmt.Printf("more than one group with the same title %v exists", name)
+
+		return
+	}
+
+	if len(groups) < 1 {
+		fmt.Printf("there is no group with the given title: %v", name)
+
+		return
+	}
+
+	DB.Where("Name = ?", name).Delete(&groups)
+	fmt.Printf("deleted Group: %v", name)
 }
 
 func PrintTaskByID(taskID uint) {
