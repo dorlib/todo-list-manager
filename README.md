@@ -1,7 +1,7 @@
 ## TODO List Manager - For Managing And Tracking Your Daily Tasks
 
 Hello everyone 👋 </br>
-This is a CLI for task managment using Go, Cobra cli & GORM!
+This is task managment application using which Include a CLI Go, Cobra cli & GORM!
 
 The main purposes of this project are to gain more experience with golang and known & popular frameworks and technologies.
 Also practise clean code, SOLID principles of golang and microservices architacture in golang.
