@@ -1,5 +1,7 @@
 ## Commands List
 
+Here you can find summery how to use every CLI command that available for all users.
+
 | Command     | Flags | Description | example |
 |:------------|:------|:------------|:--------|
 | add         |       |             |         |
