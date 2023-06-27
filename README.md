@@ -9,6 +9,7 @@ In addition, gain experience of taste of what its like working with other team m
 codebase, working with git and with the technologies github has to offer.
 
 The CLI is written with the cobra framework for CLI creation, and GORM as ORM library and database connection, which is MySQL.
+The API gateway is implemented with nginx and the authorization service is using Oauth2.
 In the future, we will continue to extend the app and create more features, and even a UI is on our mind!
 
 <p align="center">
