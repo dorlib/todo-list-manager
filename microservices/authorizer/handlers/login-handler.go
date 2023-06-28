@@ -19,7 +19,6 @@ func getSignedToken() (string, error) {
 	header := "HS256"
 	tokenString, err := token.GenerateToken(header, claimsMap, secret)
 	if err != nil {
-
 		return tokenString, err
 	}
 
@@ -29,14 +28,20 @@ func getSignedToken() (string, error) {
 func SigninHandler(rw http.ResponseWriter, r *http.Request) {
 	if _, ok := r.Header["Email"]; !ok {
 		rw.WriteHeader(http.StatusBadRequest)
-		rw.Write([]byte("Email Missing"))
+		_, err := rw.Write([]byte("Email Missing"))
+		if err != nil {
+			return
+		}
 
 		return
 	}
 
 	if _, ok := r.Header["Passwordhash"]; !ok {
 		rw.WriteHeader(http.StatusBadRequest)
-		rw.Write([]byte("Passwordhash Missing"))
+		_, err := rw.Write([]byte("Passwordhash Missing"))
+		if err != nil {
+			return
+		}
 
 		return
 	}
@@ -45,14 +50,20 @@ func SigninHandler(rw http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// this means either the user does not exist
 		rw.WriteHeader(http.StatusUnauthorized)
-		rw.Write([]byte("User Does not Exist"))
+		_, err := rw.Write([]byte("User Does not Exist"))
+		if err != nil {
+			return
+		}
 
 		return
 	}
 
 	if !valid {
 		rw.WriteHeader(http.StatusUnauthorized)
-		rw.Write([]byte("Incorrect Password"))
+		_, err := rw.Write([]byte("Incorrect Password"))
+		if err != nil {
+			return
+		}
 
 		return
 	}
@@ -61,11 +72,17 @@ func SigninHandler(rw http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 		rw.WriteHeader(http.StatusInternalServerError)
-		rw.Write([]byte("Internal Server Error"))
+		_, err := rw.Write([]byte("Internal Server Error"))
+		if err != nil {
+			return
+		}
 
 		return
 	}
 
 	rw.WriteHeader(http.StatusOK)
-	rw.Write([]byte(tokenString))
+	_, err = rw.Write([]byte(tokenString))
+	if err != nil {
+		return
+	}
 }
