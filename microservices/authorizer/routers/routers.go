@@ -10,6 +10,6 @@ func RegisterRoutes() *mux.Router {
 	authRouter := mainRouter.PathPrefix("/auth").Subrouter()
 	authRouter.HandleFunc("/signup", handlers.SignupHandler).Methods("POST")
 	authRouter.HandleFunc("/signin", handlers.SigninHandler).Methods("GET")
-	authRouter.HandleFunc("/validate-url", handlers.validateHandler).Methods("GET")
+	authRouter.HandleFunc("/validate-url", handlers.ValidateHandler).Methods("GET")
 	return mainRouter
 }

@@ -53,7 +53,7 @@ func SignupHandler(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	rw.WriteHeader(http.StatusOK)
-	_, err := rw.Write([]byte("User Created"))
+	_, err = rw.Write([]byte("User Created"))
 	if err != nil {
 		return
 	}
