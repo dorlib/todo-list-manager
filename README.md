@@ -29,10 +29,10 @@ In the future, we will continue to extend the app and create more features, and 
 - [Cobra](https://github.com/spf13/cobra) As CLI framework.
 - [viper](https://github.com/spf13/viper) Complete configuration solution for Go applications.
 - [GORM](https://gorm.io/) As ORM library for Golang.
-- [go-pretty](https://github.com/jedib0t/go-pretty/tree/main/table) For printing pretty tables.
-- [golangci-lint](https://golangci-lint.run/) As golang linter in order to preserve our code's quality.
 - [ngnix](https://www.nginx.com/) As API gateway.
 - [oauth2](https://github.com/go-oauth2/oauth2) As authentication library.
+- [go-pretty](https://github.com/jedib0t/go-pretty/tree/main/table) For printing pretty tables.
+- [golangci-lint](https://golangci-lint.run/) As golang linter in order to preserve our code's quality.
 
 ## What the Application include?
 
