@@ -12,7 +12,7 @@ codebase, working with git and with the technologies github has to offer.
 The CLI is written with the cobra framework for CLI creation, and GORM as ORM library.
 The main database is MySQL and we also use mongoDB for account managment.
 The API gateway is implemented with nginx and the authorization service is using Oauth2.
-In the future, we will continue to extend the app and create more features, and even a UI is on our mind!
+In the future, we will continue to extend the app and create more features, and even a UI is planned in the future!
 
 <p align="center">
     <img alt="Open Source? Yes!" src="https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github"/>
