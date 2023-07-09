@@ -47,7 +47,7 @@ As you can see in the welcome page of the app, the main "things" you can do are 
 4. Manage tasks - Create, update and task's content, update progress, and delete tasks (admin only).
 5. Track tasks - print in tasks different variations and options to make efficient tracking.
 6. Alert system - which will update the user who's the task is belong to by mail when deadline is coming near!
-7. Define authorization - you can give admin access for some of the group's members inorder to have extra capabilities!
+7. Define roles - you can give admin access for some of the group's members inorder to have extra capabilities!
 
 #### pleae note the README file in the cmd directory of more info about the available commands & flags.
 
