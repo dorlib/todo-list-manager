@@ -86,7 +86,7 @@ In order to run the app using docker-compose  (NOT RELAVENT for now, need to be 
 
 ## Seed data to your database
 
-In order to seed pre-made data, for quick testing the app, you can type the command `todo seed`
+In order to seed pre-made data, for quick testing the app with premade data, you can type the command `todo seed`
 
 ## Contributing
 
