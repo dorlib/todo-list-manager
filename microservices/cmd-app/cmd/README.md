@@ -12,10 +12,6 @@ Here you can find summery how to use every CLI command that available for all us
 | add-user    |       |             |         |
 | update-user |       |             |         |
 | delete-user |       |             |         |
-| create-group            |       |             |         |
-| update-group            |       |             |         |
-| delete-group            |       |             |         |
-
 
 
 ### For admins only: 
@@ -24,9 +20,9 @@ Here you can find summery how to use every CLI command that available for all us
 |:--------|:------|:------------|:--------|
 | assign  |       |             |         |
 | delete  |       |             |         |
-|         |       |             |         |
-|         |       |             |         |
-|         |       |             |         |
+| create-group            |       |             |         |
+| update-group            |       |             |         |
+| delete-group            |       |             |         |
 |         |       |             |         |
 |         |       |             |         |
 |         |       |             |         |
