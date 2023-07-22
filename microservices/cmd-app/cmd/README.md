@@ -6,8 +6,6 @@ Here you can find summery how to use every CLI command that available for all us
 |:------------|:------|:------------|:--------|
 | add         |       |             |         |
 | update      |       |             |         |
-| done        |       |             |         |
-| undone      |       |             |         |
 | print       |       |             |         |
 | add-user    |       |             |         |
 | update-user |       |             |         |
