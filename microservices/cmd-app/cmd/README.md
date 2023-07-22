@@ -18,8 +18,8 @@ Here you can find summery how to use every CLI command that available for all us
 
 | Command | Flags | Description | example |
 |:--------|:------|:------------|:--------|
-| assign  |       |             |         |
-| delete  |       |             |         |
+| assign-user  |       |             |         |
+| remove-user  |       |             |         |
 | create-group            |       |             |         |
 | update-group            |       |             |         |
 | delete-group            |       |             |         |
