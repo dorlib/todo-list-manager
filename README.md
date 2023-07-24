@@ -7,7 +7,7 @@ The app was built using Go, Cobra cli & GORM, nginx, Mysql, MongoDB and much mor
 The main purposes of the project are to gain more experience with golang and known & popular frameworks and technologies.
 Also practise clean code, SOLID principles of golang and microservices architacture, while building a real world solution with.
 In addition, gain experience of taste of what its like working with other team members on the same 
-codebase, working with git and with the technologies github has to offer.
+codebase, working with git and with the technologies github has to offer like github workflows.
 
 The CLI is written with a framework called "cobra" for CLI creation, and GORM as ORM library.
 The API gateway is implemented with nginx and the authorization service is using Oauth2.
