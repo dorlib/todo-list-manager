@@ -8,6 +8,7 @@ import (
 func ValidateHandler(rw http.ResponseWriter, r *http.Request) {
 	if _, ok := r.Header["api-key"]; !ok {
 		rw.WriteHeader(http.StatusBadRequest)
+
 		_, err := rw.Write([]byte("API key Missing"))
 		if err != nil {
 			return
@@ -20,6 +21,7 @@ func ValidateHandler(rw http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// this means either the user does not exist
 		rw.WriteHeader(http.StatusUnauthorized)
+
 		_, err := rw.Write([]byte("User Does not Exist"))
 		if err != nil {
 			return
@@ -30,6 +32,7 @@ func ValidateHandler(rw http.ResponseWriter, r *http.Request) {
 
 	if !valid {
 		rw.WriteHeader(http.StatusUnauthorized)
+
 		_, err := rw.Write([]byte("Incorrect Password"))
 		if err != nil {
 			return
@@ -42,6 +45,7 @@ func ValidateHandler(rw http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 		rw.WriteHeader(http.StatusInternalServerError)
+
 		_, err := rw.Write([]byte("Internal Server Error"))
 		if err != nil {
 			return
@@ -52,6 +56,7 @@ func ValidateHandler(rw http.ResponseWriter, r *http.Request) {
 
 	rw.WriteHeader(http.StatusOK)
 	_, err = rw.Write([]byte(tokenString))
+
 	if err != nil {
 		return
 	}

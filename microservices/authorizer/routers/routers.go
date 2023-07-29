@@ -11,5 +11,6 @@ func RegisterRoutes() *mux.Router {
 	authRouter.HandleFunc("/signup", handlers.SignupHandler).Methods("POST")
 	authRouter.HandleFunc("/signin", handlers.SigninHandler).Methods("GET")
 	authRouter.HandleFunc("/validate-url", handlers.ValidateHandler).Methods("GET")
+
 	return mainRouter
 }
