@@ -1,7 +1,7 @@
 ## TODO List Manager - For Managing And Tracking Your Daily Tasks
 
 Hello everyone 👋 </br>
-This is a task managment application which include a cli, and in the future also a UI for managing and tracking personal and group's tasks.
+This is a task manager application which include a cli, and in the future also a UI for managing and tracking personal and group's tasks.
 The app was built using Go, Cobra cli & GORM, nginx, Mysql, MongoDB and much more cool technologies!
 
 The main purposes of the project are to gain more experience with golang and known & popular frameworks and technologies.
