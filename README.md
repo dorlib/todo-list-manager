@@ -11,7 +11,7 @@ codebase, working with git and with the technologies github has to offer like gi
 
 The CLI is written with a framework called "cobra" for CLI creation and managment, and GORM as ORM library.
 The API gateway is implemented with nginx and the authorization service is using Oauth2.
-The main databases are MySQL and mongoDB for account managment.
+The main databases are MySQL and mongoDB (for account managment).
 In the future, we will continue to extend the app and create more features, and even a UI is planned!
 
 <p align="center">
