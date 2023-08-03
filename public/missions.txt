@@ -16,7 +16,7 @@ feel free to add/update missions
     b. add features for printing mission by users
     c. adjust print all to print also the user the mission assign to
     d. add option to print all tasks ordered by users
-5. add seeder command to insert pre-made data
+5. add seeder command to insert pre-made data - done.
 6. add the init command in order to make a group or make private dashboard
 7. add option to jump between dashboards (add 'use' like command in databases)
 8. verify that the conditions described in the long description of print command are applied in the code's logic.
