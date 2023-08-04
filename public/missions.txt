@@ -51,8 +51,9 @@ feel free to add/update missions
 
 ##### OPS #####
 1. include unit tests written in the code as part of the CI as a github workflow.
-2. dockerize the app (make a working dockerfile) & upload to dockerhub.
-3. optional after we have docker, upload it to EC2 in AWS.
+2. make a makefile for the services of the app for easy linting, testing and building. 
+3. dockerize the app (make a working dockerfile) & upload to dockerhub.
+4. optional after we have docker, upload it to EC2 in AWS.
 
 ####### TO INSTALL IN ORDER TO CONTRIBUTE #######
 1. go
