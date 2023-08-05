@@ -30,8 +30,8 @@ feel free to add/update missions
     a. create a new model for User in models.go
     b. add User entity in the DB migration
     c. adjust resolver to support User
-3. change done & undone to todo & in progress & done - done
-4. add a seeder to the app which insert pre-made data
+3. change done & undone to todo & in progress & done - done.
+4. add a seeder to the app which insert pre-made data - done.
 5. move hard coded parameters in openDatabase function to env vars. - done
 
 ##### ALERT SERVICE #####
