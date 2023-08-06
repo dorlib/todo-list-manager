@@ -38,7 +38,7 @@ feel free to add/update missions
 1. create an alert service which will once a day go over the undone tasks and make alerts to users by mail if the deadline in on the next day.
 
 ##### AUTH AND AUTHz #####
-1. create authentication process as a user who have access to the tasks manager.
+1. create authentication process as a user who have access to the tasks manager. - in progress
 2. create types of users (admin and regular users) and define authorization (eg. only admin can delete tasks).
 3. when running we should register or login (add to cmd).
 4. create the authorizer as independent microservice - in progress
