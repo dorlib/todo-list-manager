@@ -7,7 +7,7 @@ Here you can find summery how to use every CLI command that available for all us
 | add         |       |             |         |
 | update      |       |             |         |
 | print       |       |             |         |
-| delete | | | |
+| delete      |       |             |         |
 | add-user    |       |             |         |
 | update-user |       |             |         |
 | delete-user |       |             |         |
