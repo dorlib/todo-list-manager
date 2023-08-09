@@ -54,6 +54,7 @@ feel free to add/update missions
 2. make a makefile for the services of the app for easy linting, testing and building. 
 3. dockerize the app (make a working dockerfile) & upload to dockerhub.
 4. optional after we have docker, upload it to EC2 in AWS.
+5. add redis as a api gateway for the microservices acording to the diagram.
 
 ####### TO INSTALL IN ORDER TO CONTRIBUTE #######
 1. go
