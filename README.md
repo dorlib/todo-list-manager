@@ -9,7 +9,7 @@ Also practise clean code, SOLID principles of golang and microservices architact
 In addition, gain experience of taste of what its like working with other team members on the same </br>
 codebase, working with git and with the technologies github has to offer like github workflows. </br>
 
-The CLI is written with a framework called "cobra" for CLI creation and managment, and GORM as ORM library.
+The CLI is written with a framework called "cobra" for CLI creation and managment, and GORM as an ORM library.
 The API gateway is implemented with nginx and the authorization & authentication service is using Oauth2.
 The main databases are MySQL and mongoDB (for account managment).
 In the future, we will continue to extend the app and create more features, and even a UI is planned!
