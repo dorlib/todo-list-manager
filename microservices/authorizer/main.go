@@ -18,6 +18,7 @@ func main() {
 		Addr:    "127.0.0.1:9090",
 		Handler: ch(router),
 	}
+
 	err := server.ListenAndServe()
 	if err != nil {
 		fmt.Println("Error Booting the Server")
