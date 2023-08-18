@@ -41,6 +41,7 @@ func SignupHandler(rw http.ResponseWriter, r *http.Request) {
 
 	if _, ok := r.Header["Fullname"]; !ok {
 		rw.WriteHeader(http.StatusBadRequest)
+
 		_, err := rw.Write([]byte("Fullname Missing"))
 		if err != nil {
 			return
