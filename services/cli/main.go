@@ -5,7 +5,7 @@ Copyright © 2023 todo-list <dorlib318@gmail.com>
 package main
 
 import (
-	cmd "todo/cmd"
+	cmd "todo/client"
 	data "todo/data"
 )
 

@@ -1,18 +1,18 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 */
-package user
+package group
 
 import (
 	"fmt"
-	"todo/cmd"
-
 	"github.com/spf13/cobra"
+	"todo/client"
+	"todo/middlewares"
 )
 
-// signCmd represents the sign command.
-var signCmd = &cobra.Command{
-	Use:   "sign",
+// removeUserCmd represents the removeUser command.
+var removeUserCmd = &cobra.Command{
+	Use:   "remove-user",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -20,8 +20,9 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
+	PersistentPreRunE: middlewares.AuthenticationMiddleware,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("sign called")
+		fmt.Println("removeUser called")
 	},
 }
 
@@ -29,9 +30,9 @@ func init() {
 	// Here you will define your flags and configuration settings.
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// signCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// removeUserCmd.PersistentFlags().String("foo", "", "A help for foo")
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// signCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	cmd.RootCmd.AddCommand(signCmd)
+	// removeUserCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	client.RootCmd.AddCommand(removeUserCmd)
 }
