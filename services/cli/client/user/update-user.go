@@ -6,7 +6,7 @@ package user
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"todo/cmd"
+	"todo/client"
 	"todo/middlewares"
 )
 
@@ -34,5 +34,5 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// updateUserCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	cmd.RootCmd.AddCommand(updateUserCmd)
+	client.RootCmd.AddCommand(updateUserCmd)
 }

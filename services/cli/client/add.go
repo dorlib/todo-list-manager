@@ -2,7 +2,7 @@
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 */
 
-package cmd
+package client
 
 import (
 	"fmt"
@@ -62,7 +62,7 @@ var addCmd = &cobra.Command{
 			flagsMap[flag] = cmd.Flag(flag).Value.String()
 		}
 
-		// username := cmd.Flag("userid").Value.String()
+		// username := client.Flag("userid").Value.String()
 
 		fmt.Println(flagsMap)
 

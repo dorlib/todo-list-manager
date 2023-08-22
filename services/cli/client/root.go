@@ -2,7 +2,7 @@
 Copyright © 2023 todo-list <dorlib318@gmail.com>
 */
 
-package cmd
+package client
 
 import (
 	"github.com/spf13/cobra"
@@ -18,7 +18,7 @@ This application is a tool to track and update daily tasks and group's tasks.
 With todo-list-manager you can make your day and even your group more organized and efficient.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	// Run: func(client *cobra.Command, args []string) { },
 	CompletionOptions: cobra.CompletionOptions{
 		DisableDefaultCmd: true,
 	},
