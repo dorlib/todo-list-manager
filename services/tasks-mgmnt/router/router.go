@@ -7,14 +7,13 @@ func routeReady(e *echo.Echo, apiPrefix string, readyController *controller.read
 	subRouter.GET("", readyController.Ready)
 }
 
-func routerGroups(router echo.Router, groupController *controller.groupController) {
+func routerGroups(router *echo.Group, groupController *controller.groupController) {
 	subRouter := router.Group("/groups")
 	subRouter.POST("", groupController.CreateGroups)
 	subRouter.GET("", groupController.GetGroups)
 	subRouter.GET("/:"+request.IDParam, groupController.GetGroup)
 	subRouter.DELETE("/:"+request.IDParam, groupController.DeleteGroup)
 	subRouter.PATCH("/:"+request.IDParam, groupController.UpdateGroup)
-
 }
 
 func routeUsers(router *echo.Group, userController *controller.userController) {
