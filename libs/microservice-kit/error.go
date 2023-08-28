@@ -1,4 +1,4 @@
-package libs
+package microservice_kit
 
 import "strings"
 
