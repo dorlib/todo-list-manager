@@ -9,7 +9,7 @@ Here you can find summery how to use every CLI command that available for all us
 | login          |       |             |         |
 | reset-password |       |             |         |  
 | update         |       |             |         |
-| print          |       |             |         |
+| get          |       |             |         |
 | delete         |       |             |         |
 | add-user       |       |             |         |
 | update-user    |       |             |         |
