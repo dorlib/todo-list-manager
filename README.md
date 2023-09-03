@@ -67,7 +67,7 @@ Here's what needs to be done in order to get the app running locally on your mac
 3. run `go install`
 4. run `todo -v`
 
-### Run the docker container:
+### Run docker containers using Docker-Compose:
 
 In order to run the app using docker-compose  (NOT RELAVENT for now, need to be aligned with the new architacture).:
 1. Clone the project to your machine with `git clone https://github.com/dorlib/todo-list-manager.git && cd todo-list-manager`.
