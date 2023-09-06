@@ -4,12 +4,13 @@ Here you can find summery how to use every CLI command that available for all us
 
 | Command     | Flags | Description | example |
 |:---------------|:------|:------------|:--------|
-| add            |       |             |         |
+| add-task            |       |             |         |
 | signup         |       |             |         | 
 | login          |       |             |         |
 | reset-password |       |             |         |  
-| update         |       |             |         |
-| get          |       |             |         |
+| update-task         |       |             |         |
+| get-task          |       |             |         |
+| get-tests | | | |
 | delete         |       |             |         |
 | add-user       |       |             |         |
 | update-user    |       |             |         |
