@@ -26,8 +26,3 @@ Here you can find summery how to use every CLI command that available for all us
 | create-group            |       |             |         |
 | update-group            |       |             |         |
 | delete-group            |       |             |         |
-|         |       |             |         |
-|         |       |             |         |
-|         |       |             |         |
-|         |       |             |         |
-|         |       |             |         |
