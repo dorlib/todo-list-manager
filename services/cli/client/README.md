@@ -1,6 +1,6 @@
 ## Commands List
 
-Here you can find summery how to use every CLI command that available for all users.
+### Here you can find summery of how to use every CLI command that available for all users.
 
 | Command     | Flags | Description | example |
 |:---------------|:------|:------------|:--------|
@@ -17,7 +17,7 @@ Here you can find summery how to use every CLI command that available for all us
 | delete-user    |       |             |         |
 
 
-### For admins only: 
+### For admins only.
 
 | Command | Flags | Description | example |
 |:--------|:------|:------------|:--------|
