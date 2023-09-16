@@ -4,7 +4,7 @@ Hello everyone 👋 </br>
 This is a task manager application which include a cli, and in the future also a UI for managing and tracking personal and group's tasks. </br>
 The app was built using Go, Cobra cli & GORM, nginx, Mysql, MongoDB and much more cool technologies!
 
-The main purposes of the project are to gain more experience with golang and known & popular frameworks and technologies. </br>
+The main purposes of the project are to gain more experience with golang and known & popular frameworks and technologies.
 Also practise clean code, SOLID principles of golang and microservices architacture, while building a real world solution with. </br>
 In addition, gain experience of taste of what its like working with other team members on the same </br>
 codebase, working with git and with the technologies github has to offer like github workflows. </br>
