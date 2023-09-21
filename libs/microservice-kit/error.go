@@ -16,6 +16,7 @@ func (a *AppError) Error() string {
 
 	if a.Title != "" {
 		sb.WriteString(a.Title)
+
 		appendDash = true
 	}
 
@@ -25,6 +26,7 @@ func (a *AppError) Error() string {
 		}
 
 		sb.WriteString(a.Detail)
+
 		appendDash = true
 	}
 
