@@ -3,10 +3,7 @@ package service
 import (
 	"context"
 	"github.com/google/uuid"
-
-	"github.com/lightbits-intel/neon_insights/services/account-mgmt/model/request"
-	"github.com/lightbits-intel/neon_insights/services/account-mgmt/model/response"
-	"github.com/lightbitslabs/neon_insight/libs/microservice_kit/ctx"
+	"tasks-mgmnt/model/request"
 )
 
 type GroupService interface {
