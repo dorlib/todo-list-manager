@@ -1,12 +1,13 @@
 package domain
 
 import (
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"time"
 )
 
 type Group struct {
-	ID          uint           `gorm:"primaryKey"`
+	ID          uuid.UUID      `gorm:"primaryKey"`
 	CreatedAt   time.Time      `gorm:"autoCreateTime"`
 	UpdatedAt   time.Time      `gorm:"autoUpdateTime"`
 	DeletedAt   gorm.DeletedAt `gorm:"index"`
