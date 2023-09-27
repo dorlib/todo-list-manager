@@ -1,4 +1,4 @@
-package microservice_kit
+package error
 
 import "strings"
 
