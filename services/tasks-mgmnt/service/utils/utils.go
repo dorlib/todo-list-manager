@@ -1,4 +1,4 @@
-package data
+package utils
 
 import (
 	"fmt"
@@ -7,10 +7,11 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"tasks-mgmnt/data"
 	"time"
 )
 
-func printTask(task Task) {
+func printTask(task data.Task) {
 	year, err := strconv.Atoi(task.DeadlineDate.DeadlineYear)
 	if err != nil {
 		fmt.Println(err)
@@ -32,7 +33,7 @@ func printTask(task Task) {
 	fmt.Printf("# %d: %v %v %v %v %v %v", task.ID, task.Title, task.Description, task.Priority, task.CreatedAt, task.Deadline, timeLeft)
 }
 
-func printTasks(tasks []taskSummery) {
+func printTasks(tasks []data.taskSummery) {
 	t := table.NewWriter()
 
 	t.SetOutputMirror(os.Stdout)
@@ -53,39 +54,39 @@ func printTasks(tasks []taskSummery) {
 }
 
 func TaskExistByID(taskID uint) bool {
-	var task Task
+	var task data.Task
 
-	DB.First(&task, taskID)
+	data.DB.First(&task, taskID)
 
 	return task.ID != 0
 }
 
 func TaskExistByName(taskName string) bool {
-	var task Task
+	var task data.Task
 
-	DB.Where("name = ?", taskName).First(&task)
+	data.DB.Where("name = ?", taskName).First(&task)
 
 	return task.ID != 0
 }
 
 func UserExistByID(userID uint) bool {
-	var user User
+	var user data.User
 
-	DB.First(&user, userID)
+	data.DB.First(&user, userID)
 
 	return user.ID != 0
 }
 
 func UserExistByName(userName string) bool {
-	var user User
+	var user data.User
 
-	DB.Where("username = ?", userName).First(&user)
+	data.DB.Where("username = ?", userName).First(&user)
 
 	return user.ID != 0
 }
 
 func CheckLegalPriority(priority string) bool {
-	if priority == Critical || priority == VeryHigh || priority == High || priority == Medium || priority == Low {
+	if priority == data.Critical || priority == data.VeryHigh || priority == data.High || priority == data.Medium || priority == data.Low {
 		return true
 	}
 
