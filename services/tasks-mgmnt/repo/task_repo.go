@@ -12,6 +12,6 @@ type TaskRepo interface {
 	GetOne(ctx context.Context, db gorm.DB, taskID uuid.UUID) (*domain.Task, error)
 	DeleteOne(ctx context.Context, db gorm.DB, taskID uuid.UUID) error
 	GetAll(ctx context.Context, db gorm.DB) ([]*domain.Task, error)
-	GetBy(ctx context.Context, db gorm.DB, info string) ([]*domain.Task, error)
+	GetBy(ctx context.Context, db gorm.DB, info string) ([]*domain.Task, error) // by: user, group, priority, status
 	UpdateOne(ctx context.Context, db gorm.DB, id uuid.UUID, name *string, info map[string]interface{}) error
 }
