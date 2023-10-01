@@ -11,7 +11,8 @@ type Group struct {
 	CreatedAt   time.Time      `gorm:"autoCreateTime"`
 	UpdatedAt   time.Time      `gorm:"autoUpdateTime"`
 	DeletedAt   gorm.DeletedAt `gorm:"index"`
-	Name        string
+	Name        string         `gorm:"unique;not null"`
 	Description string
 	Users       []User `gorm:"-"`
+	Tasks       []Task `gorm:"-"`
 }
