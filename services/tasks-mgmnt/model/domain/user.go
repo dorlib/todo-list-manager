@@ -1,13 +1,14 @@
 package domain
 
 import (
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	"time"
 )
 
 type User struct {
-	ID        uint           `gorm:"primaryKey"`
+	ID        uuid.UUID      `gorm:"primaryKey"`
 	CreatedAt time.Time      `gorm:"autoCreateTime"`
 	UpdatedAt time.Time      `gorm:"autoUpdateTime"`
 	DeletedAt gorm.DeletedAt `gorm:"index"`

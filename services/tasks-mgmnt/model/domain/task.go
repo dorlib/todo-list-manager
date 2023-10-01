@@ -2,12 +2,13 @@ package domain
 
 import (
 	"fmt"
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"time"
 )
 
 type Task struct {
-	ID           uint           `gorm:"primaryKey"`
+	ID           uuid.UUID      `gorm:"primaryKey"`
 	CreatedAt    time.Time      `gorm:"autoCreateTime"`
 	UpdatedAt    time.Time      `gorm:"autoUpdateTime"`
 	DeletedAt    gorm.DeletedAt `gorm:"index"`
@@ -16,10 +17,13 @@ type Task struct {
 	Status       Status // enum
 	Title        string `gorm:"not null"`
 	Description  string
-	Priority     string // enum
-	UserID       uint   `gorm:"column:user_id"`
-	UserName     string `gorm:"column:user_name"`
+	Priority     string    // enum
+	UserID       uuid.UUID `gorm:"column:user_id"`
+	UserName     string    `gorm:"column:user_name"`
 	User         User
+	Group        Group     `gorm:"column:group"`
+	GroupID      uuid.UUID `gorm:"column:group_id"`
+	GroupName    string    `gorm:"column:group_name"`
 }
 
 type Date struct {

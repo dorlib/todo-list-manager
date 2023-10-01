@@ -19,6 +19,7 @@ type Task struct {
 	UserID       uint   `gorm:"column:user_id"`
 	UserName     string `gorm:"column:user_name"`
 	User         User
+	Group        Group `gorm:"column:group"`
 }
 
 type Date struct {
@@ -47,6 +48,7 @@ type Group struct {
 	Name        string
 	Description string
 	Users       []User `gorm:"-"`
+	Tasks       []Task `gorm:"-"`
 }
 
 type taskSummery struct {
