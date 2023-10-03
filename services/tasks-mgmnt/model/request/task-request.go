@@ -18,6 +18,11 @@ type GetTaskRequest struct {
 	ID uuid.UUID `param:"id"`
 }
 
+type GetTaskByRequest struct {
+	ID   uuid.UUID         `param:"id"`
+	Info map[string]string `json:"info"`
+}
+
 type DeleteTaskRequest struct {
 	ID uuid.UUID `param:"id"`
 }
