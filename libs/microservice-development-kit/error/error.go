@@ -61,10 +61,11 @@ func NewResourceNotFound(bodyError string) *AppError {
 	}
 }
 
-func NewInternalServerError() *AppError {
+func NewInternalServerError(bodyError string) *AppError {
 	return &AppError{
-		Code:  http.StatusInternalServerError,
-		Title: DefaultErrorMsg,
+		Code:   http.StatusInternalServerError,
+		Title:  DefaultErrorMsg,
+		Detail: bodyError,
 	}
 }
 
