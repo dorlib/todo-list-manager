@@ -6,35 +6,25 @@ import (
 	"strings"
 )
 
+const DefaultErrorMsg = "unexpected error"
+
 type AppError struct {
 	Code   int    `json:"-"`
 	Title  string `json:"title"`
 	Detail string `json:"detail"`
 }
 
-const DefaultErrorMsg = "unexpected error"
-
 func (a *AppError) Error() string {
-	sb := strings.Builder{}
-	appendDash := false
+	var parts []string
 
 	if a.Title != "" {
-		sb.WriteString(a.Title)
-
-		appendDash = true
+		parts = append(parts, a.Title)
 	}
-
 	if a.Detail != "" {
-		if appendDash {
-			sb.WriteString(" - ")
-		}
-
-		sb.WriteString(a.Detail)
-
-		appendDash = true
+		parts = append(parts, a.Detail)
 	}
 
-	return sb.String()
+	return strings.Join(parts, " - ")
 }
 
 func (a *AppError) IsResourceNotFound() bool {
