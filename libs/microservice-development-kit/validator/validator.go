@@ -1,7 +1,7 @@
 package validator
 
 import (
-	AppError "microservice-development-kit/error"
+	AppError "github.com/dorlib/todo-list-manager/libs/microservice-development-kit/error"
 	"strings"
 
 	eng "github.com/go-playground/locales/en"

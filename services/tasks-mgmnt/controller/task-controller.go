@@ -1,32 +1,36 @@
 package controller
 
 import (
+	Ctx "github.com/dorlib/todo-list-manager/libs/microservice-development-kit/ctx"
+	"github.com/dorlib/todo-list-manager/libs/microservice-development-kit/validator"
 	"github.com/labstack/echo/v4"
 	"github.com/rs/zerolog"
 	"net/http"
+	"tasks-mgmnt/model/request"
+	"tasks-mgmnt/service"
 )
 
 type TaskController struct {
 	log         *zerolog.Logger
 	validator   *validator.RequestValidator
-	userService service.TaskService
+	taskService service.TaskService
 }
 
-func NewTaskController(log *zerolog.Logger, validator *validator.RequestValidator, TaskService service.TaskService) *TaskController {
+func NewTaskController(log *zerolog.Logger, validator *validator.RequestValidator, taskService service.TaskService) *TaskController {
 	return &TaskController{
 		log:         log,
 		validator:   validator,
-		userService: taskService,
+		taskService: taskService,
 	}
 }
 
 func (t *TaskController) CreateTask(c echo.Context) error {
-	req, err := request.BindAndValidateCreateTaskRequest(c, t.validator)
+	req, err := request.BindAndValidateCreateRequest(c, t.validator)
 	if err != nil {
 		return err
 	}
 
-	res, err := t.taskService.CreateOne(c.Request().Context(), req)
+	res, err := t.taskService.CreateTask(c.Request().Context(), Ctx.FromEchoContext(c), req)
 	if err != nil {
 		return err
 	}
@@ -35,7 +39,12 @@ func (t *TaskController) CreateTask(c echo.Context) error {
 }
 
 func (t *TaskController) GetTasks(c echo.Context) error {
-	res, err := t.taskService.GetMany(c.Request().Context())
+	_, err := request.BindAndValidateGetRequest(c, t.validator)
+	if err != nil {
+		return err
+	}
+
+	res, err := t.taskService.GetTasks(c.Request().Context(), Ctx.FromEchoContext(c))
 	if err != nil {
 		return err
 	}
@@ -44,12 +53,12 @@ func (t *TaskController) GetTasks(c echo.Context) error {
 }
 
 func (t *TaskController) GetTask(c echo.Context) error {
-	req, err := request.BindAndValidateGetTaskRequest(c)
+	req, err := request.BindAndValidateGetRequest(c, t.validator)
 	if err != nil {
 		return err
 	}
 
-	res, err := t.taskService.GetOne(c.Request().Context(), req)
+	res, err := t.taskService.GetTask(c.Request().Context(), Ctx.FromEchoContext(c), req.ID)
 	if err != nil {
 		return err
 	}
@@ -58,26 +67,26 @@ func (t *TaskController) GetTask(c echo.Context) error {
 }
 
 func (t *TaskController) DeleteTask(c echo.Context) error {
-	req, err := request.BindAndValidateDeleteTaskRequest(c)
+	req, err := request.BindAndValidateDeleteRequest(c, t.validator)
 	if err != nil {
 		return err
 	}
 
-	err := t.taskService.Delete(c.Request().Context(), req)
+	res, err := t.taskService.DeleteTask(c.Request().Context(), Ctx.FromEchoContext(c), req.ID)
 	if err != nil {
 		return err
 	}
 
-	return c.NoContent(http.StatusNoContent)
+	return c.JSON(http.StatusCreated, res)
 }
 
 func (t *TaskController) UpdateTask(c echo.Context) error {
-	req, err := request.BindAndValidateUpdateTaskRequest(c)
+	req, err := request.BindAndValidateUpdateRequest(c, t.validator)
 	if err != nil {
 		return err
 	}
 
-	res, err := t.taskService.Update(c.Request().Context(), req)
+	res, err := t.taskService.UpdateTask(c.Request().Context(), Ctx.FromEchoContext(c), req)
 	if err != nil {
 		return err
 	}
